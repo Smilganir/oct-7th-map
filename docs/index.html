@@ -24,11 +24,8 @@
       background: #f0f0f0;
     }
     .embed-container {
-      width: 100%;
-      max-width: 1400px;
       position: relative;
       overflow: hidden;
-      aspect-ratio: 1400 / 1200;
       background: #fff;
     }
     .embed-container iframe {
@@ -55,11 +52,26 @@
   </div>
   <script>
     (function () {
-      var DASH_W = 1400;
+      var DASH_W = 1400, DASH_H = 1200;
+      var viewport = document.querySelector('.viewport');
       var container = document.getElementById('embed-container');
       var iframe = container.querySelector('iframe');
       function fit() {
-        var scale = container.clientWidth / DASH_W;
+        var vw = viewport.clientWidth;
+        var vh = viewport.clientHeight;
+        var maxW = Math.min(vw, 1400);
+        var byWidthH = maxW * (DASH_H / DASH_W);
+        var cw, ch;
+        if (byWidthH <= vh) {
+          cw = maxW;
+          ch = byWidthH;
+        } else {
+          ch = vh;
+          cw = ch * (DASH_W / DASH_H);
+        }
+        container.style.width = cw + 'px';
+        container.style.height = ch + 'px';
+        var scale = cw / DASH_W;
         iframe.style.transform = 'scale(' + scale + ')';
       }
       fit();
