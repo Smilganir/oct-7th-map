@@ -8,7 +8,21 @@
     "start": "next start",
     "lint": "eslint",
     "upload-memorial-images": "node scripts/upload-memorial-to-cloudinary.js",
-    "upload-idf-images": "node scripts/upload-idf-to-cloudinary.js"
+    "upload-idf-images": "node scripts/upload-idf-to-cloudinary.js",
+    "upload-new-images-cloudinary": "node scripts/upload-new-images-to-cloudinary.js",
+    "upload-raw-images-cloudinary": "node scripts/upload-raw-images-to-cloudinary.js",
+    "prepare-raw-images-sheet": "node scripts/prepare-raw-images-sheet-update.js",
+    "upload-raw-images-sheet": "python scripts/upload-raw-images-to-sheet.py",
+    "fetch-new-images": "node scripts/fetch-new-images.js",
+    "build-idf-image-cache": "node scripts/build-idf-image-cache.js",
+    "prepare-new-images-sheet": "node scripts/prepare-new-images-sheet-update.js && node scripts/generate-sheet-apps-script.js",
+    "upload-new-images-sheet": "python scripts/upload-new-images-to-sheet.py",
+    "validate-images": "node scripts/validate-images.js",
+    "fix-placeholder-images": "node scripts/fix-placeholder-images.js",
+    "fetch-validation-images": "node scripts/fetch-validation-images.js",
+    "fix-validation-sheet-urls": "node scripts/fix-validation-sheet-urls.js",
+    "upload-validation-images-sheet": "python scripts/upload-validation-images-to-sheet.py",
+    "sync-db-new-images": "node scripts/sync-db-to-new-images.js"
   },
   "dependencies": {
     "lucide-react": "^0.575.0",
@@ -27,8 +41,11 @@
     "@types/react-dom": "^19",
     "cloudinary": "^2.9.0",
     "dotenv": "^17.3.1",
+    "googleapis": "^148.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "playwright": "^1.62.1",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

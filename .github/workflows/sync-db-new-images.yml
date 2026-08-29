@@ -1,0 +1,83 @@
+# Manual sync: Oct_7th_DB → New Images, Cloudinary upload, JSON export.
+#
+# Yuval (or any collaborator) can run this from:
+#   GitHub → Actions → "Sync DB to New Images" → Run workflow
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   CLOUDINARY_CLOUD_NAME
+#   CLOUDINARY_API_KEY
+#   CLOUDINARY_API_SECRET
+#   GOOGLE_SERVICE_ACCOUNT_JSON   (full JSON key for gsheetsnirsm@... Editor on the sheet)
+#
+# Optional:
+#   NLI_API_KEY
+
+name: Sync DB to New Images
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Preview only (no sheet writes)
+        type: boolean
+        default: false
+      skip_upload:
+        description: Skip Cloudinary upload (resolve raw URLs only)
+        type: boolean
+        default: false
+
+concurrency:
+  group: sync-db-new-images
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Write Google service account key
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -z "$GOOGLE_SERVICE_ACCOUNT_JSON" ]; then
+            echo "::error::Missing secret GOOGLE_SERVICE_ACCOUNT_JSON"
+            exit 1
+          fi
+          printf '%s' "$GOOGLE_SERVICE_ACCOUNT_JSON" > "${RUNNER_TEMP}/google-credentials.json"
+
+      - name: Run sync
+        env:
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          NLI_API_KEY: ${{ secrets.NLI_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_KEY_FILE: ${{ runner.temp }}/google-credentials.json
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ "${{ inputs.skip_upload }}" = "true" ]; then ARGS="$ARGS --skip-upload"; fi
+          npm run sync-db-new-images -- $ARGS
+
+      - name: Upload JSON export
+        uses: actions/upload-artifact@v4
+        with:
+          name: new-images-export
+          path: scripts/new-images-export.json
+          if-no-files-found: error
+          retention-days: 90

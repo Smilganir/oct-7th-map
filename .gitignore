@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated pipeline outputs
+scripts/new-images-export.json
+scripts/*-cloudinary-cache.json
+scripts/*.log
+scripts/validation-report.csv
+public/validation-images/

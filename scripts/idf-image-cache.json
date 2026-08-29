@@ -1,0 +1,551 @@
+{
+  "https://www.idf.il/נופלים/חללי-המלחמה/ג-מאל-עבאס/": {
+    "pid": "2111",
+    "error": "no portrait image in page"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דביר-ברזני/": {
+    "pid": "2119",
+    "imageUrl": "https://www.idf.il/media/5cgldtpv/whatsapp-image-2023-11-20-at-00-43-26_d85f752f.jpg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אסצ-אלו-סמה/": {
+    "pid": "2131",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אור-ברנדס/": {
+    "pid": "2132",
+    "imageUrl": "https://www.idf.il/media/uunmlmg2/whatsapp-image-2023-12-03-at-06-05-47-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מאור-גרשוני/": {
+    "pid": "2148",
+    "imageUrl": "https://www.idf.il/media/2j4ljpnn/whatsapp-image-2023-12-07-at-12-07-12.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/צביקה-לביא/": {
+    "pid": "2168",
+    "imageUrl": "https://www.idf.il/media/4jth5nco/whatsapp-image-2023-12-12-at-01-39-23.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אוריה-יעקב/": {
+    "pid": "2174",
+    "imageUrl": "https://www.idf.il/media/swcp1ckp/whatsapp-image-2023-12-13-at-03-39-19_57bbca8e.jpg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלישע-לוינשטרן/": {
+    "pid": "2179",
+    "imageUrl": "https://www.idf.il/media/iqobsk12/whatsapp-image-2023-12-14-at-00-09-26.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יוסף-אבנר-דורן/": {
+    "pid": "2184",
+    "imageUrl": "https://www.idf.il/media/ompc0zqi/whatsapp-image-2023-12-17-at-01-06-51.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שי-איילי/": {
+    "pid": "2201",
+    "imageUrl": "https://www.idf.il/media/p2dngild/whatsapp-image-2023-12-22-at-00-26-07.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/טל-שועה/": {
+    "pid": "2202",
+    "imageUrl": "https://www.idf.il/media/lhmpwnua/whatsapp-image-2023-12-22-at-00-26-21.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/הראל-שרביט/": {
+    "pid": "2233",
+    "imageUrl": "https://www.idf.il/media/dlhpwmxe/whatsapp-image-2023-12-29-at-09-17-13.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/הראל-איתח/": {
+    "pid": "2235",
+    "imageUrl": "https://www.idf.il/media/0crhcyot/whatsapp-image-2023-12-30-at-18-57-15.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אורי-ג-רבי/": {
+    "pid": "2264",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אריאל-מרדכי-וולפסטל/": {
+    "pid": "2283",
+    "imageUrl": "https://www.idf.il/media/25objcka/whatsapp-image-2024-01-23-at-09-15-34.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שגיא-עידן/": {
+    "pid": "2284",
+    "imageUrl": "https://www.idf.il/media/yeqd4p5e/whatsapp-image-2024-01-23-at-09-15-56.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מארק-קונונוביץ/": {
+    "pid": "2285",
+    "imageUrl": "https://www.idf.il/media/4bcj3go2/whatsapp-image-2024-01-23-at-09-16-07.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלירן-יגר/": {
+    "pid": "2290",
+    "imageUrl": "https://www.idf.il/media/nizedw0u/whatsapp-image-2024-01-26-at-04-50-46.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלון-קליינמן/": {
+    "pid": "2298",
+    "imageUrl": "https://www.idf.il/media/hxtkgblz/whatsapp-image-2024-02-11-at-23-35-47.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עמר-שרה-בנג-ו/": {
+    "pid": "2303",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/רותם-סהר-הדר/": {
+    "pid": "2304",
+    "imageUrl": "https://www.idf.il/media/y10pqni4/whatsapp-image-2024-02-15-at-17-56-35.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אייל-שומינוב/": {
+    "pid": "2312",
+    "imageUrl": "https://www.idf.il/media/dcffdnao/whatsapp-image-2024-03-07-at-21-01-23.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נדב-כהן/": {
+    "pid": "2336",
+    "imageUrl": "https://www.idf.il/media/qbdnyskt/whatsapp-image-2024-04-01-at-05-03-19.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דור-זימל/": {
+    "pid": "2341",
+    "imageUrl": "https://www.idf.il/media/bbhnjrwe/whatsapp-image-2024-04-21-at-18-40-07.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/קאלקידן-מהרי/": {
+    "pid": "2345",
+    "imageUrl": "https://www.idf.il/media/ohfphibu/whatsapp-image-2024-04-29-at-20-42-01.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עידו-אביב/": {
+    "pid": "2346",
+    "imageUrl": "https://www.idf.il/media/r4klheyu/whatsapp-image-2024-04-29-at-20-35-51-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דן-קמחג-י/": {
+    "pid": "2351",
+    "imageUrl": "https://www.idf.il/media/s3rpya51/whatsapp-image-2024-05-06-at-23-01-29.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נחמן-נתן-הרץ/": {
+    "pid": "2352",
+    "imageUrl": "https://www.idf.il/media/cycbbliu/whatsapp-image-2024-05-06-at-19-02-56.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עירא-יאיר-גיספן/": {
+    "pid": "2360",
+    "imageUrl": "https://www.idf.il/media/ropfmzm2/whatsapp-image-2024-05-15-at-02-15-49.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/גל-שבת/": {
+    "pid": "2371",
+    "imageUrl": "https://www.idf.il/media/sqpbuuxt/whatsapp-image-2024-05-19-at-17-34-51.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/בצלאל-צבי-קובץ/": {
+    "pid": "2375",
+    "imageUrl": "https://www.idf.il/media/jbhfjqe5/whatsapp-image-2024-05-26-at-17-21-37.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/סהר-סודאי/": {
+    "pid": "2376",
+    "imageUrl": "https://www.idf.il/media/in3paypj/whatsapp-image-2024-05-26-at-20-01-19.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אליה-הלל/": {
+    "pid": "2389",
+    "imageUrl": "https://www.idf.il/media/nkvjbm2t/whatsapp-image-2024-10-10-at-10-45-37.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/רפאל-קאודרס": {
+    "pid": "2395",
+    "imageUrl": "https://www.idf.il/media/cspncpb4/whatsapp-image-2024-06-06-at-00-44-53.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתן-קופלוביץ": {
+    "pid": "2402",
+    "imageUrl": "https://www.idf.il/media/ft1icpwm/whatsapp-image-2024-06-16-at-01-19-17.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אילון-ויס": {
+    "pid": "2403",
+    "imageUrl": "https://www.idf.il/media/0vzbrrmz/whatsapp-image-2024-06-16-at-01-37-43.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אליהו-משה-צימבליסט": {
+    "pid": "2404",
+    "imageUrl": "https://www.idf.il/media/4zod4aly/whatsapp-image-2024-06-16-at-01-19-05.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתי-עמר": {
+    "pid": "2405",
+    "imageUrl": "https://www.idf.il/media/1kpfjq0k/whatsapp-image-2024-06-16-at-01-18-49.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יקיר-יעקב-לוי": {
+    "pid": "2409",
+    "imageUrl": "https://www.idf.il/media/nooa1ysx/whatsapp-image-2024-12-02-at-10-49-42.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עומר-סמדג-ה": {
+    "pid": "2412",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלון-סקאג-יו": {
+    "pid": "2416",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יהודה-גטו": {
+    "pid": "2421",
+    "imageUrl": "https://www.idf.il/media/u2cnw4za/whatsapp-image-2024-07-01-at-20-00-56.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתי-גלאה": {
+    "pid": "2427",
+    "imageUrl": "https://www.idf.il/media/mk3hx0uw/whatsapp-image-2024-07-04-at-18-10-04.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אייל-מימרן": {
+    "pid": "2428",
+    "imageUrl": "https://www.idf.il/media/4u0nh1eu/whatsapp-image-2024-07-04-at-18-31-37.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ג-לאא-אבראהים": {
+    "pid": "2429",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/טל-להט": {
+    "pid": "2430",
+    "imageUrl": "https://www.idf.il/media/oizd4ou4/whatsapp-image-2024-07-10-at-00-05-53.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ולרי-צ-פונוב/": {
+    "pid": "2431",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יונתן-אהרן-גרינבלט/": {
+    "pid": "2453",
+    "imageUrl": "https://www.idf.il/media/ytgl4yqi/whatsapp-image-2024-07-28-at-00-17-21-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מרדכי-יוסף-בן-שועם/": {
+    "pid": "2472",
+    "imageUrl": "https://www.idf.il/media/3g1p3iie/whatsapp-image-2024-08-17-at-21-34-10.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שחר-בן-נון/": {
+    "pid": "2474",
+    "imageUrl": "https://www.idf.il/media/311bzh2m/whatsapp-image-2024-08-19-at-20-08-11.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דניל-פצ-ניוק/": {
+    "pid": "2487",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עמית-צדיקוב/": {
+    "pid": "2490",
+    "imageUrl": "https://www.idf.il/media/kkcks24p/whatsapp-image-2024-08-24-at-23-03-42-2.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שלמה-יהונתן-חזוט/": {
+    "pid": "2492",
+    "imageUrl": "https://www.idf.il/media/vr3biarn/whatsapp-image-2024-08-25-at-20-14-28.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עלמקאן-טרפה/": {
+    "pid": "2530",
+    "imageUrl": "https://www.idf.il/media/xejl2ryt/whatsapp-image-2024-10-02-at-17-20-56.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עידו-ברויר/": {
+    "pid": "2531",
+    "imageUrl": "https://www.idf.il/media/nznfvuly/whatsapp-image-2024-10-02-at-17-10-38.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/טל-דרור/": {
+    "pid": "2539",
+    "imageUrl": "https://www.idf.il/media/av2cunvu/whatsapp-image-2024-10-04-at-16-33-35-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דניאל-אביב-חיים-סופר/": {
+    "pid": "2540",
+    "imageUrl": "https://www.idf.il/media/sh4fhpnd/whatsapp-image-2024-10-04-at-16-33-35.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אורי-משה-בורנשטיין/": {
+    "pid": "2551",
+    "imageUrl": "https://www.idf.il/media/r0cjb41c/whatsapp-image-2024-10-10-at-20-08-06.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נתנאל-הרשקוביץ-1/": {
+    "pid": "2552",
+    "imageUrl": "https://www.idf.il/media/zcxjvjl1/whatsapp-image-2024-10-25-at-12-37-03.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/צבי-מתתיהו-מרנץ/": {
+    "pid": "2553",
+    "imageUrl": "https://www.idf.il/media/vx3fm3g5/whatsapp-image-2024-10-10-at-20-03-14.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלישי-יונג/": {
+    "pid": "2568",
+    "imageUrl": "https://www.idf.il/media/vgodbt3z/whatsapp-image-2024-10-19-at-16-21-53.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אופיר-ברקוביץ/": {
+    "pid": "2569",
+    "imageUrl": "https://www.idf.il/media/5mujjogd/whatsapp-image-2024-10-19-at-14-29-12.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ישי-נתנאל-גרינבאום/": {
+    "pid": "2570",
+    "imageUrl": "https://www.idf.il/media/amans2lv/whatsapp-image-2024-10-19-at-21-11-18.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/גיא-עידן/": {
+    "pid": "2581",
+    "imageUrl": "https://www.idf.il/media/emjjc5vp/whatsapp-image-2024-10-25-at-09-32-39-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עמרי-לוטן/": {
+    "pid": "2582",
+    "imageUrl": "https://www.idf.il/media/4inp4bit/whatsapp-image-2024-10-25-at-09-33-02.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלון-ספראי/": {
+    "pid": "2583",
+    "imageUrl": "https://www.idf.il/media/qjjmrtu5/whatsapp-image-2024-10-25-at-09-32-17.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דן-מאורי/": {
+    "pid": "2584",
+    "imageUrl": "https://www.idf.il/media/4sch0lmw/whatsapp-image-2024-10-25-at-09-33-21.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/תום-סגל/": {
+    "pid": "2585",
+    "imageUrl": "https://www.idf.il/media/x2gnn4jq/whatsapp-image-2024-10-25-at-09-31-51-2.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/הלל-אליהו-עובדיה/": {
+    "pid": "2586",
+    "imageUrl": "https://www.idf.il/media/pvgpgm5s/whatsapp-image-2024-10-25-at-16-11-05-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עידו-בן-צבי/": {
+    "pid": "2587",
+    "imageUrl": "https://www.idf.il/media/cchhj3o1/whatsapp-image-2024-10-25-at-16-12-03-1.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ברק-ישראל-סגן/": {
+    "pid": "2588",
+    "imageUrl": "https://www.idf.il/media/dsulpn52/whatsapp-image-2024-10-25-at-16-10-42.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שאול-מויאל/": {
+    "pid": "2593",
+    "imageUrl": "https://www.idf.il/media/bizbr5kq/whatsapp-image-2024-10-27-at-16-17-41.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מלאכי-יהודה-הררי/": {
+    "pid": "2594",
+    "imageUrl": "https://www.idf.il/media/oxaeblfi/whatsapp-image-2024-10-27-at-16-16-39.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ניסים-מיטל/": {
+    "pid": "2604",
+    "imageUrl": "https://www.idf.il/media/plkooqyj/whatsapp-image-2024-12-23-at-18-43-38.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יהונתן-ג-וני-קרן/": {
+    "pid": "2605",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/זאב-חנוך-ז-אבו-ארליך/": {
+    "pid": "2645",
+    "error": "page not found (אין מה לראות כאן | את\"צ)"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מושיקו-מקסים-רוזנוולד/": {
+    "pid": "2665",
+    "imageUrl": "https://www.idf.il/media/apkn0njh/whatsapp-image-2024-12-17-at-10-17-57.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איליי-גבריאל-אטדגי/": {
+    "pid": "2668",
+    "imageUrl": "https://www.idf.il/media/js1m5y0u/whatsapp-image-2024-12-23-at-19-07-57.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נתנאל-פסח/": {
+    "pid": "2669",
+    "imageUrl": "https://www.idf.il/media/ohrppaq5/whatsapp-image-2024-12-23-at-19-17-21.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/הלל-דינר/": {
+    "pid": "2670",
+    "imageUrl": "https://www.idf.il/media/eb3cek0u/whatsapp-image-2024-12-23-at-19-58-07.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/קנאו-קאסה/": {
+    "pid": "2682",
+    "imageUrl": "https://www.idf.il/media/nepkbahy/whatsapp-image-2025-01-08-at-21-43-02.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מתתיהו-יעקב-פרל/": {
+    "pid": "2683",
+    "imageUrl": "https://www.idf.il/media/kgnpsvtw/whatsapp-image-2025-01-08-at-21-00-57.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נבו-פישר/": {
+    "pid": "2684",
+    "imageUrl": "https://www.idf.il/media/ctdlwa2v/whatsapp-image-2025-01-08-at-22-52-34.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ליאם-חזי/": {
+    "pid": "2699",
+    "imageUrl": "https://www.idf.il/media/35if3nhv/whatsapp-image-2025-01-30-at-18-34-51.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתן-זקס/": {
+    "pid": "2776",
+    "imageUrl": "https://www.idf.il/media/fi3i0tpt/whatsapp-image-2025-06-24-at-162539.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שחר-נתנאל-בוזגלו/": {
+    "pid": "2830",
+    "imageUrl": "https://www.idf.il/media/20wefhwv/%D7%A9%D7%97%D7%A8%D7%A0%D7%AA%D7%A0%D7%90%D7%9C%D7%91%D7%95%D7%96%D7%92%D7%9C%D7%95.jfif"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/צאלצאו-שמעון-דמלאש/": {
+    "pid": "2831",
+    "imageUrl": "https://www.idf.il/media/304iwivq/%D7%A6%D7%90%D7%9C%D7%A6%D7%90%D7%95-%D7%A9%D7%9E%D7%A2%D7%95%D7%9F-%D7%93%D7%9E%D7%9C%D7%90%D7%A9.jfif"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עפרי-יפה/": {
+    "pid": "2873",
+    "imageUrl": "https://www.idf.il/media/4pzhmj5x/%D7%A2%D7%A4%D7%A8%D7%99-%D7%99%D7%A4%D7%94-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מאהר-חטאר/": {
+    "pid": "2893",
+    "imageUrl": "https://www.idf.il/media/avvhk1cz/%D7%A8%D7%A1-%D7%9C-%D7%97-%D7%98%D7%90%D7%A8-%D7%9E%D7%90%D7%94%D7%A8.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אור-דמרי/": {
+    "pid": "2894",
+    "imageUrl": "https://www.idf.il/media/ks4l0fnf/%D7%90%D7%95%D7%A8-%D7%93%D7%9E%D7%A8%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אורי-גרינברג/": {
+    "pid": "2905",
+    "imageUrl": "https://www.idf.il/media/fflirrls/%D7%90%D7%95%D7%A8%D7%99-%D7%92%D7%A8%D7%99%D7%A0%D7%91%D7%A8%D7%92.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אביעד-אלחנן-וולנסקי/": {
+    "pid": "2906",
+    "imageUrl": "https://www.idf.il/media/wfcdxhsa/%D7%A1%D7%9E%D7%9C-%D7%90%D7%91%D7%99%D7%A2%D7%93-%D7%90%D7%9C%D7%97%D7%A0%D7%9F-%D7%95%D7%95%D7%9C%D7%A0%D7%A1%D7%A7%D7%99.jpg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/משה-יצחק-הכהן-כץ/": {
+    "pid": "2910",
+    "imageUrl": "https://www.idf.il/media/blshn2e4/%D7%A1%D7%9E%D7%9C-%D7%9E%D7%A9%D7%94-%D7%99%D7%A6%D7%97%D7%A7-%D7%94%D7%9B%D7%94%D7%9F-%D7%9B%D7%A5.jpg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/לירן-בן-ציון/": {
+    "pid": "2912",
+    "imageUrl": "https://www.idf.il/media/rrzh1b41/%D7%A1%D7%9E%D7%9C-%D7%9C%D7%99%D7%A8%D7%9F-%D7%91%D7%9F-%D7%A6%D7%99%D7%95%D7%9F-%D7%96%D7%9C.png"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מקסים-אנטיס/": {
+    "pid": "2913",
+    "imageUrl": "https://www.idf.il/media/dtfb3z3c/%D7%9E%D7%A7%D7%A1%D7%99%D7%9D-%D7%90%D7%A0%D7%98%D7%99%D7%A1-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נועם-מדמוני/": {
+    "pid": "2914",
+    "imageUrl": "https://www.idf.il/media/j3nfh112/%D7%A0%D7%95%D7%A2%D7%9D-%D7%9E%D7%93%D7%9E%D7%95%D7%A0%D7%99-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/בן-כהן/": {
+    "pid": "2915",
+    "imageUrl": "https://www.idf.il/media/kgwh0tug/%D7%91%D7%9F%D7%9B%D7%94%D7%9F%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/גלעד-הראל/": {
+    "pid": "2916",
+    "imageUrl": "https://www.idf.il/media/3tim0tob/%D7%92%D7%9C%D7%A2%D7%93-%D7%94%D7%A8%D7%90%D7%9C.jpg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/גיא-לודר/": {
+    "pid": "2917",
+    "imageUrl": "https://www.idf.il/media/5v1lo4ym/%D7%92%D7%99%D7%90-%D7%9C%D7%95%D7%93%D7%A8-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/טובאל-יוסף-ליפשיץ/": {
+    "pid": "2923",
+    "imageUrl": "https://www.idf.il/media/fzfgnptu/%D7%98%D7%95%D7%91%D7%90%D7%9C-%D7%99%D7%95%D7%A1%D7%A3-%D7%9C%D7%99%D7%A4%D7%A9%D7%99%D7%A5.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אייל-אוריאל-ביאנקו/": {
+    "pid": "2927",
+    "imageUrl": "https://www.idf.il/media/0smpgbjb/whatsapp-image-2026-04-14-at-044101.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ברק-כלפון/": {
+    "pid": "2930",
+    "imageUrl": "https://www.idf.il/media/gp2fjv20/%D7%91%D7%A8%D7%A7-%D7%9B%D7%9C%D7%A4%D7%95%D7%9F-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/לידור-פורת/": {
+    "pid": "2931",
+    "imageUrl": "https://www.idf.il/media/tcdls5n0/%D7%9C%D7%99%D7%93%D7%95%D7%A8-%D7%A4%D7%95%D7%A8%D7%AA-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/עידן-פוקס/": {
+    "pid": "2933",
+    "imageUrl": "https://www.idf.il/media/1vxlhxzx/%D7%A1%D7%9E%D7%9C-%D7%A2%D7%99%D7%93%D7%9F-%D7%A4%D7%95%D7%A7%D7%A1-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ליאם-בן-חמו/": {
+    "pid": "2934",
+    "imageUrl": "https://www.idf.il/media/ns2l03yg/%D7%9C%D7%99%D7%90%D7%9D-%D7%91%D7%9F-%D7%97%D7%9E%D7%95.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלכסנדר-גלובניוב/": {
+    "pid": "2936",
+    "imageUrl": "https://www.idf.il/media/rvchei5s/%D7%90%D7%9C%D7%9B%D7%A1%D7%A0%D7%93%D7%A8-%D7%92%D7%9C%D7%95%D7%91%D7%A0%D7%99%D7%95%D7%91-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נגב-דגן/": {
+    "pid": "2937",
+    "imageUrl": "https://www.idf.il/media/ny5ehinc/%D7%A1%D7%9E%D7%A8-%D7%A0%D7%92%D7%91-%D7%93%D7%9F-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מעוז-ישראל-רקנטי/": {
+    "pid": "2938",
+    "imageUrl": "https://www.idf.il/media/oqzmwn53/%D7%9E%D7%A2%D7%95%D7%96-%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%A8%D7%A7%D7%A0%D7%98%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתמר-ספיר/": {
+    "pid": "2939",
+    "imageUrl": "https://www.idf.il/media/b5ddbaxb/%D7%90%D7%99%D7%AA%D7%9E%D7%A8-%D7%A1%D7%A4%D7%99%D7%A8.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נועם-המבורגר/": {
+    "pid": "2940",
+    "imageUrl": "https://www.idf.il/media/jpjoqqgb/%D7%A1%D7%9E%D7%A8-%D7%A0%D7%95%D7%A2%D7%9D-%D7%94%D7%9E%D7%91%D7%95%D7%A8%D7%92%D7%A8-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נהוראי-לייזר/": {
+    "pid": "2941",
+    "imageUrl": "https://www.idf.il/media/svkghjxq/%D7%A0%D7%94%D7%95%D7%A8%D7%90%D7%99-%D7%9C%D7%99%D7%99%D7%96%D7%A8.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/רותם-ינאי/": {
+    "pid": "2942",
+    "imageUrl": "https://www.idf.il/media/pksfchjx/%D7%A8%D7%95%D7%AA%D7%9D-%D7%99%D7%A0%D7%90%D7%99-2.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מיכאל-טיוקין/": {
+    "pid": "2943",
+    "imageUrl": "https://www.idf.il/media/vlmegdhz/%D7%A1%D7%9E%D7%A8%D7%9E%D7%99%D7%9B%D7%90%D7%9C%D7%98%D7%99%D7%95%D7%A7%D7%99%D7%9F.png"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אדם-צרפתי/": {
+    "pid": "2944",
+    "imageUrl": "https://www.idf.il/media/ohlp1oas/%D7%90%D7%93%D7%9D-%D7%A6%D7%A8%D7%A4%D7%AA%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אורי-יוסף-סילבסטר/": {
+    "pid": "2945",
+    "imageUrl": "https://www.idf.il/media/gxdj3poj/%D7%A1%D7%A8%D7%9F-%D7%90%D7%95%D7%A8%D7%99-%D7%99%D7%95%D7%A1%D7%A3-%D7%A1%D7%99%D7%9C%D7%91%D7%A1%D7%98%D7%A8.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/איתן-שמואל-למברג/": {
+    "pid": "2946",
+    "imageUrl": "https://www.idf.il/media/tlmn4z4f/%D7%90%D7%99%D7%AA%D7%9F-%D7%A9%D7%9E%D7%95%D7%90%D7%9C-%D7%9C%D7%9E%D7%91%D7%A8%D7%92-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אהד-יערי/": {
+    "pid": "2947",
+    "imageUrl": "https://www.idf.il/media/5mpls0hb/%D7%A1%D7%9E%D7%9C-%D7%90%D7%94%D7%93-%D7%99%D7%A2%D7%A8%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/שחר-גמלא/": {
+    "pid": "2948",
+    "imageUrl": "https://www.idf.il/media/bziistho/%D7%A9%D7%97%D7%A8-%D7%92%D7%9E%D7%9C%D7%90-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/חיים-קלומיטי/": {
+    "pid": "2949",
+    "imageUrl": "https://www.idf.il/media/tjefn3cz/%D7%A8%D7%A1%D7%A8-%D7%91%D7%9E%D7%99%D7%9C-%D7%97%D7%99%D7%99%D7%9D-%D7%A7%D7%9C%D7%95%D7%9E%D7%99%D7%98%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אלכסנדר-פילין/": {
+    "pid": "2950",
+    "imageUrl": "https://www.idf.il/media/ohtplnrx/%D7%90%D7%9C%D7%9B%D7%A1%D7%A0%D7%93%D7%A8-%D7%A4%D7%99%D7%9C%D7%99%D7%9F.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דור-גדליה-בן-שמחון/": {
+    "pid": "2951",
+    "imageUrl": "https://www.idf.il/media/m5gddvl5/%D7%93%D7%95%D7%A8-%D7%92%D7%93%D7%9C%D7%99%D7%94-%D7%91%D7%9F-%D7%A9%D7%9E%D7%97%D7%95%D7%9F.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יואב-קליין/": {
+    "pid": "2952",
+    "imageUrl": "https://www.idf.il/media/f3wfot3u/%D7%99%D7%95%D7%90%D7%91-%D7%A7%D7%9C%D7%99%D7%99%D7%9F.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ניר-בן-ארי/": {
+    "pid": "2953",
+    "imageUrl": "https://www.idf.il/media/z2rl1z2b/%D7%A0%D7%99%D7%A8-%D7%91%D7%9F-%D7%90%D7%A8%D7%99.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/ליאב-כבביה/": {
+    "pid": "2954",
+    "imageUrl": "https://www.idf.il/media/yc3lk0bt/%D7%9C%D7%99%D7%90%D7%91-%D7%9B%D7%91%D7%91%D7%99%D7%94.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/נוה-חבשוש/": {
+    "pid": "2955",
+    "imageUrl": "https://www.idf.il/media/jrep1prk/%D7%A0%D7%95%D7%94-%D7%97%D7%91%D7%A9%D7%95%D7%A9.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/באסל-סויד/": {
+    "pid": "2957",
+    "imageUrl": "https://www.idf.il/media/tyqdt30o/%D7%91%D7%90%D7%A1%D7%99%D7%9C%D7%A1%D7%95%D7%99%D7%93%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/דוד-חזות/": {
+    "pid": "2960",
+    "imageUrl": "https://www.idf.il/media/rvphmx1j/%D7%93%D7%95%D7%93-%D7%97%D7%96%D7%95%D7%AA.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/יובל-עזרא/": {
+    "pid": "2961",
+    "imageUrl": "https://www.idf.il/media/aftmdefm/%D7%99%D7%95%D7%91%D7%9C-%D7%A2%D7%96%D7%A8%D7%90.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/בניהו-מלט/": {
+    "pid": "2962",
+    "imageUrl": "https://www.idf.il/media/psej1zlq/%D7%91%D7%A0%D7%99%D7%94%D7%95-%D7%9E%D7%9C%D7%98.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/תמיר-וקנין/": {
+    "pid": "2963",
+    "imageUrl": "https://www.idf.il/media/zize1rei/%D7%AA%D7%9E%D7%99%D7%A8-%D7%95%D7%A7%D7%A0%D7%99%D7%9F-%D7%96%D7%9C.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/הראל-בירנשטוק/": {
+    "pid": "2964",
+    "imageUrl": "https://www.idf.il/media/oebbabqb/%D7%94%D7%A8%D7%90%D7%9C-%D7%91%D7%99%D7%A8%D7%A0%D7%A9%D7%98%D7%95%D7%A7.jpeg"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/חיים-מאיר-עדן/": {
+    "imageUrl": "https://www.idf.il/media/v25fmbes/candle.png?width=157&height=211",
+    "source": "playwright",
+    "cached_at": "2026-08-29T09:54:47.181Z"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/זייד-מזאריב": {
+    "imageUrl": "https://www.idf.il/media/v25fmbes/candle.png?width=157&height=211",
+    "source": "playwright",
+    "cached_at": "2026-08-29T09:54:50.551Z"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/סעדיה-יעקב-דרעי": {
+    "imageUrl": "https://www.idf.il/media/v25fmbes/candle.png?width=157&height=211",
+    "source": "playwright",
+    "cached_at": "2026-08-29T09:54:53.950Z"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/מחמוד-עמרייה/": {
+    "imageUrl": "https://www.idf.il/media/v25fmbes/candle.png?width=157&height=211",
+    "source": "playwright",
+    "cached_at": "2026-08-29T09:54:57.400Z"
+  },
+  "https://www.idf.il/נופלים/חללי-המלחמה/אביב-מגן/": {
+    "imageUrl": "https://www.idf.il/media/v25fmbes/candle.png?width=157&height=211",
+    "source": "playwright",
+    "cached_at": "2026-08-29T09:55:00.778Z"
+  }
+}
