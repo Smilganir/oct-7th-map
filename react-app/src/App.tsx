@@ -194,7 +194,7 @@ export default function App() {
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
           <p className="add">{t.additional} <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} {t.civ})</small> {t.ret}</p></div>
           <div className="notes"><div className="fn"><i className="mk">*</i><i>{t.fn1}<br />{t.fn1b}</i></div><div className="fn"><i className="mk">**</i><i>{t.fn2}</i></div></div>
-          <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
+          <a href={rtl ? 'https://www.civilc.org/home-heb/silenced-no-more-heb' : 'https://www.civilc.org/silenced-no-more'} target="_blank" rel="noopener noreferrer" aria-label="The Civil Commission report"><img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" /></a>
           <button className="langb" onClick={toggleLang} aria-label="Language">{t.toggle}</button>
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
