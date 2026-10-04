@@ -185,12 +185,12 @@ export default function App() {
         {!(mobile && hideS) && <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
           <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
         {mobile && !hideS && <button className="lx lx2" aria-label="Hide size legend" onClick={() => setHideS(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
-        </div>
         {sel && one && (<div className="tip" ref={tipRef} onClick={e => e.stopPropagation()}><h4>{sel === '?' ? 'Scattered locations' : sel}</h4><div className="tt">{fmt(one.total)} Victims:</div>
           <div className="tr"><span>Killed</span><b className="c1">{fmt(one.killed)}</b></div>
           <div className="tr"><span>Kidnapped and killed</span><b className="m2">{fmt(one.hk)}</b></div>
           <div className="tr"><span>Kidnapped and returned alive</span><b className="c3">{fmt(one.ret)}</b></div>
           <button className="tgo" onClick={() => setDet(sel)}>View victims &rsaquo;</button></div>)}
+        </div>
         <div className="hint">Click on the map locations to zoom in</div>
         <section className="card c-civ"><h2>Civilian Victims Distribution</h2>
           <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">Security Forces on Duty<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">Civilians<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
