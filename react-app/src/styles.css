@@ -72,3 +72,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .dl{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.8);padding:6px 10px;font-size:13px;display:flex;flex-direction:column;gap:3px}.dl i{display:inline-block;width:11px;height:11px;margin-right:6px}
 @media(max-width:760px){.dh h2{font-size:18px}.dh button{padding:8px 10px;font-size:13px}.db{grid-template-columns:1fr 1fr;grid-template-rows:55vh 1fr}.dm{grid-column:1/3;grid-row:1}.col{grid-row:2}}
 .panel .vbtn{position:static;border:1px solid #444;background:#333;color:#fff;font-size:calc(var(--u)*13);padding:calc(var(--u)*4) calc(var(--u)*10);margin-top:calc(var(--u)*4)}
+.src{position:absolute;inset:0;background:#fff;z-index:30;overflow-y:auto;padding:24px 8%;font-size:15px;line-height:1.55}
+.src h2{font-size:26px;font-weight:600;margin:10px 0 14px}.src h3{font-size:16px;font-weight:700;margin-top:14px}.src p{max-width:760px;margin-top:3px}.src .sf{margin-top:22px;font-style:italic;font-size:13px}
+.srcbar{display:flex;gap:8px;justify-content:flex-end}.srcbar button{background:#333;color:#fff;border:0;padding:7px 14px;font-size:14px;cursor:pointer}
+.src[dir=rtl] .srcbar{justify-content:flex-start}.foot .srcl{color:inherit;text-decoration:underline;cursor:pointer}
