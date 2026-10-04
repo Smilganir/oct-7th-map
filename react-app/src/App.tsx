@@ -117,6 +117,24 @@ export default function App() {
       markers.current.push(new maplibregl.Marker({ element: el, anchor, offset }).setLngLat([vx(loc.lon), vy(loc.lat)]).addTo(map))
     }
   if (mobile) fitRef.current()
+    const declutter = () => {
+      const items = markers.current.map((m, i) => ({ el: m.getElement(), n: locations[i].count, nm: locations[i].name }))
+      items.forEach(it => it.el.classList.remove('lbh'))
+      const placed: DOMRect[] = []
+      for (const it of [...items].sort((x, y) => y.n - x.n)) {
+        const lb = it.el.querySelector('.lb') as HTMLElement | null
+        if (!lb) continue
+        const r = lb.getBoundingClientRect()
+        const pad = 1
+        const hit = placed.some(p => r.left < p.right + pad && r.right > p.left - pad && r.top < p.bottom + pad && r.bottom > p.top - pad)
+        if (hit) it.el.classList.add('lbh'); else placed.push(r)
+      }
+    }
+    let raf = 0
+    const sched = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(declutter) }
+    map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
+    sched()
+    return () => { map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
   }, [scale, mobile])
 
   useEffect(() => {

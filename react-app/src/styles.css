@@ -97,3 +97,5 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .lx1{left:calc(6px + (100vw - 12px) * .4 - 32px);top:6px}.mobile .lx2{left:calc(6px + (100vw - 12px) * .17 - 2px);top:calc(8px + (100vw - 12px) * .404)}
 .mobile .lx3{left:8px;top:8px;width:auto;border-radius:12px;padding:0 10px;font-size:12px;line-height:22px;height:24px}
 .mobile .card,.mobile .foot{background:#eef0f2!important}
+
+.mk.lbh .lb{visibility:hidden}
