@@ -159,3 +159,5 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .subm{display:none}
 @media(max-width:760px){.dh{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}.dh .subd{display:none}.subm{display:block;font-size:10px;padding:4px 10px 6px;color:#333}.dh p{margin-top:2px}.dh h2{line-height:1.15}}
 .c-age .sub{display:block;text-align:center}
+.dm .maplibregl-ctrl-attrib{max-width:100%;font-size:11px;line-height:1.25}
+@media(max-width:760px){.dm .maplibregl-ctrl-attrib{font-size:8px;max-width:100%;padding:1px 4px}.dm .maplibregl-ctrl-attrib a{font-size:8px}}
