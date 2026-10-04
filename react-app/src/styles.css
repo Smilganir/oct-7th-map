@@ -76,3 +76,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .src h2{font-size:26px;font-weight:600;margin:10px 0 14px}.src h3{font-size:16px;font-weight:700;margin-top:14px}.src p{max-width:760px;margin-top:3px}.src .sf{margin-top:22px;font-style:italic;font-size:13px}
 .srcbar{display:flex;gap:8px;justify-content:flex-end}.srcbar button{background:#333;color:#fff;border:0;padding:7px 14px;font-size:14px;cursor:pointer}
 .src[dir=rtl] .srcbar{justify-content:flex-start}.foot .srcl{color:inherit;text-decoration:underline;cursor:pointer}
+.c-civ{top:17.1%;height:15.5%}.c-gen{top:34.2%;height:15.5%}.c-age{top:51.3%;height:25.3%}
+.bars{height:64%;margin-bottom:calc(var(--u)*34)}.bar{position:relative}
+.bl{position:absolute;top:100%;left:50%;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;white-space:nowrap;margin:0;padding-bottom:2px}
+.mobile .card{margin:14px 6px 0}.mobile .c-civ,.mobile .c-gen,.mobile .c-age{top:auto;height:auto}.mobile .bars{height:130px;margin-bottom:34px}.mobile .c-age{min-height:290px}
