@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Detail from './Detail'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { AgeBars, Donut } from './charts'
@@ -25,6 +26,7 @@ export default function App() {
   const mapEl = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const [sel, setSel] = useState<string | null>(null)
+  const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
   const [mobile, setMobile] = useState(false)
   const all = useMemo(() => stats(victims), [])
@@ -124,7 +126,8 @@ export default function App() {
           <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">Female<br /><b>{fmt(s.female)}</b></span><span className="l bl">Male<br /><b>{fmt(s.male)}</b></span></div></section>
         <section className="card c-age"><h2>Victims&apos; Age Distribution</h2><small className="sub">*excluding {s.noAge} victims with no age data</small><AgeBars ages={s.ages} /></section>
         <footer className="foot"><b>Data:</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>Disclaimer:</b> All data is accurate to the best of our knowledge at the time of publication</i><br /><br /><b>Design:</b> Nir Smilga<br />Based on &apos;Return to October&apos; exhibition at the Israel Heritage &amp; Commemoration Center (IICC)</footer>
-        {sel && (<aside className="panel" onClick={e => e.stopPropagation()}><button onClick={() => setSel(null)} aria-label="Close">×</button><h3>{sel === '?' ? 'Scattered locations' : sel}</h3><p><b>{fmt(s.total)}</b> victims · {fmt(s.killed)} killed · {fmt(s.hk)} kidnapped and killed · {fmt(s.ret)} returned alive</p><p>Civilians {fmt(s.civilians)} · Security forces {fmt(s.security)} · Female {fmt(s.female)} · Male {fmt(s.male)}</p></aside>)}
+        {sel && (<aside className="panel" onClick={e => e.stopPropagation()}><button onClick={() => setSel(null)} aria-label="Close">×</button><h3>{sel === '?' ? 'Scattered locations' : sel}</h3><p><b>{fmt(s.total)}</b> victims · {fmt(s.killed)} killed · {fmt(s.hk)} kidnapped and killed · {fmt(s.ret)} returned alive</p><p><button className="vbtn" onClick={() => setDet(sel)}>View victims</button></p><p>Civilians {fmt(s.civilians)} · Security forces {fmt(s.security)} · Female {fmt(s.female)} · Male {fmt(s.male)}</p></aside>)}
+        {det && <Detail name={det} onBack={() => setDet(null)} />}
       </div>
     </div>
   )
