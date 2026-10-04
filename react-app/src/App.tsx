@@ -169,7 +169,7 @@ export default function App() {
     declutterRef.current = declutter
     let raf = 0
     const sched = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(declutter) }
-    const lz = () => { const dz = fitting.current || baseZ.current === null ? 0 : Math.max(0, map.getZoom() - baseZ.current); mapEl.current?.style.setProperty('--lz', mobile ? String(Math.min(1.9, 1 + 0.3 * dz)) : '1') }
+    const lz = () => { const dz = fitting.current || baseZ.current === null ? 0 : Math.max(0, map.getZoom() - baseZ.current); mapEl.current?.style.setProperty('--lz', mobile ? String(Math.min(2.2, 1 + 0.6 * dz)) : '1') }
     lzRef.current = lz; map.on('zoom', lz); lz()
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
