@@ -53,9 +53,10 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       <div className="dh">
         <div><h2><b>{nm}</b> {rtl ? t.vicinity : 'Vicinity'} <b>{list.length} {t.vic}</b></h2>
           <p><b style={{ color: COL.k }}>{c.k}</b> {rtl ? t.dK : 'killed'} | <b style={{ color: COL.h }}>{c.h}</b> {rtl ? t.ttHK : 'kidnapped and killed'} | <b style={{ color: COL.a }}>{c.a}</b> {rtl ? t.ttR : 'kidnapped and returned alive'}</p>
-          <p><i>{t.schem}</i></p></div>
+          <p className="subd"><i>{t.schem}</i></p></div>
         <button onClick={onBack}>{t.back}</button>
       </div>
+      <p className="subm"><i>{t.schem}</i></p>
       <div className="db">
         <div className="col">{list.slice(0, half).map(card)}</div>
         <div className="dm"><div ref={el} className="dmap" />
