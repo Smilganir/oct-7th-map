@@ -90,3 +90,4 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .c-age{min-height:0;padding:6px}.mobile .c-age h2{font-size:14px}.mobile .bars{height:95px;margin-bottom:30px}.mobile .c-age .sub{font-size:9px}
 .mobile .head h1{min-height:60px;padding-top:2px}.mobile .logo{width:74px}
 .mobile .tot{font-size:11.5px}.mobile .tot .lead{font-size:13px}.mobile .tot b{font-size:14px}.mobile .tot small,.mobile .add small{font-size:10px}.mobile .add{font-size:11.5px}.mobile .add b{font-size:13.5px}.mobile .notes{font-size:9px}
+.mobile .tot,.mobile .add{line-height:1.35;margin-bottom:0}.mobile .add{margin-top:0}.mobile .tot b,.mobile .add b,.mobile .tot .lead{line-height:1}
