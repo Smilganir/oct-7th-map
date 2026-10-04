@@ -138,7 +138,7 @@ export default function App() {
       const label = document.createElement('span')
       label.className = 'lb'
       label.textContent = nm(loc.name)
-      label.style.fontSize = `${Math.max(9, 11.5 * scale)}px`
+      label.style.fontSize = mobile ? `calc(${Math.max(9, 11.5 * scale)}px * var(--lz, 1))` : `${Math.max(9, 11.5 * scale)}px`
       const side = SIDE[loc.name]
       if (side) el.classList.add('side-' + side)
       el.append(dot, label)
@@ -166,9 +166,12 @@ export default function App() {
     declutterRef.current = declutter
     let raf = 0
     const sched = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(declutter) }
+    const base0 = map.cameraForBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0 })?.zoom ?? 0
+    const lz = () => { const dz = Math.max(0, map.getZoom() - base0); mapEl.current?.style.setProperty('--lz', mobile ? String(Math.min(1.9, 1 + 0.3 * dz)) : '1') }
+    map.on('zoom', lz); lz()
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
-    return () => { map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
+    return () => { map.off('zoom', lz); map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
   }, [scale, mobile, lang])
 
   useEffect(() => {
