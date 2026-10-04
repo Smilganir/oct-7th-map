@@ -68,7 +68,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .db{flex:1;display:grid;grid-template-columns:190px 1fr 190px;min-height:0;border-top:1px solid #ccc}
 .col{overflow-y:auto;background:#eee}.vc{display:flex;align-items:center;gap:6px;height:68px;margin-bottom:2px;background:#ececec;font-size:13px;position:relative}
 .vc img,.vc .ph{width:52px;height:68px;object-fit:cover;flex:none;background:#ccc}.vc .vn{flex:1;line-height:1.2}.vc i{width:9px;height:9px;border-radius:50%;margin-right:10px;flex:none}
-.dm{position:relative;min-height:0}.dmap{position:absolute;inset:0}.dmap canvas{filter:grayscale(1)}
+.dm{position:relative;min-height:0}.dmap{position:absolute;inset:0}
 .dl{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.8);padding:6px 10px;font-size:13px;display:flex;flex-direction:column;gap:3px}.dl i{display:inline-block;width:11px;height:11px;margin-right:6px}
 @media(max-width:760px){.dh h2{font-size:18px}.dh button{padding:8px 10px;font-size:13px}.db{grid-template-columns:1fr 1fr;grid-template-rows:55vh 1fr}.dm{grid-column:1/3;grid-row:1}.col{grid-row:2}}
 .panel .vbtn{position:static;border:1px solid #444;background:#333;color:#fff;font-size:calc(var(--u)*13);padding:calc(var(--u)*4) calc(var(--u)*10);margin-top:calc(var(--u)*4)}
