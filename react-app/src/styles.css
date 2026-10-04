@@ -147,3 +147,9 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.he .lx1,.mobile.he .lx2{width:22px;height:22px;box-sizing:border-box;border:2px solid #6eb8ee!important;background:#fffffff5!important;color:#134a6e!important;border-radius:5px;box-shadow:0 1px 4px #00000024}
 .mobile.he .lx svg{width:10px;height:10px}
 .mobile.he .lx1{left:9px;top:9px}.mobile.he .lx2{left:9px;top:calc(8px + (100vw - 12px) * .404 + 4px)}
+
+.vc .cap{flex:1;display:flex;align-items:center;gap:6px;min-width:0}.vc .cap .vn{flex:1;min-width:0}.vc .ic{display:flex;align-items:center;gap:6px;flex:none;margin-right:8px}
+.vc .cap i,.vc .cap .ml{position:static!important;margin:0!important}
+.vc .cap i{width:9px;height:9px;border-radius:50%}
+.vc .cap .ml{width:20px!important;height:20px!important;padding:3px!important}
+@media(max-width:760px){.vc .cap{align-items:flex-start;gap:2px;padding:3px 3px 5px}.vc .cap .vn{padding:0!important}.vc .ic{flex-direction:column;align-items:center;gap:4px;margin:0;width:18px}.vc .cap i{border:0!important;margin-top:2px!important}.vc .cap .ml{width:18px!important;height:18px!important;padding:2px!important;border-width:1.5px}}
