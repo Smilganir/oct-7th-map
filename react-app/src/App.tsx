@@ -178,10 +178,12 @@ export default function App() {
     if (loc) {
       const base = map.cameraForBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0 })?.zoom ?? 0
       map.flyTo({ center: [vx(loc.lon), vy(loc.lat)], zoom: base + 1.7, duration: 900, essential: true })
+    } else if (mobile) {
+      fitRef.current()
     } else {
       map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 700 })
     }
-  }, [sel])
+  }, [sel]) // eslint-disable-line
 
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
@@ -216,7 +218,7 @@ export default function App() {
         <section className="card c-age"><h2>{t.cAge}</h2><small className="sub">{t.excl(s.noAge)}</small><AgeBars ages={s.ages} /></section>
         <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => setShowSrc(true)}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> {t.dname}<br />{t.based}</footer>
         {showSrc && <Sources lang={lang} onClose={() => setShowSrc(false)} />}
-        {det && <Detail name={det} lang={lang} onBack={() => setDet(null)} />}
+        {det && <Detail name={det} lang={lang} onBack={() => { setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
       </div>
     </div>
   )
