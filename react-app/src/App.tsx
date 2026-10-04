@@ -52,7 +52,7 @@ export default function App() {
       style: { version: 8, sources: {}, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#ffffff' } }] },
       bounds: [[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], fitBoundsOptions: { padding: 0 },
       maxBounds: [[0, (-VH / 2) * YS], [VW, (VH / 2) * YS]], renderWorldCopies: false, attributionControl: false,
-      dragRotate: false, touchPitch: false, fadeDuration: 0, pitchWithRotate: false,
+      dragRotate: false, touchPitch: false, locale: { 'CooperativeGesturesHandler.MobileHelpText': 'Use two fingers to move the map', 'CooperativeGesturesHandler.WindowsHelpText': 'Use Ctrl + scroll to zoom the map', 'CooperativeGesturesHandler.MacHelpText': 'Use ⌘ + scroll to zoom the map' }, fadeDuration: 0, pitchWithRotate: false,
     })
     map.touchZoomRotate.disableRotation()
     map.on('load', () => {
@@ -80,6 +80,12 @@ export default function App() {
     ro.observe(mapEl.current!)
     return () => { ro.disconnect(); map.remove() }
   }, [])
+
+  useEffect(() => {
+    const map = mapRef.current!
+    if (mobile && window.matchMedia('(pointer: coarse)').matches) map.cooperativeGestures.enable()
+    else map.cooperativeGestures.disable()
+  }, [mobile])
 
   const markers = useRef<maplibregl.Marker[]>([])
   useEffect(() => {
