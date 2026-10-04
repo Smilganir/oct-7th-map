@@ -23,7 +23,7 @@ export const S = {
     data: 'Data:', disc: 'Disclaimer:', discT: 'All data is accurate to the best of our knowledge at the time of publication', src: 'Sources & policy', design: 'Design:', dname: 'Nir Smilga', based: "Based on 'Return to October' exhibition at the Israel Heritage & Commemoration Center (IICC)",
     victims: 'Victims', ttK: 'Killed', ttHK: 'Kidnapped and killed', ttR: 'Kidnapped and returned alive', view: 'View victims ›',
     vic: 'victims', vicinity: 'Vicinity', schem: "Victims' locations are schematic and represent approximate event coordinates", back: '◄ Back to Regional Map',
-    dKK: 'Kidnapped,Killed', dKA: 'Kidnapped,alive', dK: 'Killed', toggle: 'עברית', hideLeg: 'Hide legend', hideSize: 'Hide size legend',
+    dKK: 'Kidnapped,Killed', dKA: 'Kidnapped,alive', dK: 'Killed', toggle: 'עב', hideLeg: 'Hide legend', hideSize: 'Hide size legend',
   },
   he: {
     title: 'הטבח של חמאס ב-7 באוקטובר בעוטף עזה', tot1: 'סה״כ', fat: 'הרוגים', hostages: 'חטופים', civ: 'אזרחים', killed: 'נהרגו',
@@ -37,7 +37,7 @@ export const S = {
     data: 'נתונים:', disc: 'הבהרה:', discT: 'כל הנתונים מדויקים למיטב ידיעתנו במועד הפרסום', src: 'מקורות ומדיניות', design: 'עיצוב:', dname: 'ניר סמילגה', based: 'מבוסס על התערוכה Return to October ב-Israel Heritage & Commemoration Center (IICC)',
     victims: 'נפגעים', ttK: 'נהרגו', ttHK: 'נחטפו ונהרגו', ttR: 'נחטפו וחזרו בחיים', view: '‹ לצפייה בנפגעים',
     vic: 'נפגעים', vicinity: 'והסביבה', schem: 'מיקומי הנפגעים סכמטיים ומייצגים קואורדינטות אירוע משוערות', back: 'חזרה למפה האזורית ►',
-    dKK: 'נחטפו, נהרגו', dKA: 'נחטפו, בחיים', dK: 'נהרגו', toggle: 'English', hideLeg: 'הסתר מקרא', hideSize: 'הסתר מקרא גודל',
+    dKK: 'נחטפו, נהרגו', dKA: 'נחטפו, בחיים', dK: 'נהרגו', toggle: 'En', hideLeg: 'הסתר מקרא', hideSize: 'הסתר מקרא גודל',
   },
 }
 export const initLang = (): Lang => {
