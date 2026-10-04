@@ -42,7 +42,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mk.side-top .lb,.mk.side-bottom .lb{margin:0}
 .mk{transition:opacity .2s}
 @media (max-width:759px){
- .dash.mobile{aspect-ratio:auto;height:auto;display:flex;flex-direction:column;font-size:calc(var(--u)*16)}
+ .dash.mobile{aspect-ratio:auto;height:auto;display:grid;grid-template-columns:1fr 1fr;align-content:start;font-size:calc(var(--u)*16)}
  .mobile .head,.mobile .hint,.mobile .card,.mobile .foot,.mobile .logo{top:auto;left:auto;position:static;width:auto;height:auto}
  .mobile .head{padding:12px 14px 8px;display:flex;flex-direction:column;position:relative}
  .mobile .head h1{font-size:19px;line-height:1.15}.mobile .tot{font-size:12px;margin-top:6px}.mobile .tot .lead{font-size:13.5px}.mobile .tot b{font-size:14.5px}.mobile .tot small,.mobile .add small{font-size:10.5px}.mobile .add{font-size:12px;margin-top:4px}.mobile .add b{font-size:14px}
@@ -82,3 +82,11 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .card{margin:14px 6px 0}.mobile .c-civ,.mobile .c-gen,.mobile .c-age{top:auto;height:auto}.mobile .bars{height:130px;margin-bottom:34px}.mobile .c-age{min-height:290px}
 
 .foot a{font-weight:700;text-decoration:underline}
+
+.mobile>*{grid-column:1/-1;min-width:0}
+.mobile .c-civ,.mobile .c-gen{grid-column:auto;margin:8px 3px 0 6px;padding:6px;min-height:0}.mobile .c-gen{margin:8px 6px 0 3px}
+.mobile .c-civ h2,.mobile .c-gen h2{font-size:12.5px;line-height:1.2}.mobile .c-gen h2 small,.mobile .c-gen h2 span{font-size:9px}
+.mobile .c-civ .dn,.mobile .c-gen .dn{height:125px}.mobile .c-civ .l,.mobile .c-gen .l{font-size:8.5px}.mobile .c-civ .l b,.mobile .c-gen .l b{font-size:9.5px}
+.mobile .c-age{min-height:0;padding:6px}.mobile .c-age h2{font-size:14px}.mobile .bars{height:95px;margin-bottom:30px}.mobile .c-age .sub{font-size:9px}
+.mobile .head h1{min-height:60px;padding-top:2px}.mobile .logo{width:74px}
+.mobile .tot{font-size:11.5px}.mobile .tot .lead{font-size:13px}.mobile .tot b{font-size:14px}.mobile .tot small,.mobile .add small{font-size:10px}.mobile .add{font-size:11.5px}.mobile .add b{font-size:13.5px}.mobile .notes{font-size:9px}
