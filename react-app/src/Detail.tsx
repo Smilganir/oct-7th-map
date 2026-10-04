@@ -32,19 +32,18 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
     }
+    const fit = () => {
+      if (!pts.length) return
+      const b = new maplibregl.LngLatBounds()
+      pts.forEach(p => b.extend([p.x!, p.y!]))
+      map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
+    }
     let fell = false, errs = 0
     map.on('error', (e: any) => {
       if (fell || e?.sourceId !== 'img') return
-      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); map.once('style.load', addPts) }
+      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); map.once('style.load', () => { addPts(); fit() }) }
     })
-    map.on('load', () => {
-      addPts()
-      if (pts.length) {
-        const b = new maplibregl.LngLatBounds()
-        pts.forEach(p => b.extend([p.x!, p.y!]))
-        map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
-      }
-    })
+    map.on('load', () => { addPts(); if (!fell) fit() })
     return () => map.remove()
   }, [d, name])
   const c = { k: 0, h: 0, a: 0 }
