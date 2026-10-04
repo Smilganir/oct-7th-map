@@ -41,6 +41,7 @@ export default function App() {
   const [hideL, setHideL] = useState(false)
   const [hideS, setHideS] = useState(false)
   const fitRef = useRef<() => void>(() => {})
+  const fitting = useRef(false), baseZ = useRef<number | null>(null), lzRef = useRef<() => void>(() => {})
   const declutterRef = useRef<() => void>(() => {})
   const all = useMemo(() => stats(victims), [])
   const one = useMemo(() => (sel ? stats(victims.filter(v => v.l === sel)) : null), [sel])
@@ -69,8 +70,10 @@ export default function App() {
     mapRef.current = map
     fitRef.current = () => {
       const box = mapEl.current!.getBoundingClientRect()
+      fitting.current = true; mapEl.current!.style.setProperty('--lz', '1')
       map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 })
-      if (!mobileRef.current) return
+      const done = () => { fitting.current = false; baseZ.current = map.getZoom(); lzRef.current() }
+      if (!mobileRef.current) { done(); return }
       let pass = 0
       const step = () => {
         declutterRef.current()
@@ -80,13 +83,13 @@ export default function App() {
           const el = m.getElement(); ext(el.querySelector('.dot')!.getBoundingClientRect())
           if (!el.classList.contains('lbh')) ext((el.querySelector('.lb') as HTMLElement).getBoundingClientRect())
         })
-        if (x1 < x0) return
+        if (x1 < x0) { done(); return }
         const M = 5
         const k = Math.min((box.width - 2 * M) / (x1 - x0), (box.height - 2 * M) / (y1 - y0))
-        if (Math.abs(k - 1) < 0.01 || k < 0.6 || k > 3) return
+        if (Math.abs(k - 1) < 0.01 || k < 0.6 || k > 3) { done(); return }
         const c = map.unproject([(x0 + x1) / 2 - box.left, (y0 + y1) / 2 - box.top])
         map.jumpTo({ zoom: map.getZoom() + Math.log2(k), center: c })
-        if (++pass < 5) requestAnimationFrame(() => requestAnimationFrame(step))
+        if (++pass < 5) requestAnimationFrame(() => requestAnimationFrame(step)); else done()
       }
       requestAnimationFrame(() => requestAnimationFrame(step))
     }
@@ -166,9 +169,8 @@ export default function App() {
     declutterRef.current = declutter
     let raf = 0
     const sched = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(declutter) }
-    const base0 = map.cameraForBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0 })?.zoom ?? 0
-    const lz = () => { const dz = Math.max(0, map.getZoom() - base0); mapEl.current?.style.setProperty('--lz', mobile ? String(Math.min(1.9, 1 + 0.3 * dz)) : '1') }
-    map.on('zoom', lz); lz()
+    const lz = () => { const dz = fitting.current || baseZ.current === null ? 0 : Math.max(0, map.getZoom() - baseZ.current); mapEl.current?.style.setProperty('--lz', mobile ? String(Math.min(2.2, 1 + 0.6 * dz)) : '1') }
+    lzRef.current = lz; map.on('zoom', lz); lz()
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
     return () => { map.off('zoom', lz); map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
