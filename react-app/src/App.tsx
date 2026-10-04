@@ -129,8 +129,8 @@ export default function App() {
       <div className={`dash${mobile ? ' mobile' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
         <header className="head">
           <h1>Oct-7th Hamas Massacre in Gaza Envelope</h1>
-          <p className="tot"><span className="lead">Total {fmt(all.fatalities)} Fatalities, Total {fmt(all.hostages)} hostages:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} civilians)</small> killed, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} civilians)</small> kidnapped and killed or killed and kidnapped</p>
-          <p className="add">Additional <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} civilians)</small> kidnapped and returned alive</p>
+          <div className="totwrap"><p className="tot"><span className="lead">Total {fmt(all.fatalities)} Fatalities, Total {fmt(all.hostages)} hostages:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} civilians)</small> killed, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} civilians)</small> kidnapped and killed or killed and kidnapped<span className="mp">.</span></p>{' '}
+          <p className="add">Additional <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} civilians)</small> kidnapped and returned alive</p></div>
           <div className="notes"><div className="fn"><i className="mk">*</i><i>Numbers refer to victims of events occurring between October 7–9, 2023, including individuals injured during the attacks and subsequently died.<br />The majority of the victims were murdered within a few hours of the attack.</i></div><div className="fn"><i className="mk">**</i><i>An additional 22 (including 4 females) individuals were killed outside the Gaza Envelope; their locations are therefore not reflected on this map.</i></div></div>
           <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
         </header>
