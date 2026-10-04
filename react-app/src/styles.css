@@ -105,3 +105,19 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .tip .tr{display:flex;justify-content:space-between;gap:calc(var(--u)*14);color:#666}.tip .tr b{font-weight:700}.tip .m2{color:#c23bb4}
 .tip .tgo{display:block;border:0;background:none;color:#1e9bd7;font:inherit;padding:calc(var(--u)*6) 0 0;cursor:pointer;text-align:left}
 .mobile .tip{font-size:11px;padding:6px 8px;min-width:170px}
+
+.langb{position:absolute;top:calc(var(--u)*8);right:calc(var(--u)*184);background:#fff;border:1px solid #666;border-radius:calc(var(--u)*12);font:inherit;font-size:calc(var(--u)*12);padding:calc(var(--u)*2) calc(var(--u)*10);cursor:pointer;color:#222;z-index:8}
+.he .langb{right:auto;left:calc(var(--u)*184)}
+.he .logo{right:auto;left:calc(var(--u)*22.4)}
+.he .head{text-align:right}.he .notes{margin-left:auto}
+.he .fn .mk{margin-right:0;margin-left:.35em}
+.he .foot,.he .tip,.he .sizeleg{text-align:right}
+.hel{pointer-events:none;background:rgba(190,200,215,.85);border:1px solid #888;aspect-ratio:2088/2108;container-type:inline-size;display:flex;flex-direction:column;justify-content:space-around;padding:2cqw 4cqw;box-sizing:border-box}
+.hel .lr{display:flex;align-items:center;gap:4cqw;font-size:5.6cqw;line-height:1.1;color:#111}
+.hel .li{flex:none;width:12cqw;display:flex;justify-content:center;align-items:center}.hel .li img{width:11cqw;height:11cqw}
+.hel .ib{width:6cqw;height:6cqw;border:1.3cqw solid #1030e0;border-radius:50%;box-sizing:border-box;display:block}.hel .ic{width:7cqw;height:7cqw;border-radius:50%;background:#f01010;display:block}
+.hel .ia{color:#e01010;font-style:normal;font-size:7cqw;line-height:1}.hel .id{width:10cqw;border-top:.9cqw dashed #e01010;display:block}.hel .ig{width:10cqw;border-top:1.3cqw solid #111;display:block}
+.he .detail .db{direction:ltr}.he .detail .db .col,.he .detail .dm{direction:rtl}
+.mobile.he .langb{right:auto;left:8px;top:8px;font-size:11px;padding:1px 9px}
+.mobile .langb{right:96px;top:8px;font-size:11px;padding:1px 9px}
+.mobile.he .logo{right:auto;left:8px}.mobile.he .head h1{padding-right:0;padding-left:92px}

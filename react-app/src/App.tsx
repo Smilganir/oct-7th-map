@@ -4,6 +4,7 @@ import Sources from './Sources'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { AgeBars, Donut } from './charts'
+import { HE_NAMES, S, initLang, type Lang } from './i18n'
 import { fmt, locations, stats, victims } from './stats'
 
 // Image (Tableau "mapped image") bounds, taken from the workbook: left 34.2, right 34.9, bottom 31.15, top 31.75.
@@ -26,6 +27,11 @@ export default function App() {
   const wrap = useRef<HTMLDivElement>(null)
   const mapEl = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
+  const [lang, setLang] = useState<Lang>(initLang)
+  const t = S[lang], rtl = lang === 'he'
+  const nm = (n: string) => (rtl ? HE_NAMES[n] ?? n : n === '?' ? 'Scattered locations' : n)
+  const toggleLang = () => { const n: Lang = rtl ? 'en' : 'he'; setLang(n); try { localStorage.setItem('o7lang', n) } catch { /* ignore */ } }
+  useEffect(() => { document.documentElement.lang = lang }, [lang])
   const [sel, setSel] = useState<string | null>(null)
   const [showSrc, setShowSrc] = useState(false)
   const [det, setDet] = useState<string | null>(null)
@@ -122,7 +128,7 @@ export default function App() {
       else { dot.style.background = RED; dot.style.borderRadius = '50%'; dot.style.boxShadow = '0 1px 2px rgba(0,0,0,.35)' }
       const label = document.createElement('span')
       label.className = 'lb'
-      label.textContent = loc.name === '?' ? 'Scattered locations' : loc.name
+      label.textContent = nm(loc.name)
       label.style.fontSize = `${Math.max(9, 11.5 * scale)}px`
       const side = SIDE[loc.name]
       if (side) el.classList.add('side-' + side)
@@ -153,7 +159,7 @@ export default function App() {
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
     return () => { map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
-  }, [scale, mobile])
+  }, [scale, mobile, lang])
 
   useEffect(() => {
     const map = mapRef.current
@@ -170,36 +176,37 @@ export default function App() {
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
     <div className="viewport">
-      <div className={`dash${mobile ? ' mobile' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
-        <header className="head">
-          <h1>Oct-7th Hamas Massacre in Gaza Envelope</h1>
-          <div className="totwrap"><p className="tot"><span className="lead">Total {fmt(all.fatalities)} Fatalities, Total {fmt(all.hostages)} hostages:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} civilians)</small> killed, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} civilians)</small> kidnapped and killed or killed and kidnapped<span className="mp">.</span></p>{' '}
-          <p className="add">Additional <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} civilians)</small> kidnapped and returned alive</p></div>
-          <div className="notes"><div className="fn"><i className="mk">*</i><i>Numbers refer to victims of events occurring between October 7–9, 2023, including individuals injured during the attacks and subsequently died.<br />The majority of the victims were murdered within a few hours of the attack.</i></div><div className="fn"><i className="mk">**</i><i>An additional 22 (including 4 females) individuals were killed outside the Gaza Envelope; their locations are therefore not reflected on this map.</i></div></div>
+      <div className={`dash${mobile ? ' mobile' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+        <header className="head" dir={rtl ? 'rtl' : 'ltr'}>
+          <h1>{t.title}</h1>
+          <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
+          <p className="add">{t.additional} <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} {t.civ})</small> {t.ret}</p></div>
+          <div className="notes"><div className="fn"><i className="mk">*</i><i>{t.fn1}<br />{t.fn1b}</i></div><div className="fn"><i className="mk">**</i><i>{t.fn2}</i></div></div>
           <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
+          <button className="langb" onClick={toggleLang} aria-label="Language">{t.toggle}</button>
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
-        {!(mobile && hideL) && <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />}
-        {mobile && !hideL && <button className="lx lx1" aria-label="Hide legend" onClick={() => setHideL(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
-        {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>Legend</button>}
-        {!(mobile && hideS) && <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
+        {!(mobile && hideL) && (rtl ? <div className="legend hel" dir="rtl">{[<i key="a" className="ib" />, <i key="b" className="ic" />, <img key="c" src={`${import.meta.env.BASE_URL}assets/nova.png`} alt="" />, <img key="d" src={`${import.meta.env.BASE_URL}assets/psyduck.png`} alt="" />, <i key="e" className="ia">←</i>, <i key="f" className="id" />, <i key="g" className="ig" />].map((ic, k) => <div key={k} className="lr"><span className="li">{ic}</span><span>{t.leg[k]}</span></div>)}</div> : <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />)}
+        {mobile && !hideL && <button className="lx lx1" aria-label={t.hideLeg} onClick={() => setHideL(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
+        {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>{t.legendBtn}</button>}
+        {!(mobile && hideS) && <div className="sizeleg" dir={rtl ? 'rtl' : 'ltr'}><span>{t.sizeLeg1}<br />{t.sizeLeg2}</span>
           <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
-        {mobile && !hideS && <button className="lx lx2" aria-label="Hide size legend" onClick={() => setHideS(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
-        {sel && one && (<div className="tip" ref={tipRef} onClick={e => e.stopPropagation()}><h4>{sel === '?' ? 'Scattered locations' : sel}</h4><div className="tt">{fmt(one.total)} Victims:</div>
-          <div className="tr"><span>Killed</span><b className="c1">{fmt(one.killed)}</b></div>
-          <div className="tr"><span>Kidnapped and killed</span><b className="m2">{fmt(one.hk)}</b></div>
-          <div className="tr"><span>Kidnapped and returned alive</span><b className="c3">{fmt(one.ret)}</b></div>
-          <button className="tgo" onClick={() => setDet(sel)}>View victims &rsaquo;</button></div>)}
+        {mobile && !hideS && <button className="lx lx2" aria-label={t.hideSize} onClick={() => setHideS(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
+        {sel && one && (<div className="tip" dir={rtl ? 'rtl' : 'ltr'} ref={tipRef} onClick={e => e.stopPropagation()}><h4>{nm(sel)}</h4><div className="tt">{fmt(one.total)} {t.victims}:</div>
+          <div className="tr"><span>{t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
+          <div className="tr"><span>{t.ttHK}</span><b className="m2">{fmt(one.hk)}</b></div>
+          <div className="tr"><span>{t.ttR}</span><b className="c3">{fmt(one.ret)}</b></div>
+          <button className="tgo" onClick={() => setDet(sel)}>{t.view}</button></div>)}
         </div>
-        <div className="hint">Click on the map locations to zoom in</div>
-        <section className="card c-civ"><h2>Civilian Victims Distribution</h2>
-          <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">Security Forces on Duty<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">Civilians<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
-        <section className="card c-gen"><h2>Victims&apos; Gender <small>(including hostages)</small></h2>
-          <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">Female<br /><b>{fmt(s.female)}</b></span><span className="l bl">Male<br /><b>{fmt(s.male)}</b></span></div></section>
-        <section className="card c-age"><h2>Victims&apos; Age Distribution</h2><small className="sub">*excluding {s.noAge} victims with no age data</small><AgeBars ages={s.ages} /></section>
-        <footer className="foot"><b>Data:</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>Disclaimer:</b> All data is accurate to the best of our knowledge at the time of publication</i><br /><a className="srcl" onClick={() => setShowSrc(true)}><b>Sources &amp; policy</b></a><br /><br /><b>Design:</b> Nir Smilga<br />Based on &apos;Return to October&apos; exhibition at the Israel Heritage &amp; Commemoration Center (IICC)</footer>
-        {showSrc && <Sources onClose={() => setShowSrc(false)} />}
-        {det && <Detail name={det} onBack={() => setDet(null)} />}
+        <div className="hint">{t.hint}</div>
+        <section className="card c-civ"><h2>{t.cCiv}</h2>
+          <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">{t.sec}<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">{t.civs}<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
+        <section className="card c-gen"><h2>{t.cGen} <small>{t.incl}</small></h2>
+          <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">{t.fem}<br /><b>{fmt(s.female)}</b></span><span className="l bl">{t.male}<br /><b>{fmt(s.male)}</b></span></div></section>
+        <section className="card c-age"><h2>{t.cAge}</h2><small className="sub">{t.excl(s.noAge)}</small><AgeBars ages={s.ages} /></section>
+        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => setShowSrc(true)}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> {t.dname}<br />{t.based}</footer>
+        {showSrc && <Sources lang={lang} onClose={() => setShowSrc(false)} />}
+        {det && <Detail name={det} lang={lang} onBack={() => setDet(null)} />}
       </div>
     </div>
   )

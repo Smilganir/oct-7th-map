@@ -25,8 +25,8 @@ const T = {
   },
 }
 
-export default function Sources({ onClose }: { onClose: () => void }) {
-  const [lang, setLang] = useState<'en' | 'he'>('en')
+export default function Sources({ onClose, lang: l0 }: { onClose: () => void; lang: 'en' | 'he' }) {
+  const [lang, setLang] = useState<'en' | 'he'>(l0)
   const t = T[lang]
   return (
     <div className="src" dir={t.dir} lang={lang} onClick={e => e.stopPropagation()}>

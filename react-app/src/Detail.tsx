@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
+import { HE_NAMES, S, type Lang } from './i18n'
 
 type P = { n: string; a: number | null; k: 'k' | 'h' | 'a'; u: string; y: number | null; x: number | null }
 type D = { photoPrefix: string; byLoc: Record<string, P[]> }
@@ -8,7 +9,9 @@ let cache: Promise<D> | null = null
 const load = () => (cache ??= fetch(`${import.meta.env.BASE_URL}detail.json`).then(r => r.json()))
 const photo = (d: D, u: string) => (!u ? '' : u.startsWith('!') ? u.slice(1) : d.photoPrefix + u)
 
-export default function Detail({ name, onBack }: { name: string; onBack: () => void }) {
+export default function Detail({ name, onBack, lang }: { name: string; onBack: () => void; lang: Lang }) {
+  const t = S[lang], rtl = lang === 'he'
+  const nm = rtl ? HE_NAMES[name] ?? name : name === '?' ? 'Scattered locations' : name
   const [d, setD] = useState<D | null>(null)
   const el = useRef<HTMLDivElement>(null)
   useEffect(() => { load().then(setD) }, [])
@@ -43,17 +46,17 @@ export default function Detail({ name, onBack }: { name: string; onBack: () => v
     </div>
   )
   return (
-    <div className="detail">
+    <div className="detail" dir={rtl ? 'rtl' : 'ltr'}>
       <div className="dh">
-        <div><h2><b>{name === '?' ? 'Scattered locations' : name}</b> Vicinity <b>{list.length} victims</b></h2>
-          <p><b style={{ color: COL.k }}>{c.k}</b> killed | <b style={{ color: COL.h }}>{c.h}</b> kidnapped and killed | <b style={{ color: COL.a }}>{c.a}</b> kidnapped and returned alive</p>
-          <p><i>Victims&apos; locations are schematic and represent approximate event coordinates</i></p></div>
-        <button onClick={onBack}>◄ Back to Regional Map</button>
+        <div><h2><b>{nm}</b> {rtl ? t.vicinity : 'Vicinity'} <b>{list.length} {t.vic}</b></h2>
+          <p><b style={{ color: COL.k }}>{c.k}</b> {rtl ? t.dK : 'killed'} | <b style={{ color: COL.h }}>{c.h}</b> {rtl ? t.ttHK : 'kidnapped and killed'} | <b style={{ color: COL.a }}>{c.a}</b> {rtl ? t.ttR : 'kidnapped and returned alive'}</p>
+          <p><i>{t.schem}</i></p></div>
+        <button onClick={onBack}>{t.back}</button>
       </div>
       <div className="db">
         <div className="col">{list.slice(0, half).map(card)}</div>
         <div className="dm"><div ref={el} className="dmap" />
-          <div className="dl"><span><i style={{ background: COL.h }} />Kidnapped,Killed</span><span><i style={{ background: COL.a }} />Kidnapped,alive</span><span><i style={{ background: COL.k }} />Killed</span></div></div>
+          <div className="dl"><span><i style={{ background: COL.h }} />{t.dKK}</span><span><i style={{ background: COL.a }} />{t.dKA}</span><span><i style={{ background: COL.k }} />{t.dK}</span></div></div>
         <div className="col">{list.slice(half).map((p, i) => card(p, i + half))}</div>
       </div>
     </div>
