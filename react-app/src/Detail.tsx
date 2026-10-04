@@ -7,6 +7,8 @@ type D = { photoPrefix: string; byLoc: Record<string, P[]> }
 const COL = { k: '#b01212', h: '#4a1a54', a: '#3a9a9a' }
 let cache: Promise<D> | null = null
 const load = () => (cache ??= fetch(`${import.meta.env.BASE_URL}detail.json`).then(r => r.json()))
+let hc: Promise<Record<string, [string, string]>> | null = null
+const loadHe = () => (hc ??= fetch(`${import.meta.env.BASE_URL}he.json`).then(r => r.json()).catch(() => ({})))
 const photo = (d: D, u: string) => (!u ? '' : u.startsWith('!') ? u.slice(1) : d.photoPrefix + u)
 
 export default function Detail({ name, onBack, lang }: { name: string; onBack: () => void; lang: Lang }) {
@@ -14,7 +16,8 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const nm = rtl ? HE_NAMES[name] ?? name : name === '?' ? 'Scattered locations' : name
   const [d, setD] = useState<D | null>(null)
   const el = useRef<HTMLDivElement>(null)
-  useEffect(() => { load().then(setD) }, [])
+  const [he, setHe] = useState<Record<string, [string, string]>>({})
+  useEffect(() => { load().then(setD); loadHe().then(setHe) }, [])
   const list = d?.byLoc[name] ?? []
   useEffect(() => {
     if (!d || !el.current) return
@@ -38,13 +41,13 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const c = { k: 0, h: 0, a: 0 }
   list.forEach(p => c[p.k]++)
   const half = Math.ceil(list.length / 2)
-  const lid = (u?: string) => (u && u.match(/laad\.btl\.gov\.il\/view_files\/Nofel_Pic\/(\d+)\//)?.[1]) || ''
+  const hk = (p: P) => he[p.n + '|' + (p.a ?? '')]
   const card = (p: P, i: number) => (
     <div className="vc" key={i}>
       {d && p.u ? <img src={photo(d, p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => ((e.target as HTMLImageElement).style.visibility = 'hidden')} /> : <span className="ph" />}
-      <span className="vn">{p.n}{p.a != null && <><br />({p.a})</>}</span>
+      <span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <><br />({p.a})</>}</span>
       <i style={{ background: COL[p.k] }} />
-      {lid(p.u) && <a className="ml" href={`https://laad.btl.gov.il/Web/He/TerrorVictims/Page/Default.aspx?ID=${lid(p.u)}`} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => e.stopPropagation()}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}
+      {hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => e.stopPropagation()}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}
     </div>
   )
   return (

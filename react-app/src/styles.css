@@ -144,3 +144,6 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .head{padding-bottom:4px}
 .mobile .head h1{min-height:46px;padding-top:0}
 .mobile .tot{margin-top:0}
+.mobile.he .lx1,.mobile.he .lx2{width:22px;height:22px;box-sizing:border-box;border:2px solid #6eb8ee!important;background:#fffffff5!important;color:#134a6e!important;border-radius:5px;box-shadow:0 1px 4px #00000024}
+.mobile.he .lx svg{width:10px;height:10px}
+.mobile.he .lx1{left:9px;top:9px}.mobile.he .lx2{left:9px;top:calc(8px + (100vw - 12px) * .404 + 4px)}
