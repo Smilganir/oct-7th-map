@@ -51,8 +51,9 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
  .mobile .head h1{padding-right:92px}.mobile .tot{padding-right:0}
   .mobile .mapwrap{position:relative;margin:0 6px;order:2}.mobile .mapzone{position:relative;width:100%;height:min(118vw,620px);left:0;top:0}
  .mobile .hint{order:3;color:#444;text-align:center;padding:4px;font-size:11px}
- .mobile .legend{order:4;width:min(260px,70%);margin:6px auto 0;opacity:1}
- .mobile .sizeleg{display:none}
+ .mobile .legend{position:absolute;left:6px;top:6px;width:40%;height:auto;opacity:.92}
+ .mobile .sizeleg{position:absolute;left:6px;top:calc(12px + (100vw - 12px) * .404);width:17%;font-size:7px;padding:2px}
+ .mobile .tot small,.mobile .add small{white-space:nowrap}
  .mobile .card{order:5;margin:8px 6px 0;padding:8px;min-height:220px;background:#fff}
  .mobile .card h2{font-size:17px}.mobile .c-age{min-height:260px}.mobile .dn{height:170px}
  .mobile .l{font-size:11px}.mobile .l b{font-size:12px}.mobile .sub{font-size:10px}.mobile .bv{font-size:11px}.mobile .bl{font-size:9px}.mobile .bars{height:170px}
