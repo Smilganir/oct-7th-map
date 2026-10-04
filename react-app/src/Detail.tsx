@@ -24,7 +24,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     const pts = list.filter(p => p.y != null && p.x != null)
     const map = new maplibregl.Map({
       container: el.current, attributionControl: { compact: false },
-      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community | Powered by Esri', tiles: [new URLSearchParams(location.search).has('fbtest') ? 'https://esri-fail.invalid/{z}/{y}/{x}' : 'https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=' + import.meta.env.VITE_ARC_KEY] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
+      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community | Powered by Esri', tiles: [(import.meta.env.VITE_ALLOW_FBTEST && new URLSearchParams(location.search).has('fbtest')) ? 'https://esri-fail.invalid/{z}/{y}/{x}' : 'https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=' + import.meta.env.VITE_ARC_KEY] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
       center: [34.5, 31.4], zoom: 12,
     })
     const addPts = () => {
@@ -39,11 +39,23 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       pts.forEach(p => b.extend([p.x!, p.y!]))
       map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
     }
-    let fell = false, errs = 0
+    const MB = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
+    const rs = (tiles: string, attribution: string, paint: any, maxzoom = 19): any => ({ version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom, attribution, tiles: [tiles] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint }] })
+    const stages: any[] = []
+    if (MB) stages.push(rs('https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/256/{z}/{x}/{y}@2x?access_token=' + MB, '© Mapbox © OpenStreetMap', {}, 22))
+    stages.push(rs((import.meta.env.VITE_ALLOW_FBTEST && new URLSearchParams(location.search).has('fbtest3')) ? 'https://osm-fail.invalid/{z}/{x}/{y}' : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap contributors', { 'raster-saturation': -1, 'raster-contrast': -0.1 }, 19))
+    let stage = -1, errs = 0
+    const advance = () => {
+      if (stage >= stages.length - 1) return
+      stage++; errs = 0
+      map.setStyle(stages[stage]); let n = 0
+      const t = setInterval(() => { if (map.isStyleLoaded() && !map.getLayer('p')) { addPts(); fit() } if (map.getLayer('p') || ++n > 40) clearInterval(t) }, 250)
+    }
     map.on('error', (e: any) => {
-      if (fell || e?.sourceId !== 'img') return
-      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); let n = 0; const t = setInterval(() => { if (map.isStyleLoaded() && !map.getLayer('p')) { addPts(); fit() } if (map.getLayer('p') || ++n > 40) clearInterval(t) }, 250) }
+      if (e?.sourceId !== 'img') return
+      if (++errs >= 4) advance()
     })
+    const fell = false
     map.on('load', () => { addPts(); if (!fell) fit() })
     return () => map.remove()
   }, [d, name])
