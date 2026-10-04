@@ -4,9 +4,9 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .dash{position:relative;width:min(100vw,1400px);aspect-ratio:7/6;background:#fff;overflow:hidden;font-size:calc(var(--u)*14)}
 .head{position:absolute;left:0;top:0;width:100%;height:16.5%;padding:calc(var(--u)*22) calc(var(--u)*22) 0}
 .head h1{font-weight:400;font-size:calc(var(--u)*30);line-height:1.1}
-.tot{font-weight:600;font-size:calc(var(--u)*17);margin-top:calc(var(--u)*5)}
-.tot b{font-size:calc(var(--u)*22)}.tot small,.add small{font-size:calc(var(--u)*13);font-weight:400}
-.add{font-size:calc(var(--u)*14);margin-top:calc(var(--u)*3)}.add b{font-size:calc(var(--u)*19)}
+.tot{font-weight:400;font-size:calc(var(--u)*13);margin-top:calc(var(--u)*5)}.tot .lead{font-weight:700;font-size:calc(var(--u)*19.6)}
+.tot b{font-size:calc(var(--u)*19.5);font-weight:700}.tot small,.add small{font-size:calc(var(--u)*12.8);font-weight:400}
+.add{font-size:calc(var(--u)*13);margin-top:calc(var(--u)*3)}.add b{font-size:calc(var(--u)*19);font-weight:700}
 .c1{color:#a00}.c2{color:#4a1a5a}.c3{color:#3a9a95}
 .notes{margin-top:calc(var(--u)*14);padding-top:calc(var(--u)*6);border-top:1px solid #ddd;width:34%;font-size:calc(var(--u)*11.5);line-height:1.35;white-space:nowrap;border:none}
 .logo{position:absolute;right:calc(var(--u)*22.4);top:calc(var(--u)*39);width:calc(var(--u)*149);height:auto}
@@ -45,7 +45,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
  .dash.mobile{aspect-ratio:auto;height:auto;display:flex;flex-direction:column;font-size:calc(var(--u)*16)}
  .mobile .head,.mobile .mapzone,.mobile .legend,.mobile .sizeleg,.mobile .hint,.mobile .card,.mobile .foot,.mobile .logo{top:auto;left:auto;position:static;width:auto;height:auto}
  .mobile .head{padding:12px 14px 8px;display:flex;flex-direction:column;position:relative}
- .mobile .head h1{font-size:22px}.mobile .tot{font-size:14px}.mobile .tot b{font-size:18px}.mobile .add{font-size:13px}
+ .mobile .head h1{font-size:22px}.mobile .tot{font-size:12px}.mobile .tot .lead{font-size:16px}.mobile .tot b{font-size:17px}.mobile .add{font-size:12px}
  .mobile .notes{width:auto;white-space:normal;font-size:10.5px}
  .mobile .logo{width:72px;position:absolute;right:8px;top:8px!important}
  .mobile .head h1,.mobile .tot{padding-right:78px}
