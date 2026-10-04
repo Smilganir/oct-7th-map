@@ -9,6 +9,8 @@ let cache: Promise<D> | null = null
 const load = () => (cache ??= fetch(`${import.meta.env.BASE_URL}detail.json`).then(r => r.json()))
 let hc: Promise<Record<string, [string, string]>> | null = null
 const loadHe = () => (hc ??= fetch(`${import.meta.env.BASE_URL}he.json`).then(r => r.json()).catch(() => ({})))
+const hid = (u: string) => { let a = 2166136261, b = 0x9747b28c; for (let i = 0; i < u.length; i++) { const c = u.charCodeAt(i); a = Math.imul(a ^ c, 16777619) >>> 0; b = Math.imul(b ^ c, 16777619) >>> 0 } return a.toString(16).padStart(8, '0') + b.toString(16).padStart(8, '0') }
+const local = (u: string) => (u ? import.meta.env.BASE_URL + 'photos/' + hid(u) + '.jpg' : '')
 const photo = (d: D, u: string) => (!u ? '' : u.startsWith('!') ? u.slice(1) : d.photoPrefix + u)
 
 export default function Detail({ name, onBack, lang }: { name: string; onBack: () => void; lang: Lang }) {
@@ -65,7 +67,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const hk = (p: P) => he[p.n + '|' + (p.a ?? '')]
   const card = (p: P, i: number) => (
     <div className="vc" key={i}>
-      {d && p.u ? <img src={photo(d, p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => ((e.target as HTMLImageElement).style.visibility = 'hidden')} /> : <span className="ph" />}
+      {d && p.u ? <img src={local(p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { const t = e.target as HTMLImageElement; if (t.dataset.fb) t.style.visibility = 'hidden'; else { t.dataset.fb = '1'; t.src = photo(d, p.u) } }} /> : <span className="ph" />}
       <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <><br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => e.stopPropagation()}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
     </div>
   )
