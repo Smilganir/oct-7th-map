@@ -42,7 +42,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     const MB = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
     const rs = (tiles: string, attribution: string, paint: any, maxzoom = 19): any => ({ version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom, attribution, tiles: [tiles] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint }] })
     const stages: any[] = []
-    if (MB) stages.push(rs('https://api.mapbox.com/styles/v1/smilganir/cmm698oih004t01s49c9f5pxb/tiles/256/{z}/{x}/{y}@2x?access_token=' + MB, '© Mapbox © OpenStreetMap', {}, 22))
+    if (MB) stages.push(rs((import.meta.env.VITE_ALLOW_FBTEST && new URLSearchParams(location.search).has('fbtest2')) ? 'https://mb-fail.invalid/{z}/{x}/{y}' : 'https://api.mapbox.com/styles/v1/smilganir/cmm698oih004t01s49c9f5pxb/tiles/256/{z}/{x}/{y}@2x?access_token=' + MB, '© Mapbox © OpenStreetMap', {}, 22))
     stages.push(rs((import.meta.env.VITE_ALLOW_FBTEST && new URLSearchParams(location.search).has('fbtest3')) ? 'https://osm-fail.invalid/{z}/{x}/{y}' : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap contributors', { 'raster-saturation': -1, 'raster-contrast': -0.1 }, 19))
     let stage = -1, errs = 0
     const advance = () => {
