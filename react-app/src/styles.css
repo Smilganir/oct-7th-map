@@ -161,3 +161,11 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .c-age .sub{display:block;text-align:center}
 .dm .maplibregl-ctrl-attrib{max-width:100%;font-size:11px;line-height:1.25}
 @media(max-width:760px){.dm .maplibregl-ctrl-attrib{font-size:8px;max-width:100%;padding:1px 4px}.dm .maplibregl-ctrl-attrib a{font-size:8px}}
+/* HE header order (RTL): title on the right, logo to its left, language button leftmost */
+.he .langb{right:auto;left:calc(var(--u)*22.4)}
+.he .logo{right:auto!important;left:calc(var(--u)*80)}
+.he .head{padding-right:calc(var(--u)*22);padding-left:calc(var(--u)*240)}
+.mobile.he .langb{right:auto;left:6px;top:20px}
+.mobile.he .logo{right:auto!important;left:40px}
+.mobile.he .head{padding-right:14px;padding-left:14px}
+.mobile.he .head h1{padding-right:0;padding-left:110px}
