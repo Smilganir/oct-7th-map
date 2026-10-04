@@ -119,8 +119,7 @@ export default function App() {
         <div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
         <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png`} alt="" />
         <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
-          <svg viewBox="0 0 60 50">{[[200, 22], [100, 17], [50, 12.5], [5, 5]].map(([n, r]) => <circle key={n} cx="25" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" />)}
-            {[[200, 5], [100, 15], [50, 25], [5, 40]].map(([n, y]) => <text key={n} x="49" y={y} fontSize="5" textAnchor="end">{n}</text>)}</svg></div>
+          <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>
         <div className="hint">Click on the map locations to zoom in</div>
         <section className="card c-civ"><h2>Civilian Victims Distribution</h2>
           <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">Security Forces on Duty<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">Civilians<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
