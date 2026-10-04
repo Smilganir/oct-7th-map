@@ -31,13 +31,15 @@ export default function App() {
   const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
   const [mobile, setMobile] = useState(false)
+  const mobileRef = useRef(false)
+  const fitRef = useRef<() => void>(() => {})
   const all = useMemo(() => stats(victims), [])
   const one = useMemo(() => (sel ? stats(victims.filter(v => v.l === sel)) : null), [sel])
   const s = one ?? all
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; setMobile(w < 760); setScale(w < 760 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); setScale(w < 760 ? w / 700 : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -56,8 +58,23 @@ export default function App() {
       map.addLayer({ id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-resampling': 'linear', 'raster-fade-duration': 0 } })
     })
     mapRef.current = map
+    fitRef.current = () => {
+      const box = mapEl.current!.getBoundingClientRect()
+      map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 })
+      if (!mobileRef.current) return
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9
+        markers.current.forEach(m => { const r = m.getElement().getBoundingClientRect(); x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom) })
+        if (x1 < x0) return
+        const M = 10
+        const k = Math.min((box.width - 2 * M) / (x1 - x0), (box.height - 2 * M) / (y1 - y0))
+        if (k < 1.02 || k > 3) return
+        const c = map.unproject([(x0 + x1) / 2 - box.left, (y0 + y1) / 2 - box.top])
+        map.jumpTo({ zoom: map.getZoom() + Math.log2(k), center: c })
+      }))
+    }
     let lastW = 0
-    const ro = new ResizeObserver(() => { map.resize(); const w = mapEl.current!.clientWidth; if (w !== lastW) { lastW = w; map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 }) } })
+    const ro = new ResizeObserver(() => { map.resize(); const w = mapEl.current!.clientWidth; if (w !== lastW) { lastW = w; fitRef.current() } })
     ro.observe(mapEl.current!)
     return () => { ro.disconnect(); map.remove() }
   }, [])
@@ -91,6 +108,7 @@ export default function App() {
       const offset: [number, number] = side === 'left' ? [d / 2, 0] : side === 'top' ? [0, d / 2] : side === 'bottom' ? [0, -d / 2] : [-d / 2, 0]
       markers.current.push(new maplibregl.Marker({ element: el, anchor, offset }).setLngLat([vx(loc.lon), vy(loc.lat)]).addTo(map))
     }
+  if (mobile) fitRef.current()
   }, [scale, mobile])
 
   useEffect(() => {
@@ -113,7 +131,7 @@ export default function App() {
           <h1>Oct-7th Hamas Massacre in Gaza Envelope</h1>
           <p className="tot"><span className="lead">Total {fmt(all.fatalities)} Fatalities, Total {fmt(all.hostages)} hostages:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} civilians)</small> killed, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} civilians)</small> kidnapped and killed or killed and kidnapped</p>
           <p className="add">Additional <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} civilians)</small> kidnapped and returned alive</p>
-          <div className="notes"><i>*&nbsp; Numbers refer to victims of events occurring between October 7–9, 2023, including individuals injured during the attacks and subsequently died.<br />&nbsp;&nbsp;&nbsp; The majority of the victims were murdered within a few hours of the attack.</i><br /><i>** An additional 22 (including 4 females) individuals were killed outside the Gaza Envelope; their locations are therefore not reflected on this map.</i></div>
+          <div className="notes"><div className="fn"><i className="mk">*</i><i>Numbers refer to victims of events occurring between October 7–9, 2023, including individuals injured during the attacks and subsequently died.<br />The majority of the victims were murdered within a few hours of the attack.</i></div><div className="fn"><i className="mk">**</i><i>An additional 22 (including 4 females) individuals were killed outside the Gaza Envelope; their locations are therefore not reflected on this map.</i></div></div>
           <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
