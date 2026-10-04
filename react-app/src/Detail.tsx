@@ -28,7 +28,8 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       center: [34.5, 31.4], zoom: 12,
     })
     const addPts = () => {
-      if (map.getSource('p')) return
+      if (map.getLayer('p')) return
+      if (map.getSource('p')) map.removeSource('p')
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
     }
@@ -41,7 +42,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     let fell = false, errs = 0
     map.on('error', (e: any) => {
       if (fell || e?.sourceId !== 'img') return
-      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); map.once('style.load', () => { addPts(); fit() }) }
+      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); let n = 0; const t = setInterval(() => { if (map.isStyleLoaded() && !map.getLayer('p')) { addPts(); fit() } if (map.getLayer('p') || ++n > 40) clearInterval(t) }, 250) }
     })
     map.on('load', () => { addPts(); if (!fell) fit() })
     return () => map.remove()
