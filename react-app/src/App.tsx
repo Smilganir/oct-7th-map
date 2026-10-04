@@ -41,6 +41,7 @@ export default function App() {
   const [hideL, setHideL] = useState(false)
   const [hideS, setHideS] = useState(false)
   const fitRef = useRef<() => void>(() => {})
+  const declutterRef = useRef<() => void>(() => {})
   const all = useMemo(() => stats(victims), [])
   const one = useMemo(() => (sel ? stats(victims.filter(v => v.l === sel)) : null), [sel])
   const s = one ?? all
@@ -70,16 +71,24 @@ export default function App() {
       const box = mapEl.current!.getBoundingClientRect()
       map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 })
       if (!mobileRef.current) return
-      requestAnimationFrame(() => requestAnimationFrame(() => {
+      let pass = 0
+      const step = () => {
+        declutterRef.current()
         let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9
-        markers.current.forEach(m => { const r = m.getElement().getBoundingClientRect(); x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom) })
+        const ext = (r: DOMRect) => { x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom) }
+        markers.current.forEach(m => {
+          const el = m.getElement(); ext(el.querySelector('.dot')!.getBoundingClientRect())
+          if (!el.classList.contains('lbh')) ext((el.querySelector('.lb') as HTMLElement).getBoundingClientRect())
+        })
         if (x1 < x0) return
-        const M = 10
+        const M = 5
         const k = Math.min((box.width - 2 * M) / (x1 - x0), (box.height - 2 * M) / (y1 - y0))
         if (Math.abs(k - 1) < 0.01 || k < 0.6 || k > 3) return
         const c = map.unproject([(x0 + x1) / 2 - box.left, (y0 + y1) / 2 - box.top])
         map.jumpTo({ zoom: map.getZoom() + Math.log2(k), center: c })
-      }))
+        if (++pass < 5) requestAnimationFrame(() => requestAnimationFrame(step))
+      }
+      requestAnimationFrame(() => requestAnimationFrame(step))
     }
     let lastW = 0
     const ro = new ResizeObserver(() => { map.resize(); const w = mapEl.current!.clientWidth; if (w !== lastW) { lastW = w; fitRef.current() } })
@@ -154,6 +163,7 @@ export default function App() {
         if (hit) it.el.classList.add('lbh'); else placed.push(r)
       }
     }
+    declutterRef.current = declutter
     let raf = 0
     const sched = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(declutter) }
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
