@@ -99,3 +99,9 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .card,.mobile .foot{background:#eef0f2!important}
 
 .mk.lbh .lb{visibility:hidden}
+
+.tip{position:absolute;z-index:6;background:#fff;border:1px solid #d0d0d0;box-shadow:0 1px 4px rgba(0,0,0,.3);padding:calc(var(--u)*7) calc(var(--u)*10);font-size:calc(var(--u)*11);line-height:1.35;min-width:calc(var(--u)*200);color:#333}
+.tip h4{font-size:1em;font-weight:700;color:#222}.tip .tt{font-weight:700;margin-bottom:2px;color:#222}
+.tip .tr{display:flex;justify-content:space-between;gap:calc(var(--u)*14);color:#666}.tip .tr b{font-weight:700}.tip .m2{color:#c23bb4}
+.tip .tgo{display:block;border:0;background:none;color:#1e9bd7;font:inherit;padding:calc(var(--u)*6) 0 0;cursor:pointer;text-align:left}
+.mobile .tip{font-size:11px;padding:6px 8px;min-width:170px}

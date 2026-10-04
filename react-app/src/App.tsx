@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Detail from './Detail'
 import Sources from './Sources'
 import maplibregl from 'maplibre-gl'
@@ -87,6 +87,24 @@ export default function App() {
     else map.cooperativeGestures.disable()
   }, [mobile])
 
+  const tipRef = useRef<HTMLDivElement | null>(null)
+  const placeTip = useCallback(() => {
+    const map = mapRef.current, tip = tipRef.current, host = mapEl.current
+    if (!map || !tip || !host || !sel) return
+    const loc = locations.find(l => l.name === sel); if (!loc) return
+    const p = map.project([vx(loc.lon), vy(loc.lat)])
+    const W = host.clientWidth, H = host.clientHeight, tw = tip.offsetWidth, th = tip.offsetHeight
+    const r = (diameter(loc.count) * scale) / 2 + 4
+    let x = p.x + r; if (x + tw > W - 2) x = p.x - r - tw; x = Math.max(2, Math.min(x, W - tw - 2))
+    let y = p.y - th / 2; y = Math.max(2, Math.min(y, H - th - 2))
+    tip.style.left = `${host.offsetLeft + x}px`; tip.style.top = `${host.offsetTop + y}px`
+  }, [sel, scale])
+  useEffect(() => {
+    const map = mapRef.current; if (!map || !sel) return
+    placeTip(); map.on('move', placeTip); map.on('moveend', placeTip)
+    return () => { map.off('move', placeTip); map.off('moveend', placeTip) }
+  }, [sel, placeTip, mobile])
+
   const markers = useRef<maplibregl.Marker[]>([])
   useEffect(() => {
     const map = mapRef.current!
@@ -168,6 +186,11 @@ export default function App() {
           <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
         {mobile && !hideS && <button className="lx lx2" aria-label="Hide size legend" onClick={() => setHideS(true)}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
         </div>
+        {sel && one && (<div className="tip" ref={tipRef} onClick={e => e.stopPropagation()}><h4>{sel === '?' ? 'Scattered locations' : sel}</h4><div className="tt">{fmt(one.total)} Victims:</div>
+          <div className="tr"><span>Killed</span><b className="c1">{fmt(one.killed)}</b></div>
+          <div className="tr"><span>Kidnapped and killed</span><b className="m2">{fmt(one.hk)}</b></div>
+          <div className="tr"><span>Kidnapped and returned alive</span><b className="c3">{fmt(one.ret)}</b></div>
+          <button className="tgo" onClick={() => setDet(sel)}>View victims &rsaquo;</button></div>)}
         <div className="hint">Click on the map locations to zoom in</div>
         <section className="card c-civ"><h2>Civilian Victims Distribution</h2>
           <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">Security Forces on Duty<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">Civilians<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
@@ -175,7 +198,6 @@ export default function App() {
           <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">Female<br /><b>{fmt(s.female)}</b></span><span className="l bl">Male<br /><b>{fmt(s.male)}</b></span></div></section>
         <section className="card c-age"><h2>Victims&apos; Age Distribution</h2><small className="sub">*excluding {s.noAge} victims with no age data</small><AgeBars ages={s.ages} /></section>
         <footer className="foot"><b>Data:</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>Disclaimer:</b> All data is accurate to the best of our knowledge at the time of publication</i><br /><a className="srcl" onClick={() => setShowSrc(true)}><b>Sources &amp; policy</b></a><br /><br /><b>Design:</b> Nir Smilga<br />Based on &apos;Return to October&apos; exhibition at the Israel Heritage &amp; Commemoration Center (IICC)</footer>
-        {sel && (<aside className="panel" onClick={e => e.stopPropagation()}><button onClick={() => setSel(null)} aria-label="Close"><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button><h3>{sel === '?' ? 'Scattered locations' : sel}</h3><p><b>{fmt(s.total)}</b> victims · {fmt(s.killed)} killed · {fmt(s.hk)} kidnapped and killed · {fmt(s.ret)} returned alive</p><p><button className="vbtn" onClick={() => setDet(sel)}>View victims</button></p><p>Civilians {fmt(s.civilians)} · Security forces {fmt(s.security)} · Female {fmt(s.female)} · Male {fmt(s.male)}</p></aside>)}
         {showSrc && <Sources onClose={() => setShowSrc(false)} />}
         {det && <Detail name={det} onBack={() => setDet(null)} />}
       </div>
