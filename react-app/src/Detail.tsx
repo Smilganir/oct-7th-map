@@ -24,12 +24,21 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     const pts = list.filter(p => p.y != null && p.x != null)
     const map = new maplibregl.Map({
       container: el.current, attributionControl: { compact: false },
-      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community | Powered by Esri', tiles: ['https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=' + import.meta.env.VITE_ARC_KEY] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
+      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community | Powered by Esri', tiles: [new URLSearchParams(location.search).has('fbtest') ? 'https://esri-fail.invalid/{z}/{y}/{x}' : 'https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=' + import.meta.env.VITE_ARC_KEY] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
       center: [34.5, 31.4], zoom: 12,
     })
-    map.on('load', () => {
+    const addPts = () => {
+      if (map.getSource('p')) return
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
+    }
+    let fell = false, errs = 0
+    map.on('error', (e: any) => {
+      if (fell || e?.sourceId !== 'img') return
+      if (++errs >= 4) { fell = true; map.setStyle('https://tiles.openfreemap.org/styles/liberty'); map.once('style.load', addPts) }
+    })
+    map.on('load', () => {
+      addPts()
       if (pts.length) {
         const b = new maplibregl.LngLatBounds()
         pts.forEach(p => b.extend([p.x!, p.y!]))
