@@ -11,8 +11,8 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .notes{margin-top:calc(var(--u)*14);padding-top:calc(var(--u)*6);border-top:1px solid #ddd;width:34%;font-size:calc(var(--u)*11.5);line-height:1.35;white-space:nowrap;border:none}
 .logo{position:absolute;right:calc(var(--u)*22.4);top:calc(var(--u)*39);width:calc(var(--u)*149);height:auto}
 .mapzone{position:absolute;left:1.4%;top:16.5%;width:97%;height:82%;border:1px solid #aaa;background:#fff}
-.legend{position:absolute;left:2.33%;top:17.6%;width:15.36%;height:auto;opacity:.85;pointer-events:none}
-.sizeleg{position:absolute;left:2.33%;top:37.4%;width:5.5%;background:rgba(255,255,255,.4);font-size:calc(var(--u)*10.5);padding:calc(var(--u)*3);pointer-events:none}
+.legend{position:absolute;left:2.33%;top:17.6%;width:16.7%;height:auto;opacity:.85;pointer-events:none}
+.sizeleg{position:absolute;left:2.33%;top:38.4%;width:5.5%;background:rgba(255,255,255,.4);font-size:calc(var(--u)*10.5);padding:calc(var(--u)*3);pointer-events:none}
 .sizeleg svg{width:100%;display:block}
 .hint{position:absolute;left:27.9%;top:16.7%;color:#fff;font-size:calc(var(--u)*11);padding-top:calc(var(--u)*6);pointer-events:none}
 .card{position:absolute;left:74.86%;width:23.07%;background:rgba(255,255,255,.88);border:1px solid #444;padding:calc(var(--u)*6)}

@@ -117,7 +117,7 @@ export default function App() {
           <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
         </header>
         <div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
-        <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=2`} alt="" />
+        <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />
         <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
           <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>
         <div className="hint">Click on the map locations to zoom in</div>
