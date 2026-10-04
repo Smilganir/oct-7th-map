@@ -18,7 +18,7 @@ export default function Detail({ name, onBack }: { name: string; onBack: () => v
     const pts = list.filter(p => p.y != null && p.x != null)
     const map = new maplibregl.Map({
       container: el.current, attributionControl: { compact: false },
-      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': 0.1 } }] },
+      style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Imagery © Esri, Maxar, Earthstar Geographics', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
       center: [34.5, 31.4], zoom: 12,
     })
     map.on('load', () => {
