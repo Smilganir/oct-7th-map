@@ -141,3 +141,6 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .langb{right:6px;top:20px}
 .mobile .head h1{padding-right:110px;font-size:clamp(15.5px,4.4vw,18.5px);line-height:1.15}
 .mobile.he .head h1{padding-right:110px}
+.mobile .head{padding-bottom:4px}
+.mobile .head h1{min-height:46px;padding-top:0}
+.mobile .tot{margin-top:0}
