@@ -32,6 +32,8 @@ export default function App() {
   const [scale, setScale] = useState(1)
   const [mobile, setMobile] = useState(false)
   const mobileRef = useRef(false)
+  const [hideL, setHideL] = useState(false)
+  const [hideS, setHideS] = useState(false)
   const fitRef = useRef<() => void>(() => {})
   const all = useMemo(() => stats(victims), [])
   const one = useMemo(() => (sel ? stats(victims.filter(v => v.l === sel)) : null), [sel])
@@ -135,9 +137,12 @@ export default function App() {
           <img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" />
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
-        <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />
-        <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
-          <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>
+        {!(mobile && hideL) && <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />}
+        {mobile && !hideL && <button className="lx lx1" aria-label="Hide legend" onClick={() => setHideL(true)}>×</button>}
+        {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>Legend</button>}
+        {!(mobile && hideS) && <div className="sizeleg"><span>{'# of victims'}<br />per location</span>
+          <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
+        {mobile && !hideS && <button className="lx lx2" aria-label="Hide size legend" onClick={() => setHideS(true)}>×</button>}
         </div>
         <div className="hint">Click on the map locations to zoom in</div>
         <section className="card c-civ"><h2>Civilian Victims Distribution</h2>

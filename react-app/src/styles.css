@@ -93,3 +93,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile .tot,.mobile .add{line-height:1.35;margin-bottom:0}.mobile .add{margin-top:0}.mobile .tot b,.mobile .add b,.mobile .tot .lead{line-height:1}
 .fn{display:flex;align-items:flex-start}.fn .mk{flex:none;margin-right:.35em}
 .mp{display:none}.mobile .mp{display:inline}.mobile .totwrap{margin-top:6px;line-height:1.35}.mobile .totwrap p{display:inline;margin:0;line-height:1.35}
+.lx{display:none}.mobile .lx{display:block;position:absolute;z-index:5;background:rgba(255,255,255,.9);border:1px solid #888;color:#222;border-radius:50%;width:24px;height:24px;line-height:20px;font-size:17px;padding:0;text-align:center;cursor:pointer}
+.mobile .lx1{left:calc(6px + (100vw - 12px) * .4 - 28px);top:10px}.mobile .lx2{left:calc(6px + (100vw - 12px) * .17 + 2px);top:calc(12px + (100vw - 12px) * .404)}
+.mobile .lx3{left:8px;top:8px;width:auto;border-radius:12px;padding:0 10px;font-size:12px;line-height:22px;height:24px}
+.mobile .card,.mobile .foot{background:#eef0f2!important}
