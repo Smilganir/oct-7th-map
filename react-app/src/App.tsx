@@ -68,7 +68,7 @@ export default function App() {
         if (x1 < x0) return
         const M = 10
         const k = Math.min((box.width - 2 * M) / (x1 - x0), (box.height - 2 * M) / (y1 - y0))
-        if (k < 1.02 || k > 3) return
+        if (Math.abs(k - 1) < 0.01 || k < 0.6 || k > 3) return
         const c = map.unproject([(x0 + x1) / 2 - box.left, (y0 + y1) / 2 - box.top])
         map.jumpTo({ zoom: map.getZoom() + Math.log2(k), center: c })
       }))
