@@ -36,3 +36,28 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .panel h3{font-weight:600;font-size:calc(var(--u)*18);margin-bottom:calc(var(--u)*4)}.panel p{margin-top:calc(var(--u)*3)}
 .panel button{position:absolute;right:calc(var(--u)*8);top:calc(var(--u)*4);border:0;background:none;font-size:calc(var(--u)*22);cursor:pointer}
 .maplibregl-canvas{outline:none}
+
+.mk.side-left{flex-direction:row-reverse}.mk.side-left .lb{margin-left:0;margin-right:calc(var(--u)*5)}
+.mk.side-top,.mk.side-bottom{flex-direction:column;align-items:center}.mk.side-top{flex-direction:column-reverse}
+.mk.side-top .lb,.mk.side-bottom .lb{margin:0}
+.mk{transition:opacity .2s}
+@media (max-width:759px){
+ .dash.mobile{aspect-ratio:auto;height:auto;display:flex;flex-direction:column;font-size:calc(var(--u)*16)}
+ .mobile .head,.mobile .mapzone,.mobile .legend,.mobile .sizeleg,.mobile .hint,.mobile .card,.mobile .foot,.mobile .logo{top:auto;left:auto;position:static;width:auto;height:auto}
+ .mobile .head{padding:12px 14px 8px;display:flex;flex-direction:column;position:relative}
+ .mobile .head h1{font-size:22px}.mobile .tot{font-size:14px}.mobile .tot b{font-size:18px}.mobile .add{font-size:13px}
+ .mobile .notes{width:auto;white-space:normal;font-size:10.5px}
+ .mobile .logo{width:72px;position:absolute;right:8px;top:8px!important}
+ .mobile .head h1,.mobile .tot{padding-right:78px}
+ .mobile .legend{display:block}
+ .mobile .mapzone{height:min(118vw,620px);margin:0 6px;order:2;position:relative}
+ .mobile .hint{order:3;color:#444;text-align:center;padding:4px;font-size:11px}
+ .mobile .legend{order:4;width:min(260px,70%);margin:6px auto 0;opacity:1}
+ .mobile .sizeleg{display:none}
+ .mobile .card{order:5;margin:8px 6px 0;padding:8px;min-height:220px;background:#fff}
+ .mobile .card h2{font-size:17px}.mobile .c-age{min-height:260px}.mobile .dn{height:170px}
+ .mobile .l{font-size:11px}.mobile .l b{font-size:12px}.mobile .sub{font-size:10px}.mobile .bv{font-size:11px}.mobile .bl{font-size:9px}.mobile .bars{height:170px}
+ .mobile .foot{order:6;margin:10px 10px 14px;font-size:11px}
+ .mobile .panel{position:fixed;left:8px;right:8px;bottom:8px;width:auto;font-size:13px}
+ .mobile .panel h3{font-size:17px}
+}

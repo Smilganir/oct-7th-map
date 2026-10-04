@@ -9,12 +9,15 @@ const L = 34.2, R = 34.9, B = 31.15, T = 31.75
 const IMG_W = 11334, IMG_H = 5906
 const VH = 2, VW = (VH * IMG_W) / IMG_H // virtual degrees (image keeps its native aspect, like Tableau)
 const vx = (lon: number) => ((lon - L) / (R - L)) * VW
-const vy = (lat: number) => VH / 2 - ((T - lat) / (T - B)) * VH
+// Tableau draws the image ~2.6% flatter than its native aspect (measured from 17 dots, rms 2 px); keep that.
+const YS = 0.97396
+const vy = (lat: number) => (VH / 2 - ((T - lat) / (T - B)) * VH) * YS
 // Initial view = what the Tableau dashboard shows by default.
-const VIEW = { w: vx(34.244), e: vx(34.673), s: vy(31.2), n: vy(31.698) }
+const VIEW = { w: vx(34.24572), e: vx(34.68362), s: vy(31.17538), n: vy(31.69728) }
 const DASH_W = 1400
 
 const RED = 'radial-gradient(circle at 35% 30%, #ff6b5e 0%, #e01010 45%, #8f0000 100%)'
+const SIDE: Record<string, 'left' | 'top' | 'bottom'> = { 'Kibbutz Nahal Oz': 'bottom', "Re'im": 'top', 'Gama jct': 'bottom', Kisufim: 'left', 'Kisufim Base': 'top', 'Nir Am': 'left', Nirim: 'left', Sufa: 'left' }
 const diameter = (n: number) => 6 + 2.4 * Math.sqrt(n)
 
 export default function App() {
@@ -23,13 +26,14 @@ export default function App() {
   const mapRef = useRef<maplibregl.Map | null>(null)
   const [sel, setSel] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
+  const [mobile, setMobile] = useState(false)
   const all = useMemo(() => stats(victims), [])
   const one = useMemo(() => (sel ? stats(victims.filter(v => v.l === sel)) : null), [sel])
   const s = one ?? all
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => setScale(el.clientWidth / DASH_W))
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; setMobile(w < 760); setScale(w < 760 ? w / 700 : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -39,16 +43,17 @@ export default function App() {
       container: mapEl.current!,
       style: { version: 8, sources: {}, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#ffffff' } }] },
       bounds: [[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], fitBoundsOptions: { padding: 0 },
-      maxBounds: [[0, -VH / 2], [VW, VH / 2]], renderWorldCopies: false, attributionControl: false,
+      maxBounds: [[0, (-VH / 2) * YS], [VW, (VH / 2) * YS]], renderWorldCopies: false, attributionControl: false,
       dragRotate: false, touchPitch: false, fadeDuration: 0, pitchWithRotate: false,
     })
     map.touchZoomRotate.disableRotation()
     map.on('load', () => {
-      map.addSource('relief', { type: 'image', url: `${import.meta.env.BASE_URL}assets/relief.webp`, coordinates: [[0, VH / 2], [VW, VH / 2], [VW, -VH / 2], [0, -VH / 2]] })
+      map.addSource('relief', { type: 'image', url: `${import.meta.env.BASE_URL}assets/relief.webp`, coordinates: [[0, (VH / 2) * YS], [VW, (VH / 2) * YS], [VW, (-VH / 2) * YS], [0, (-VH / 2) * YS]] })
       map.addLayer({ id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-resampling': 'linear', 'raster-fade-duration': 0 } })
     })
     mapRef.current = map
-    const ro = new ResizeObserver(() => { map.resize(); map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 }) })
+    let lastW = 0
+    const ro = new ResizeObserver(() => { map.resize(); const w = mapEl.current!.clientWidth; if (w !== lastW) { lastW = w; map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 0 }) } })
     ro.observe(mapEl.current!)
     return () => { ro.disconnect(); map.remove() }
   }, [])
@@ -72,17 +77,34 @@ export default function App() {
       label.className = 'lb'
       label.textContent = loc.name === '?' ? 'Scattered locations' : loc.name
       label.style.fontSize = `${Math.max(9, 11.5 * scale)}px`
+      const side = SIDE[loc.name]
+      if (side) el.classList.add('side-' + side)
       el.append(dot, label)
       el.title = `${label.textContent}: ${loc.count}`
       el.addEventListener('click', e => { e.stopPropagation(); setSel(loc.name) })
-      markers.current.push(new maplibregl.Marker({ element: el, anchor: 'left', offset: [-d / 2, 0] }).setLngLat([vx(loc.lon), vy(loc.lat)]).addTo(map))
+      el.dataset.name = loc.name
+      const anchor = side === 'left' ? 'right' : side === 'top' ? 'bottom' : side === 'bottom' ? 'top' : 'left'
+      const offset: [number, number] = side === 'left' ? [d / 2, 0] : side === 'top' ? [0, d / 2] : side === 'bottom' ? [0, -d / 2] : [-d / 2, 0]
+      markers.current.push(new maplibregl.Marker({ element: el, anchor, offset }).setLngLat([vx(loc.lon), vy(loc.lat)]).addTo(map))
     }
-  }, [scale])
+  }, [scale, mobile])
+
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map) return
+    const loc = locations.find(l => l.name === sel)
+    if (loc) {
+      const base = map.cameraForBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0 })?.zoom ?? 0
+      map.flyTo({ center: [vx(loc.lon), vy(loc.lat)], zoom: base + 1.7, duration: 900, essential: true })
+    } else {
+      map.fitBounds([[VIEW.w, VIEW.s], [VIEW.e, VIEW.n]], { padding: 0, duration: 700 })
+    }
+  }, [sel])
 
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
     <div className="viewport">
-      <div className="dash" ref={wrap} style={{ ['--u' as string]: `${scale}px` }}>
+      <div className={`dash${mobile ? ' mobile' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
         <header className="head">
           <h1>Oct-7th Hamas Massacre in Gaza Envelope</h1>
           <p className="tot">Total {fmt(all.fatalities)} Fatalities, Total {fmt(all.hostages)} hostages: <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} civilians)</small> killed, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} civilians)</small> kidnapped and killed or killed and kidnapped</p>
