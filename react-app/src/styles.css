@@ -155,3 +155,4 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 @media(max-width:760px){.vc .cap{align-items:flex-start;gap:2px;padding:3px 3px 5px}.vc .cap .vn{padding:0!important}.vc .ic{flex-direction:column;align-items:center;gap:4px;margin:0;width:18px}.vc .cap i{border:0!important;margin-top:2px!important}.vc .cap .ml{width:18px!important;height:18px!important;padding:2px!important;border-width:1.5px}}
 .mobile .lx1{width:22px;height:22px;box-sizing:border-box;border:2px solid #6eb8ee!important;background:#fffffff5!important;color:#134a6e!important;border-radius:5px;box-shadow:0 1px 4px #00000024;top:9px;left:calc(6px + (100vw - 12px) * .4 - 29px)}
 .mobile.he .lx1{left:9px;top:9px}
+.logol{display:contents}
