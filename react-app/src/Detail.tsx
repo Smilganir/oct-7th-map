@@ -35,11 +35,20 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
     }
+    const mob = (el.current?.clientWidth ?? 1000) < 760
+    const r0 = pts.length > 60 ? 2.5 : pts.length > 20 ? 3 : 4
+    const scaleDots = () => {
+      if (!mob || !map.getLayer('p')) return
+      const z0 = map.getZoom()
+      map.setPaintProperty('p', 'circle-radius', ['interpolate', ['exponential', 1.5], ['zoom'], z0, r0, z0 + 3, Math.min(9, r0 * 3.375)])
+      map.setPaintProperty('p', 'circle-stroke-width', 0.8)
+    }
     const fit = () => {
       if (!pts.length) return
       const b = new maplibregl.LngLatBounds()
       pts.forEach(p => b.extend([p.x!, p.y!]))
       map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
+      scaleDots()
     }
     const MB = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
     const rs = (tiles: string, attribution: string, paint: any, maxzoom = 19): any => ({ version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom, attribution, tiles: [tiles] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint }] })
