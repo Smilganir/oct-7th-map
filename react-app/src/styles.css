@@ -211,3 +211,4 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 @media(max-width:479px){.db{grid-template-columns:repeat(2,1fr)}.dh p.subd{display:none}.subm{display:block;font-size:11.5px;padding:4px 12px 6px;color:#333}}
 
 .vc img,.vc .ph{box-shadow:2px 0 0 #fff}.he .vc img,.he .vc .ph{box-shadow:-2px 0 0 #fff}
+.foot a.byl{font-weight:inherit}
