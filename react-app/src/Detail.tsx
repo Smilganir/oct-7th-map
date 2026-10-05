@@ -42,7 +42,21 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const el = useRef<HTMLDivElement>(null)
   const [he, setHe] = useState<Record<string, [string, string]>>({})
   useEffect(() => { load().then(setD); loadHe().then(setHe) }, [])
+  const dbRef = useRef<HTMLDivElement>(null)
   const list = d?.byLoc[name] ?? []
+  useEffect(() => {
+    const cols = dbRef.current ? Array.from(dbRef.current.querySelectorAll<HTMLElement>(':scope > .col')) : []
+    if (cols.length !== 2) return
+    const [a, b] = cols
+    let lead: HTMLElement | null = null
+    const sync = (src: HTMLElement, dst: HTMLElement) => () => { if (lead !== src || getComputedStyle(src).overflowY === 'visible') return; if (Math.abs(dst.scrollTop - src.scrollTop) > 0.5) dst.scrollTop = src.scrollTop }
+    const fa = sync(a, b), fb = sync(b, a)
+    const la = () => { lead = a }, lb = () => { lead = b }
+    const evs = ['wheel', 'touchstart', 'pointerdown', 'pointerenter', 'keydown']
+    evs.forEach(e => { a.addEventListener(e, la, { passive: true }); b.addEventListener(e, lb, { passive: true }) })
+    a.addEventListener('scroll', fa, { passive: true }); b.addEventListener('scroll', fb, { passive: true })
+    return () => { evs.forEach(e => { a.removeEventListener(e, la); b.removeEventListener(e, lb) }); a.removeEventListener('scroll', fa); b.removeEventListener('scroll', fb) }
+  }, [d, name])
   useEffect(() => {
     if (!d || !el.current) return
     const pts = spreadSame(list.filter(p => p.y != null && p.x != null))
@@ -112,7 +126,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
         <button onClick={onBack}>{t.back}</button>
       </div>
       <p className="subm"><i>{t.schem}</i></p>
-      <div className="db">
+      <div className="db" ref={dbRef}>
         <div className="col">{list.slice(0, half).map(card)}</div>
         <div className="dm"><div ref={el} className="dmap" />
           <div className="dl"><span><i style={{ background: COL.h }} />{t.dKK}</span><span><i style={{ background: COL.a }} />{t.dKA}</span><span><i style={{ background: COL.k }} />{t.dK}</span></div></div>
