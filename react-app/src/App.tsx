@@ -38,6 +38,7 @@ export default function App() {
   const [showSrc, setShowSrc] = useState(false)
   const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
+  const [dscale, setDscale] = useState(1)
   const [mobile, setMobile] = useState(false)
   const [mid, setMid] = useState(false)
   const mobileRef = useRef(false)
@@ -54,7 +55,7 @@ export default function App() {
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 1100; setMobile(w < 1100); setMid(w >= 600 && w < 1100); document.documentElement.style.setProperty('--mk', String(w < 1100 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); document.documentElement.style.setProperty('--mz', String(Math.max(1, Math.min(1.5, w / 740)))); setScale(w < 1100 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 1100; setMobile(w < 1100); setMid(w >= 600 && w < 1100); document.documentElement.style.setProperty('--mk', String(w < 1100 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); document.documentElement.style.setProperty('--mz', String(Math.max(1, Math.min(1.5, w / 740)))); setScale(w < 1100 ? w / 700 : w / DASH_W); setDscale(w >= 600 ? w / DASH_W : w / 700) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -116,11 +117,11 @@ export default function App() {
     const loc = locations.find(l => l.name === sel); if (!loc) return
     const p = map.project([vx(loc.lon), vy(loc.lat)])
     const W = host.clientWidth, H = host.clientHeight, tw = tip.offsetWidth, th = tip.offsetHeight
-    const r = (diameter(loc.count) * scale) / 2 + 4
+    const r = (diameter(loc.count) * dscale) / 2 + 4
     let x = p.x + r; if (x + tw > W - 2) x = p.x - r - tw; x = Math.max(2, Math.min(x, W - tw - 2))
     let y = p.y - th / 2; y = Math.max(2, Math.min(y, H - th - 2))
     tip.style.left = `${host.offsetLeft + x}px`; tip.style.top = `${host.offsetTop + y}px`
-  }, [sel, scale])
+  }, [sel, dscale])
   useEffect(() => {
     const map = mapRef.current; if (!map || !sel) return
     placeTip(); map.on('move', placeTip); map.on('moveend', placeTip)
@@ -132,14 +133,14 @@ export default function App() {
     const map = mapRef.current!
     markers.current.forEach(m => m.remove()); markers.current = []
     for (const loc of locations) {
-      const d = diameter(loc.count) * scale
+      const d = diameter(loc.count) * dscale
       const el = document.createElement('div')
       el.className = 'mk'
       const dot = document.createElement('div')
       dot.className = 'dot'
       dot.style.width = dot.style.height = `${d}px`
-      if (loc.shape === 'Base') { dot.style.border = `${Math.max(2, 3 * scale)}px solid #0a32d6`; dot.style.background = 'rgba(255,255,255,0.15)'; dot.style.borderRadius = '50%' }
-      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${30 * scale + 4}px`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
+      if (loc.shape === 'Base') { dot.style.border = `${Math.max(2, 3 * dscale)}px solid #0a32d6`; dot.style.background = 'rgba(255,255,255,0.15)'; dot.style.borderRadius = '50%' }
+      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${30 * dscale + 4}px`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
       else if (loc.shape === 'Rest') { dot.style.background = 'radial-gradient(circle, #ff5a4a 0%, rgba(255,60,50,.55) 55%, rgba(255,60,50,.15) 100%)'; dot.style.borderRadius = '50%' }
       else { dot.style.background = RED; dot.style.borderRadius = '50%'; dot.style.boxShadow = '0 1px 2px rgba(0,0,0,.35)' }
       const label = document.createElement('span')
@@ -178,7 +179,7 @@ export default function App() {
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
     return () => { map.off('zoom', lz); map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
-  }, [scale, mobile, lang])
+  }, [scale, dscale, mobile, lang])
 
   useEffect(() => {
     const map = mapRef.current
