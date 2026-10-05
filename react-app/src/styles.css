@@ -70,7 +70,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .vc img,.vc .ph{width:52px;height:68px;object-fit:cover;flex:none;background:#ccc}.vc .vn{flex:1;line-height:1.2}.vc i{width:9px;height:9px;border-radius:50%;margin-right:10px;flex:none}
 .dm{position:relative;min-height:0}.dmap{position:absolute;inset:0}
 .dl{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.8);padding:6px 10px;font-size:13px;display:flex;flex-direction:column;gap:3px}.dl i{display:inline-block;width:11px;height:11px;margin-right:6px}
-@media(max-width:760px){.detail{position:fixed;z-index:50;overflow-y:auto;display:block}.dh{padding:8px 10px;gap:8px;align-items:center}.dh h2{font-size:15px}.dh p{font-size:10px}.dh p i{font-size:9px}.dh button{position:relative;padding:5px 9px;font-size:11px;font-weight:600;min-height:0;flex:none}.dh button::before{content:'';position:absolute;inset:-9px}
+@media(max-width:599px){.detail{position:fixed;z-index:50;overflow-y:auto;display:block}.dh{padding:8px 10px;gap:8px;align-items:center}.dh h2{font-size:15px}.dh p{font-size:10px}.dh p i{font-size:9px}.dh button{position:relative;padding:5px 9px;font-size:11px;font-weight:600;min-height:0;flex:none}.dh button::before{content:'';position:absolute;inset:-9px}
 .db{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;flex:none;min-height:0;border-top:1px solid #ccc}.col{display:contents;overflow:visible}.dm{grid-column:1/-1;grid-row:1;height:min(78vw,420px);min-height:0}
 .vc{flex-direction:column;align-items:stretch;gap:0;height:auto;margin:0;font-size:10px;background:#ececec}.vc img,.vc .ph{width:100%;height:auto;aspect-ratio:3/4;display:block}.vc .vn{padding:3px 4px 5px;line-height:1.15;word-break:break-word;flex:none}.vc i{position:absolute;right:5px;top:5px;margin:0;width:9px;height:9px;border:1px solid #fff}
 .dl{font-size:9px;padding:3px 5px;left:4px;top:4px}.dl i{width:8px;height:8px;margin-right:3px}}
@@ -132,11 +132,11 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.he .head{padding-right:14px}
 .mobile .lx3{position:absolute;left:8px;top:8px;font-size:calc(11px*var(--mk,1));padding:2px 9px;border-width:2px!important;z-index:6}
 .mobile .tip .tgo{font-size:calc(11px*var(--mk,1));padding:2px 8px}
-@media(max-width:760px){.dh button{padding:3px 8px;font-size:11px;border-width:2px!important}.dh button::before{content:'';position:absolute;inset:-9px}}
+@media(max-width:599px){.dh button{padding:3px 8px;font-size:11px;border-width:2px!important}.dh button::before{content:'';position:absolute;inset:-9px}}
 
 .vc .ml{position:absolute;right:3px;width:22px;height:22px;padding:4px;border-radius:5px;background:#fffffff2;color:#134a6e;border:1.5px solid #6eb8ee;display:block;box-sizing:border-box;z-index:2;bottom:3px}
-@media(min-width:761px){.vc .ml{bottom:auto;top:3px;right:3px;width:18px;height:18px;padding:3px}}
-@media(max-width:760px){.vc .ml{bottom:auto;top:calc(100% * 0 + 3px);left:3px;right:auto;width:20px;height:20px;padding:3px}.vc .ml{margin:0}}
+@media(min-width:600px){.vc .ml{bottom:auto;top:3px;right:3px;width:18px;height:18px;padding:3px}}
+@media(max-width:599px){.vc .ml{bottom:auto;top:calc(100% * 0 + 3px);left:3px;right:auto;width:20px;height:20px;padding:3px}.vc .ml{margin:0}}
 .mobile .logo{right:40px!important;width:66px!important}
 .mobile .langb{right:6px;top:20px}
 .mobile .head h1{padding-right:calc(110px*var(--mk,1));font-size:calc(clamp(15.5px,4.4vw,18.5px)*var(--mk,1));line-height:1.15}
@@ -152,15 +152,15 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .vc .cap i,.vc .cap .ml{position:static!important;margin:0!important}
 .vc .cap i{width:9px;height:9px;border-radius:50%}
 .vc .cap .ml{width:20px!important;height:20px!important;padding:3px!important}
-@media(max-width:760px){.vc .cap{align-items:flex-start;gap:2px;padding:3px 3px 5px}.vc .cap .vn{padding:0!important}.vc .ic{flex-direction:column;align-items:center;gap:4px;margin:0;width:18px}.vc .cap i{border:0!important;margin-top:2px!important}.vc .cap .ml{width:18px!important;height:18px!important;padding:2px!important;border-width:1.5px}}
+@media(max-width:599px){.vc .cap{align-items:flex-start;gap:2px;padding:3px 3px 5px}.vc .cap .vn{padding:0!important}.vc .ic{flex-direction:column;align-items:center;gap:4px;margin:0;width:18px}.vc .cap i{border:0!important;margin-top:2px!important}.vc .cap .ml{width:18px!important;height:18px!important;padding:2px!important;border-width:1.5px}}
 .mobile .lx1{width:22px;height:22px;box-sizing:border-box;border:2px solid #6eb8ee!important;background:#fffffff5!important;color:#134a6e!important;border-radius:5px;box-shadow:0 1px 4px #00000024;top:9px;left:calc(6px + var(--lw, calc((100vw - 12px) * .4)) - 29px)}
 .mobile.he .lx1{left:9px;top:9px}
 .logol{display:contents}
 .subm{display:none}
-@media(max-width:760px){.dh{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}.dh .subd{display:none}.subm{display:block;font-size:10px;padding:4px 10px 6px;color:#333}.dh p{margin-top:2px}.dh h2{line-height:1.15}}
+@media(max-width:599px){.dh{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}.dh .subd{display:none}.subm{display:block;font-size:10px;padding:4px 10px 6px;color:#333}.dh p{margin-top:2px}.dh h2{line-height:1.15}}
 .c-age .sub{display:block;text-align:center}
 .dm .maplibregl-ctrl-attrib{max-width:100%;font-size:11px;line-height:1.25}
-@media(max-width:760px){.dm .maplibregl-ctrl-attrib{font-size:8px;max-width:100%;padding:1px 4px}.dm .maplibregl-ctrl-attrib a{font-size:8px}}
+@media(max-width:599px){.dm .maplibregl-ctrl-attrib{font-size:8px;max-width:100%;padding:1px 4px}.dm .maplibregl-ctrl-attrib a{font-size:8px}}
 /* HE header order (RTL): title on the right, logo to its left, language button leftmost */
 .he .langb{right:auto;left:calc(var(--u)*22.4)}
 .he .logo{right:auto!important;left:calc(var(--u)*80)}
@@ -169,3 +169,29 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.he .logo{right:auto!important;left:40px}
 .mobile.he .head{padding-right:14px;padding-left:14px}
 .mobile.he .head h1{padding-right:0;padding-left:110px}
+
+/* mid layout (container 600-759): map full width, charts in a row beneath, readable text */
+.dash.mobile.mid{grid-template-columns:repeat(3,1fr)}
+.mobile.mid .card{grid-column:auto;margin:8px 3px 0;padding:8px}.mobile.mid .c-civ{margin-left:6px}.mobile.mid .c-age{margin-right:6px}
+.mobile.mid .head{padding:14px 18px 6px}
+.mobile.mid .head h1{font-size:26px;line-height:1.15;min-height:0;padding-right:130px}.mobile.mid.he .head h1{padding-right:0;padding-left:130px}
+.mobile.mid .logo{width:78px!important;right:56px!important;top:8px!important}.mobile.mid.he .logo{right:auto!important;left:56px}
+.mobile.mid .langb{font-size:13px;top:20px;right:14px;padding:3px 9px}.mobile.mid.he .langb{right:auto;left:14px}
+.mobile.mid .tot{font-size:13px}.mobile.mid .tot .lead{font-size:14px}.mobile.mid .tot b{font-size:15.5px}.mobile.mid .tot small,.mobile.mid .add small{font-size:11.5px}.mobile.mid .add{font-size:13px}.mobile.mid .add b{font-size:15px}
+.mobile.mid .notes{font-size:10.5px;margin-top:6px;line-height:1.3}
+.mobile.mid .hint{font-size:12px;padding:12px 4px 12px}
+.mobile.mid .card h2{font-size:13.5px}.mobile.mid .c-civ h2,.mobile.mid .c-gen h2,.mobile.mid .c-age h2{font-size:13.5px;line-height:1.2}.mobile.mid .c-gen h2 small,.mobile.mid .c-gen h2 span{font-size:10px}
+.mobile.mid .c-civ .dn,.mobile.mid .c-gen .dn{height:170px}
+.mobile.mid .c-civ .l,.mobile.mid .c-gen .l{font-size:10px}.mobile.mid .c-civ .l b,.mobile.mid .c-gen .l b{font-size:11px}
+.mobile.mid .c-age .sub{font-size:9.5px}.mobile.mid .bv{font-size:10px}.mobile.mid .bl{font-size:9px}.mobile.mid .bars{height:120px;margin-bottom:34px}
+.mobile.mid .foot{font-size:11.5px;margin:10px 6px 14px}
+.mobile.mid .tip{font-size:12.5px}.mobile.mid .tip .tgo{font-size:12px}
+/* detail: desktop layout from 600px, scaled text, smaller photos */
+@media(min-width:600px) and (max-width:759px){
+ .detail{position:fixed;z-index:50}
+ .dh h2{font-size:clamp(20px,3.4vw,26px)}.dh p{font-size:13px}.dh p i{font-size:11.5px}
+ .dh button{font-size:14px;padding:6px 12px}
+ .db{grid-template-columns:150px 1fr 150px}
+ .vc{height:56px;font-size:12.5px;gap:5px}.vc img,.vc .ph{width:42px;height:56px}.vc i{margin-right:6px}
+ .dl{font-size:12px}
+}

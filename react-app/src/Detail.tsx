@@ -57,7 +57,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
     }
-    const mob = window.innerWidth < 760
+    const mob = window.innerWidth < 600
     const r0 = pts.length > 60 ? 2.5 : pts.length > 20 ? 3 : 4
     const scaleDots = () => {
       if (!mob || !map.getLayer('p')) return

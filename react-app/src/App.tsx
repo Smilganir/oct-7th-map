@@ -39,6 +39,7 @@ export default function App() {
   const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
   const [mobile, setMobile] = useState(false)
+  const [mid, setMid] = useState(false)
   const mobileRef = useRef(false)
   const [hideL, setHideL] = useState(false)
   const legRef = useRef<HTMLDivElement>(null)
@@ -53,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); document.documentElement.style.setProperty('--mk', String(w < 760 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); setScale(w < 760 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); setMid(w >= 600 && w < 760); document.documentElement.style.setProperty('--mk', String(w < 760 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); setScale(w < 760 ? w / 700 : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -196,7 +197,7 @@ export default function App() {
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
     <div className="viewport">
-      <div className={`dash${mobile ? ' mobile' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
         <header className="head" dir={rtl ? 'rtl' : 'ltr'}>
           <h1>{t.title}</h1>
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
