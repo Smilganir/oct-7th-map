@@ -30,7 +30,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .foot a{color:#1a5fb4}
 .mk{display:flex;align-items:center;cursor:pointer;white-space:nowrap}
 .dot{flex:none}
-.lb{margin-left:calc(var(--u)*5);font-weight:400;color:#111;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff}
+.lb{margin-left:calc(var(--u)*5);font-weight:700;color:#111;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff}
 .mk:hover .dot{filter:brightness(1.2)}
 .panel{position:absolute;left:3%;bottom:3%;width:36%;background:rgba(255,255,255,.95);border:1px solid #444;padding:calc(var(--u)*10) calc(var(--u)*14);z-index:5;font-size:max(11.5px,calc(var(--u)*13*1.15))}
 .panel h3{font-weight:600;font-size:max(15px,calc(var(--u)*18*1.15));margin-bottom:calc(var(--u)*4)}.panel p{margin-top:calc(var(--u)*3)}
