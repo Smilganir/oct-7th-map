@@ -191,7 +191,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
  .detail{position:fixed;z-index:50}
  .dh h2{font-size:clamp(20px,3.4vw,26px)}.dh p{font-size:13px}.dh p i{font-size:11.5px}
  .dh button{font-size:14px;padding:6px 12px}
- .db{grid-template-columns:150px 1fr 150px}
+ .db{grid-template-columns:190px 1fr 190px}
  .vc{height:56px;font-size:12.5px;gap:5px}.vc img,.vc .ph{width:42px;height:56px}.vc i{margin-right:6px}
  .dl{font-size:12px}
 }
