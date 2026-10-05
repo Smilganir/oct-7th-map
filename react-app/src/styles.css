@@ -50,7 +50,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
  .mobile .logo{width:84px;position:absolute;right:8px;top:8px!important}
  .mobile .head h1{padding-right:92px}.mobile .tot{padding-right:0}
   .mobile .mapwrap{position:relative;margin:0 6px;order:2}.mobile .mapzone{position:relative;width:100%;height:min(106vw,560px);left:0;top:0}
- .mobile .hint{order:3;color:#444;text-align:center;padding:4px;font-size:11px}
+ .mobile .hint{order:3;color:#444;text-align:center;padding:18px 4px 20px;font-size:11px;touch-action:pan-y}
  .mobile .legend{position:absolute;left:6px;top:6px;width:40%;height:auto;opacity:.92}
  .mobile .sizeleg{position:absolute;left:6px;top:calc(12px + (100vw - 12px) * .404);width:17%;font-size:7px;padding:2px}
  .mobile .tot small,.mobile .add small{white-space:nowrap}

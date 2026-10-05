@@ -101,8 +101,7 @@ export default function App() {
 
   useEffect(() => {
     const map = mapRef.current!
-    if (mobile && window.matchMedia('(pointer: coarse)').matches) map.cooperativeGestures.enable()
-    else map.cooperativeGestures.disable()
+    map.cooperativeGestures.disable() // mobile: one-finger pan, two-finger zoom; page scrolls from the strip below the map
   }, [mobile])
 
   const tipRef = useRef<HTMLDivElement | null>(null)
