@@ -54,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); setMid(w >= 600 && w < 760); document.documentElement.style.setProperty('--mk', String(w < 760 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); setScale(w < 760 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 1100; setMobile(w < 1100); setMid(w >= 600 && w < 1100); document.documentElement.style.setProperty('--mk', String(w < 1100 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); document.documentElement.style.setProperty('--mz', String(Math.max(1, Math.min(1.5, w / 740)))); setScale(w < 1100 ? w / 700 : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
