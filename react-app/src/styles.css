@@ -186,12 +186,21 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.mid .c-age .sub{font-size:9.5px}.mobile.mid .bv{font-size:10px}.mobile.mid .bl{font-size:9px}.mobile.mid .bars{height:120px;margin-bottom:34px}
 .mobile.mid .foot{font-size:11.5px;margin:10px 6px 14px}
 .mobile.mid .tip{font-size:12.5px}.mobile.mid .tip .tgo{font-size:12px}
-/* detail: desktop layout from 600px, scaled text, smaller photos */
-@media(min-width:600px) and (max-width:759px){
- .detail{position:fixed;z-index:50}
- .dh h2{font-size:clamp(20px,3.4vw,26px)}.dh p{font-size:13px}.dh p i{font-size:11.5px}
+/* detail 600-799: map on top, photo grid below (small photos, larger text, <=2 lines per name, icons kept) */
+@media(min-width:600px) and (max-width:799px){
+ .detail{position:fixed;inset:0;z-index:50;overflow-y:auto;display:block}
+ .dh{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);align-items:center}
+ .dh h2{font-size:clamp(20px,3.4vw,26px)}.dh p{font-size:13.5px}.dh p i{font-size:12px}
  .dh button{font-size:14px;padding:6px 12px}
- .db{grid-template-columns:190px 1fr 190px}
- .vc{height:56px;font-size:12.5px;gap:5px}.vc img,.vc .ph{width:42px;height:56px}.vc i{margin-right:6px}
+ .db{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:2px;flex:none;min-height:0;border-top:1px solid #ccc}
+ .he .detail .db{direction:rtl}
+ .col{display:contents;overflow:visible}
+ .dm{grid-column:1/-1;grid-row:1;height:min(62vw,440px);min-height:0}
+ .vc{flex-direction:row;align-items:center;gap:6px;height:auto;min-height:58px;margin:0;font-size:13px;background:#ececec}
+ .vc img,.vc .ph{width:40px;height:54px;align-self:center}
+ .vc .cap{flex:1;display:flex;align-items:center;gap:4px;min-width:0;padding:0 4px 0 0}
+ .vc .vn{line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+ .vc .vn br{display:none}
+ .vc .ic{flex-direction:column;align-items:center;gap:5px;margin:0;width:22px;flex:none}
  .dl{font-size:12px}
 }
