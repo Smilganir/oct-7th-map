@@ -38,7 +38,9 @@ export default function App() {
   const [showSrc, setShowSrc] = useState(false)
   const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
-  const [dscale, setDscale] = useState(1)
+  const [dscale0, setDscale] = useState(1)
+  const [boost, setBoost] = useState(1)
+  const dscale = dscale0 * boost
   const [mobile, setMobile] = useState(false)
   const [mid, setMid] = useState(false)
   const mobileRef = useRef(false)
@@ -128,6 +130,24 @@ export default function App() {
     return () => { map.off('move', placeTip); map.off('moveend', placeTip) }
   }, [sel, placeTip, mobile])
 
+  useEffect(() => {
+    const cap = mobile ? (mid ? 1.7 : 3.2) : 1
+    if (cap <= 1) { setBoost(1); return }
+    const t = setTimeout(() => {
+      const map = mapRef.current; if (!map) return
+      const base = dscale0
+      const pts = locations.filter(l => !l.shape || l.shape === 'Circle' || l.shape === 'Rest' || (l.shape !== 'Base' && l.shape !== 'Nova' && l.shape !== 'Psyduck')).map(l => { const p = map.project([vx(l.lon), vy(l.lat)]); return { x: p.x, y: p.y, d: diameter(l.count) * base } })
+      const rs: number[] = []
+      for (let a = 0; a < pts.length; a++) { let m = Infinity; for (let b = 0; b < pts.length; b++) if (a !== b) { const dist = Math.hypot(pts[a].x - pts[b].x, pts[a].y - pts[b].y); m = Math.min(m, dist / ((pts[a].d + pts[b].d) / 2)) } rs.push(m) }
+      rs.sort((x, y) => x - y)
+      const f = rs.length ? rs[Math.floor(rs.length * 0.12)] : 1
+      const W = mapEl.current?.clientWidth ?? 600
+      const maxD = Math.max(...pts.map(p => p.d)) || 1
+      setBoost(Math.max(1, Math.min(cap, f * 0.97, (W * 0.075) / maxD)))
+    }, 700)
+    return () => clearTimeout(t)
+  }, [dscale0, mobile, mid, lang])
+
   const markers = useRef<maplibregl.Marker[]>([])
   useEffect(() => {
     const map = mapRef.current!
@@ -212,7 +232,7 @@ export default function App() {
         {mobile && !hideL && <button className="lx lx1" aria-label={t.hideLeg} onClick={() => { setHideL(true); setHideS(true) }}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
         {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>{t.legendBtn}</button>}
         {!(mobile && hideS) && <div className="sizeleg" dir={rtl ? 'rtl' : 'ltr'}><span>{t.sizeLeg1}<br />{t.sizeLeg2}</span>
-          <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
+          {(() => { const f = (n: number) => diameter(n) * dscale / 2; const R = f(200), H = 2 * R + 3, Wd = 2 * R + 6 + 22, fs = Math.max(8, Math.min(11, 9 * Math.max(1, dscale / 0.6))); return <svg width={Wd} height={H} viewBox={`0 0 ${Wd} ${H}`} style={{ width: Wd, height: H }}>{[200, 100, 50, 5].map(n => { const r = f(n); const y = H - 1.5 - 2 * r; return <g key={n}><circle cx={R + 2} cy={H - 1.5 - r} r={r} fill="none" stroke="#222" strokeWidth="1" /><line x1={R + 2} y1={y} x2={2 * R + 6} y2={y} stroke="#222" strokeWidth=".6" /><text x={2 * R + 8} y={y + fs * 0.35} fontSize={fs}>{n}</text></g> })}</svg> })()}</div>}
         {sel && one && (<div className="tip" dir={rtl ? 'rtl' : 'ltr'} ref={tipRef} onClick={e => e.stopPropagation()}><h4>{nm(sel)}</h4><div className="tt">{fmt(one.total)} {t.victims}:</div>
           <div className="tr"><span>{t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
           <div className="tr"><span>{t.ttHK}</span><b className="m2">{fmt(one.hk)}</b></div>
