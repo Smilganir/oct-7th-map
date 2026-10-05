@@ -142,7 +142,7 @@ export default function App() {
       const f = rs.length ? rs[Math.floor(rs.length * 0.12)] : 1
       const W = mapEl.current?.clientWidth ?? 600
       const maxD = Math.max(...pts.map(p => p.d)) || 1
-      const cap = Math.max(1, (Math.min(1, W / DASH_W)) / base)
+      const cap = Math.max(1, (4 * Math.min(1, W / DASH_W)) / base)
       void maxD
       setBoost(Math.max(1, Math.min(cap, f * 0.97)))
     }, 700)
