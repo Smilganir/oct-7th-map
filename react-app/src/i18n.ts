@@ -22,7 +22,7 @@ export const S = {
     cAge: "Victims' Age Distribution", excl: (n: number) => `*excluding ${n} victims with no age data`,
     data: 'Data:', disc: 'Disclaimer:', discT: 'All data is accurate to the best of our knowledge at the time of publication', src: 'Sources & policy', design: 'Design:', dname: 'Nir Smilga', based: "Based on 'Return to October' exhibition at the Israel Heritage & Commemoration Center (IICC)",
     victims: 'Victims', ttK: 'Killed', ttHK: 'Kidnapped and killed', ttR: 'Kidnapped and returned alive', view: 'View victims ›',
-    vic: 'victims', vicinity: 'Vicinity', schem: "Victims' locations are schematic and represent approximate event coordinates", back: '◄ Back to Regional Map',
+    vic: 'victims', vicinity: 'Vicinity', schem: "Victims' locations are schematic and represent approximate event coordinates. Points at the same location are slightly spread for readability.", back: '◄ Back to Regional Map',
     dKK: 'Kidnapped,Killed', dKA: 'Kidnapped,alive', dK: 'Killed', toggle: 'עב', hideLeg: 'Hide legend', hideSize: 'Hide size legend',
   },
   he: {
@@ -36,7 +36,7 @@ export const S = {
     cAge: 'התפלגות גילאי הנפגעים', excl: (n: number) => `*לא כולל ${n} נפגעים ללא נתוני גיל`,
     data: 'נתונים:', disc: 'הבהרה:', discT: 'כל הנתונים מדויקים למיטב ידיעתנו במועד הפרסום', src: 'מקורות ומדיניות', design: 'עיצוב:', dname: 'ניר סמילגה', based: 'מבוסס על התערוכה Return to October ב-Israel Heritage & Commemoration Center (IICC)',
     victims: 'נפגעים', ttK: 'נהרגו', ttHK: 'נחטפו ונהרגו', ttR: 'נחטפו וחזרו בחיים', view: '‹ לצפייה בנפגעים',
-    vic: 'נפגעים', vicinity: 'והסביבה', schem: 'מיקומי הנפגעים סכמטיים ומייצגים קואורדינטות אירוע משוערות', back: 'חזרה למפה האזורית ►',
+    vic: 'נפגעים', vicinity: 'והסביבה', schem: 'מיקומי הנפגעים סכמטיים ומייצגים קואורדינטות אירוע משוערות. נקודות באותו מיקום מפוזרות מעט לשם קריאות.', back: 'חזרה למפה האזורית ►',
     dKK: 'נחטפו, נהרגו', dKA: 'נחטפו, בחיים', dK: 'נהרגו', toggle: 'En', hideLeg: 'הסתר מקרא', hideSize: 'הסתר מקרא גודל',
   },
 }

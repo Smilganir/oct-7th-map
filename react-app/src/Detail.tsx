@@ -13,6 +13,27 @@ const hid = (u: string) => { let a = 2166136261, b = 0x9747b28c; for (let i = 0;
 const local = (u: string) => (u ? import.meta.env.BASE_URL + 'photos/' + hid(u) + '.jpg' : '')
 const photo = (d: D, u: string) => (!u ? '' : u.startsWith('!') ? u.slice(1) : d.photoPrefix + u)
 
+
+// Victims that share identical coordinates are fanned out on a small, deterministic spiral (seeded by name+age, same every load).
+const hash = (t: string) => { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619) } return h >>> 0 }
+function spreadSame<T extends { n: string; a?: number | null; x?: number | null; y?: number | null }>(pts: T[]): T[] {
+  const groups = new Map<string, T[]>()
+  pts.forEach(p => { const k = `${p.x!.toFixed(6)},${p.y!.toFixed(6)}`; (groups.get(k) ?? groups.set(k, []).get(k)!).push(p) })
+  const out: T[] = []
+  groups.forEach(g => {
+    if (g.length === 1) { out.push(g[0]); return }
+    const sorted = [...g].sort((u, v) => hash(u.n + '|' + (u.a ?? '')) - hash(v.n + '|' + (v.a ?? '')))
+    const rot = (hash(`${sorted[0].x},${sorted[0].y}`) % 360) * Math.PI / 180
+    sorted.forEach((p, i) => {
+      if (i === 0) { out.push(p); return }
+      const r = 6 * Math.sqrt(i), th = rot + i * 2.399963
+      const dy = (r * Math.sin(th)) / 110574, dx = (r * Math.cos(th)) / (111320 * Math.cos(p.y! * Math.PI / 180))
+      out.push({ ...p, x: p.x! + dx, y: p.y! + dy })
+    })
+  })
+  return out
+}
+
 export default function Detail({ name, onBack, lang }: { name: string; onBack: () => void; lang: Lang }) {
   const t = S[lang], rtl = lang === 'he'
   const nm = rtl ? HE_NAMES[name] ?? name : name === '?' ? 'Scattered locations' : name
@@ -23,7 +44,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const list = d?.byLoc[name] ?? []
   useEffect(() => {
     if (!d || !el.current) return
-    const pts = list.filter(p => p.y != null && p.x != null)
+    const pts = spreadSame(list.filter(p => p.y != null && p.x != null))
     const map = new maplibregl.Map({
       container: el.current, attributionControl: { compact: false },
       style: { version: 8, sources: { img: { type: 'raster', tileSize: 256, maxzoom: 19, attribution: 'Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community | Powered by Esri', tiles: [(import.meta.env.VITE_ALLOW_FBTEST && new URLSearchParams(location.search).has('fbtest')) ? 'https://esri-fail.invalid/{z}/{y}/{x}' : 'https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=' + import.meta.env.VITE_ARC_KEY] } }, layers: [{ id: 'img', type: 'raster', source: 'img', paint: { 'raster-saturation': -1, 'raster-contrast': -0.25, 'raster-brightness-min': 0.3, 'raster-brightness-max': 1 } }] },
