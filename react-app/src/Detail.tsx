@@ -69,7 +69,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       if (!pts.length) return
       const b = new maplibregl.LngLatBounds()
       pts.forEach(p => b.extend([p.x!, p.y!]))
-      map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
+      map.fitBounds(b, { padding: 28, maxZoom: 17.5, duration: 0 })
       scaleDots()
     }
     const MB = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
@@ -90,7 +90,8 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     })
     const fell = false
     map.on('load', () => { addPts(); if (!fell) fit() })
-    return () => map.remove()
+    const host = el.current; let rt: any; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { map.resize(); if (map.getLayer('p')) fit() }, 120) }); ro.observe(host)
+    return () => { ro.disconnect(); clearTimeout(rt); map.remove() }
   }, [d, name])
   const c = { k: 0, h: 0, a: 0 }
   list.forEach(p => c[p.k]++)
