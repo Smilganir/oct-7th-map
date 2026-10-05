@@ -219,7 +219,7 @@ export default function App() {
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
     <div className="viewport">
-      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${det ? ' indet' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
         <header className="head" dir={rtl ? 'rtl' : 'ltr'}>
           <h1>{t.title}</h1>
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}

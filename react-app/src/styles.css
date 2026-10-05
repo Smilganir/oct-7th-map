@@ -190,7 +190,10 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.mid .sizeleg{width:min(17%,calc(84px*var(--mz,1)));font-size:calc(8.4px*var(--mz,1))}
 /* detail below 800: map on top, photo grid below (small photos, larger text, <=2 lines per name, icons kept) */
 @media(max-width:799px){
- .detail{position:fixed;inset:0;z-index:50;overflow-y:auto;display:block}
+ .dash.indet{overflow:visible}
+ .dash.indet>*:not(.detail):not(.foot){display:none!important}
+ .detail{position:relative;inset:auto;z-index:1;overflow:visible;display:block;grid-column:1/-1;order:1}
+ .dash.indet .foot{grid-column:1/-1}
  .dh{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);align-items:center;padding:8px 12px}
  .dh h2{font-size:clamp(18px,3.4vw,26px);line-height:1.15}.dh p{font-size:13.5px;margin-top:2px}.dh p i{font-size:12px}
  .dh button{position:relative;font-size:14px;padding:6px 12px;flex:none;min-height:0}
