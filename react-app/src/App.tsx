@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type React from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Detail from './Detail'
 import Sources from './Sources'
 import { track } from './track'
@@ -40,6 +41,8 @@ export default function App() {
   const [mobile, setMobile] = useState(false)
   const mobileRef = useRef(false)
   const [hideL, setHideL] = useState(false)
+  const legRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => { const d = wrap.current; const l = legRef.current; if (!d) return; if (!(mobile && l)) { d.style.removeProperty('--lh'); d.style.removeProperty('--lw'); return } const m = () => { d.style.setProperty('--lh', l.offsetHeight + 'px'); d.style.setProperty('--lw', l.offsetWidth + 'px') }; m(); const ro = new ResizeObserver(m); ro.observe(l); return () => ro.disconnect() }, [mobile, hideL, lang, scale])
   const [hideS, setHideS] = useState(false)
   const fitRef = useRef<() => void>(() => {})
   const fitting = useRef(false), baseZ = useRef<number | null>(null), lzRef = useRef<() => void>(() => {})
@@ -50,7 +53,7 @@ export default function App() {
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); setScale(w < 760 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); document.documentElement.style.setProperty('--mk', String(w < 760 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); setScale(w < 760 ? w / 700 : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -203,7 +206,7 @@ export default function App() {
           <button className="langb" onClick={toggleLang} aria-label="Language">{t.toggle}</button>
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
-        {!(mobile && hideL) && (rtl ? <div className="legend hel" dir="rtl">{[<i key="a" className="ib" />, <i key="b" className="ic" />, <img key="c" src={`${import.meta.env.BASE_URL}assets/nova.png`} alt="" />, <img key="d" src={`${import.meta.env.BASE_URL}assets/psyduck.png`} alt="" />, <i key="e" className="ia">←</i>, <i key="f" className="id" />, <i key="g" className="ig" />].map((ic, k) => <div key={k} className="lr"><span className="li">{ic}</span><span>{t.leg[k]}</span></div>)}</div> : <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />)}
+        {!(mobile && hideL) && (rtl ? <div className="legend hel" dir="rtl" ref={legRef}>{[<i key="a" className="ib" />, <i key="b" className="ic" />, <img key="c" src={`${import.meta.env.BASE_URL}assets/nova.png`} alt="" />, <img key="d" src={`${import.meta.env.BASE_URL}assets/psyduck.png`} alt="" />, <i key="e" className="ia">←</i>, <i key="f" className="id" />, <i key="g" className="ig" />].map((ic, k) => <div key={k} className="lr"><span className="li">{ic}</span><span>{t.leg[k]}</span></div>)}</div> : <img className="legend" ref={legRef as React.RefObject<HTMLImageElement>} src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />)}
         {mobile && !hideL && <button className="lx lx1" aria-label={t.hideLeg} onClick={() => { setHideL(true); setHideS(true) }}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
         {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>{t.legendBtn}</button>}
         {!(mobile && hideS) && <div className="sizeleg" dir={rtl ? 'rtl' : 'ltr'}><span>{t.sizeLeg1}<br />{t.sizeLeg2}</span>
