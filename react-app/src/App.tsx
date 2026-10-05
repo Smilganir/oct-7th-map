@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Detail from './Detail'
 import Sources from './Sources'
+import { track } from './track'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { AgeBars, Donut } from './charts'
@@ -30,7 +31,7 @@ export default function App() {
   const [lang, setLang] = useState<Lang>(initLang)
   const t = S[lang], rtl = lang === 'he'
   const nm = (n: string) => (rtl ? HE_NAMES[n] ?? n : n === '?' ? 'Scattered locations' : n)
-  const toggleLang = () => { const n: Lang = rtl ? 'en' : 'he'; setLang(n); try { localStorage.setItem('o7lang', n) } catch { /* ignore */ } }
+  const toggleLang = () => { const n: Lang = rtl ? 'en' : 'he'; track('lang_toggle', { to: n, where: 'header' }); setLang(n); try { localStorage.setItem('o7lang', n) } catch { /* ignore */ } }
   useEffect(() => { document.documentElement.lang = lang }, [lang])
   const [sel, setSel] = useState<string | null>(null)
   const [showSrc, setShowSrc] = useState(false)
@@ -145,7 +146,7 @@ export default function App() {
       if (side) el.classList.add('side-' + side)
       el.append(dot, label)
       el.title = `${label.textContent}: ${loc.count}`
-      el.addEventListener('click', e => { e.stopPropagation(); setSel(loc.name) })
+      el.addEventListener('click', e => { e.stopPropagation(); track('settlement_select', { settlement: loc.name, lang: document.documentElement.lang }); setSel(loc.name) })
       el.dataset.name = loc.name
       const anchor = side === 'left' ? 'right' : side === 'top' ? 'bottom' : side === 'bottom' ? 'top' : 'left'
       const offset: [number, number] = side === 'left' ? [d / 2, 0] : side === 'top' ? [0, d / 2] : side === 'bottom' ? [0, -d / 2] : [-d / 2, 0]
@@ -198,7 +199,7 @@ export default function App() {
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
           <p className="add">{t.additional} <b className="c3">{fmt(all.ret)}</b> <small className="c3">({fmt(all.retCiv)} {t.civ})</small> {t.ret}</p></div>
           <div className="notes"><div className="fn"><i className="mk">*</i><i>{t.fn1}<br />{t.fn1b}</i></div><div className="fn"><i className="mk">**</i><i>{t.fn2}</i></div></div>
-          <a href={rtl ? 'https://www.civilc.org/home-heb/silenced-no-more-heb' : 'https://www.civilc.org/silenced-no-more'} target="_blank" rel="noopener noreferrer" aria-label="The Civil Commission report" className="logol"><img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" /></a>
+          <a href={rtl ? 'https://www.civilc.org/home-heb/silenced-no-more-heb' : 'https://www.civilc.org/silenced-no-more'} target="_blank" rel="noopener noreferrer" aria-label="The Civil Commission report" className="logol" onClick={() => track('outbound_click', { target: 'civil_commission', lang })}><img className="logo" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="The Civil Commission on Oct 7th crimes by Hamas against women and children" /></a>
           <button className="langb" onClick={toggleLang} aria-label="Language">{t.toggle}</button>
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
@@ -211,7 +212,7 @@ export default function App() {
           <div className="tr"><span>{t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
           <div className="tr"><span>{t.ttHK}</span><b className="m2">{fmt(one.hk)}</b></div>
           <div className="tr"><span>{t.ttR}</span><b className="c3">{fmt(one.ret)}</b></div>
-          <button className="tgo" onClick={() => setDet(sel)}>{t.view}</button></div>)}
+          <button className="tgo" onClick={() => { track('settlement_open', { settlement: sel, lang }); setDet(sel) }}>{t.view}</button></div>)}
         </div>
         <div className="hint">{t.hint}</div>
         <section className="card c-civ"><h2>{t.cCiv}</h2>
@@ -219,9 +220,9 @@ export default function App() {
         <section className="card c-gen"><h2>{t.cGen} <small>{t.incl}</small></h2>
           <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">{t.fem}<br /><b>{fmt(s.female)}</b></span><span className="l bl">{t.male}<br /><b>{fmt(s.male)}</b></span></div></section>
         <section className="card c-age"><h2>{t.cAge}</h2><small className="sub">{t.excl(s.noAge)}</small><AgeBars ages={s.ages} /></section>
-        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => setShowSrc(true)}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> {t.dname}<br />{t.based}</footer>
+        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer" onClick={() => track('outbound_click', { target: 'oct7database', lang })}>https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => { track('sources_open', { lang }); setShowSrc(true) }}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> {t.dname}<br />{t.based}</footer>
         {showSrc && <Sources lang={lang} onClose={() => setShowSrc(false)} />}
-        {det && <Detail name={det} lang={lang} onBack={() => { setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
+        {det && <Detail name={det} lang={lang} onBack={() => { track('detail_back', { settlement: det, lang }); setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
       </div>
     </div>
   )

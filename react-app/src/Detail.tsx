@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { track } from './track'
 import maplibregl from 'maplibre-gl'
 import { HE_NAMES, S, type Lang } from './i18n'
 
@@ -98,7 +99,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const card = (p: P, i: number) => (
     <div className="vc" key={i}>
       {d && p.u ? <img src={local(p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { const t = e.target as HTMLImageElement; if (t.dataset.fb) t.style.visibility = 'hidden'; else { t.dataset.fb = '1'; t.src = photo(d, p.u) } }} /> : <span className="ph" />}
-      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <><br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => e.stopPropagation()}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
+      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <><br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => { e.stopPropagation(); track('memorial_click', { settlement: name, lang }) }}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
     </div>
   )
   return (

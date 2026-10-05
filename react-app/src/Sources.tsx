@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { track } from './track'
 
 const T = {
   en: {
@@ -30,7 +31,7 @@ export default function Sources({ onClose, lang: l0 }: { onClose: () => void; la
   const t = T[lang]
   return (
     <div className="src" dir={t.dir} lang={lang} onClick={e => e.stopPropagation()}>
-      <div className="srcbar"><button onClick={() => setLang(lang === 'en' ? 'he' : 'en')}>{t.toggle}</button><button onClick={onClose}>{t.close}</button></div>
+      <div className="srcbar"><button onClick={() => { const n = lang === 'en' ? 'he' : 'en'; track('lang_toggle', { to: n, where: 'sources' }); setLang(n) }}>{t.toggle}</button><button onClick={onClose}>{t.close}</button></div>
       <h2>{t.title}</h2>
       {t.s.map(([h, b]) => <section key={h}><h3>{h}</h3><p>{b}</p></section>)}
       <p className="sf">{t.foot}</p>
