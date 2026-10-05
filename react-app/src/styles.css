@@ -175,7 +175,7 @@ html,body{height:100%;background:#f0f0f0;font-family:'Noto Sans','Segoe UI',syst
 .mobile.mid .card{grid-column:auto;margin:8px 3px 0;padding:8px}.mobile.mid .c-civ{margin-left:6px}.mobile.mid .c-age{margin-right:6px}
 .mobile.mid .head{padding:14px 18px 6px}
 .mobile.mid .head h1{font-size:26px;line-height:1.15;min-height:0;padding-right:130px}.mobile.mid.he .head h1{padding-right:0;padding-left:130px}
-.mobile.mid .logo{width:60px!important;right:56px!important;top:7px!important}.mobile.mid.he .logo{right:auto!important;left:56px}
+.mobile.mid .logo{width:60px!important;right:56px!important;top:4px!important}.mobile.mid .totwrap{margin-top:14px}.mobile.mid.he .logo{right:auto!important;left:56px}
 .mobile.mid .langb{font-size:13px;top:20px;right:14px;padding:3px 9px}.mobile.mid.he .langb{right:auto;left:14px}
 .mobile.mid .tot{font-size:13px}.mobile.mid .tot .lead{font-size:14px}.mobile.mid .tot b{font-size:15.5px}.mobile.mid .tot small,.mobile.mid .add small{font-size:11.5px}.mobile.mid .add{font-size:13px}.mobile.mid .add b{font-size:15px}
 .mobile.mid .notes{font-size:10.5px;margin-top:6px;line-height:1.3}
