@@ -3,7 +3,7 @@ export const HE_NAMES: Record<string, string> = {
   'Sderot': 'שדרות', 'Netivot': 'נתיבות', 'Ofakim': 'אופקים', 'Zikim Base': 'בסיס זיקים', 'Erez Checkpoint': 'מעבר ארז',
   'Nahal Oz base': 'בסיס נחל עוז', "Re'im Base": 'בסיס רעים', 'Kisufim Base': 'בסיס כיסופים', 'Urim base': 'בסיס אורים',
   'Netiv HaAsara': 'נתיב העשרה', 'Mefalsim': 'מפלסים', 'Kfar Aza': 'כפר עזה', 'Yakhini': 'יכיני', 'Kibbutz Nahal Oz': 'קיבוץ נחל עוז',
-  'Alumim': 'אלומים', "Be'eri": 'בארי', 'Nova': 'נובה', "Re'im": 'רעים', 'Ein HaShlosha': 'עין השלושה', 'Nirim': 'נירים',
+  'Alumim': 'עלומים', "Be'eri": 'בארי', 'Nova': 'נובה', "Re'im": 'רעים', 'Ein HaShlosha': 'עין השלושה', 'Nirim': 'נירים',
   'Nir Oz': 'ניר עוז', 'Magen': 'מגן', 'Holit': 'חולית', 'Sufa': 'סופה', 'Nir Yitzhak': 'ניר יצחק', 'Pri Gan': 'פרי גן',
   'Kerem Shalom': 'כרם שלום', 'Yiftah Base': 'בסיס יפתח', 'Zikim': 'זיקים', 'Paga Base': 'בסיס פגה', 'Sufa Base': 'בסיס סופה',
   'Psyduck': 'פסיידאק', 'Gama jct': 'צומת גמה', 'Mivtahim': 'מבטחים', 'Kisufim': 'כיסופים', "Sha'ar HaNegev jct": 'צומת שער הנגב',
