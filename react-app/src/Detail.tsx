@@ -5,11 +5,31 @@ import { HE_NAMES, S, type Lang } from './i18n'
 
 type P = { n: string; a: number | null; k: 'k' | 'h' | 'a'; u: string; y: number | null; x: number | null }
 type D = { photoPrefix: string; byLoc: Record<string, P[]> }
+function regroupDetail(d: D): D {
+  const out: D = { ...d, byLoc: { ...d.byLoc } }
+  const rules: Record<string, string[]> = { 'MASA Erez': ['Ofir Zioni'], 'Zikim Firing Ranges': ['Itay Maor Melihi', 'Ori Locker', 'Amit Tsur'], 'Mivtahim Junction': ['Chen Ben Avi', 'Dan Damri', 'David Turgeman', 'Dor Nahum', 'Shir Yaron', 'Niv Tel Tzur', 'Ido Perez', 'Ron Weinberg', 'Rody Skariszewski', 'Zion Levy', 'Noy Maodi', 'Moti Elkabatz', 'Matan Rozeberg'] }
+  for (const [target, names] of Object.entries(rules)) {
+    const from = target === 'Mivtahim Junction' ? 'Mivtahim' : 'Zikim Base'
+    const orig = out.byLoc[from] || []
+    out.byLoc[target] = orig.filter(p => names.includes(p.n))
+    out.byLoc[from] = orig.filter(p => !names.includes(p.n))
+  }
+  return out
+}
 const COL = { k: '#b01212', h: '#4a1a54', a: '#3a9a9a' }
 let cache: Promise<D> | null = null
-const load = () => (cache ??= fetch(`${import.meta.env.BASE_URL}detail.json`).then(r => r.json()))
+const load = () => (cache ??= fetch(`${import.meta.env.BASE_URL}detail.json`).then(r => r.json()).then(regroupDetail))
 let hc: Promise<Record<string, [string, string]>> | null = null
 const loadHe = () => (hc ??= fetch(`${import.meta.env.BASE_URL}he.json`).then(r => r.json()).catch(() => ({})))
+let sc: Promise<{ photos?: string[]; entries?: string[] }> | null = null
+const loadSup = () => (sc ??= fetch(`${import.meta.env.BASE_URL}suppress.json`, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})))
+let cc: Promise<Record<string, string>> | null = null
+const loadCred = () => (cc ??= fetch(`${import.meta.env.BASE_URL}credits.json`, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : {})).catch(() => ({})))
+const NOPIC = /nopicTerror|no(%20| )image(%20| )placeholder|candle\.png/i
+const MSG = {
+  en: { contact: 'Question about a photo or record', src: 'Sources and policy', subj: 'Question about a photo or record', body: `Name of the person or link to the record:\n\nDetails of the request (including correction or removal):\n\nHow to reach you:\n` },
+  he: { contact: 'פנייה בנוגע לתמונה או לרשומה', src: 'מקורות ומדיניות', subj: 'פנייה בנוגע לתמונה או לרשומה', body: `שם האדם או קישור לרשומה:\n\nפרטי הבקשה (לרבות תיקון או הסרה):\n\nדרך ליצירת קשר:\n` },
+}
 const hid = (u: string) => { let a = 2166136261, b = 0x9747b28c; for (let i = 0; i < u.length; i++) { const c = u.charCodeAt(i); a = Math.imul(a ^ c, 16777619) >>> 0; b = Math.imul(b ^ c, 16777619) >>> 0 } return a.toString(16).padStart(8, '0') + b.toString(16).padStart(8, '0') }
 const local = (u: string) => (u ? import.meta.env.BASE_URL + 'photos/' + hid(u) + '.jpg' : '')
 const photo = (d: D, u: string) => (!u ? '' : u.startsWith('!') ? u.slice(1) : d.photoPrefix + u)
@@ -35,13 +55,15 @@ function spreadSame<T extends { n: string; a?: number | null; x?: number | null;
   return out
 }
 
-export default function Detail({ name, onBack, lang }: { name: string; onBack: () => void; lang: Lang }) {
+export default function Detail({ name, onBack, onSources, lang }: { name: string; onBack: () => void; onSources: () => void; lang: Lang }) {
   const t = S[lang], rtl = lang === 'he'
   const nm = rtl ? HE_NAMES[name] ?? name : name === '?' ? 'Scattered locations' : name
   const [d, setD] = useState<D | null>(null)
   const el = useRef<HTMLDivElement>(null)
   const [he, setHe] = useState<Record<string, [string, string]>>({})
-  useEffect(() => { load().then(setD); loadHe().then(setHe) }, [])
+  const [sup, setSup] = useState<{ photos?: string[]; entries?: string[] }>({})
+  const [cred, setCred] = useState<Record<string, string>>({})
+  useEffect(() => { load().then(setD); loadHe().then(setHe); loadSup().then(setSup); loadCred().then(setCred) }, [])
   const dbRef = useRef<HTMLDivElement>(null)
   const list = d?.byLoc[name] ?? []
   useEffect(() => {
@@ -113,23 +135,25 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const hk = (p: P) => he[p.n + '|' + (p.a ?? '')]
   const card = (p: P, i: number) => (
     <div className="vc" key={i}>
-      {d && p.u ? <img src={local(p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { const t = e.target as HTMLImageElement; if (t.dataset.fb) t.style.visibility = 'hidden'; else { t.dataset.fb = '1'; t.src = photo(d, p.u) } }} /> : <span className="ph" />}
-      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <>{' '}<br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => { e.stopPropagation(); track('memorial_click', { settlement: name, lang }) }}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
+      {d && p.u && !NOPIC.test(p.u) && !sup.photos?.includes(hid(p.u)) && !sup.entries?.includes(p.n + '|' + (p.a ?? '')) ? <img src={local(p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { const t = e.target as HTMLImageElement; if (t.dataset.fb) t.style.visibility = 'hidden'; else { t.dataset.fb = '1'; t.src = photo(d, p.u) } }} /> : <span className="ph" />}
+      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <>{' '}<br />({p.a})</>}{cred[hid(p.u)] && <><br /><small className="cr">{cred[hid(p.u)]}</small></>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => { e.stopPropagation(); track('memorial_click', { settlement: name, lang }) }}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
     </div>
   )
   return (
     <div className="detail" dir={rtl ? 'rtl' : 'ltr'}>
       <div className="dh">
-        <div><h2><b>{nm}</b> {rtl ? t.vicinity : 'Vicinity'} <b>{list.length} {t.vic}</b></h2>
-          <p><b style={{ color: COL.k }}>{c.k}</b> {rtl ? t.dK : 'killed'} | <b style={{ color: COL.h }}>{c.h}</b> {rtl ? t.ttHK : 'kidnapped and killed'} | <b style={{ color: COL.a }}>{c.a}</b> {rtl ? t.ttR : 'kidnapped and returned alive'}</p>
+        <div><h2><b>{nm}</b> {rtl ? t.vicinity : 'Vicinity'} <b>{list.length} {rtl && list.length === 1 ? 'נפגע' : t.vic}</b></h2>
+          <p><b style={{ color: COL.k }}>{c.k}</b> {rtl && c.k === 1 ? 'נהרג' : rtl ? t.dK : 'killed'} | <b style={{ color: COL.h }}>{c.h}</b> {rtl ? t.ttHK : 'kidnapped and killed'} | <b style={{ color: COL.a }}>{c.a}</b> {rtl ? t.ttR : 'kidnapped and returned alive'}</p>
           <p className="subd"><i>{t.schem}</i></p></div>
         <button onClick={onBack}>{t.back}</button>
       </div>
       <p className="subm"><i>{t.schem}</i></p>
+      {name === '?' && <p className="event-note" dir={rtl ? 'rtl' : 'ltr'} style={{ margin: '8px 16px', fontSize: '14px' }}>{rtl ? 'יתד - חדירת מחבלים, ללא הרוגים או חטופים בתוך המושב' : 'Yated - terrorist infiltration; no one killed or kidnapped inside the village'} <a href="https://www.ynet.co.il/news/article/sjysrsqzze" target="_blank" rel="noopener noreferrer">{rtl ? 'מקור: תחקיר ynet' : 'Source: ynet inquiry'}</a></p>}
       <div className="db" ref={dbRef}>
         <div className="col">{list.slice(0, half).map(card)}</div>
         <div className="dm"><div ref={el} className="dmap" />
           <div className="dl"><span><i style={{ background: COL.h }} />{t.dKK}</span><span><i style={{ background: COL.a }} />{t.dKA}</span><span><i style={{ background: COL.k }} />{t.dK}</span></div></div>
+        <p className="dlinks dlrow"><a href={`mailto:hello@nirsmilga.com?subject=${encodeURIComponent(MSG[lang].subj + ' - ' + nm)}&body=${encodeURIComponent(MSG[lang].body)}`} onClick={() => track('contact_click', { settlement: name, lang })}>{MSG[lang].contact}</a> | <a href="#sources" onClick={e => { e.preventDefault(); onSources() }}>{MSG[lang].src}</a></p>
         <div className="col">{list.slice(half).map((p, i) => card(p, i + half))}</div>
       </div>
     </div>

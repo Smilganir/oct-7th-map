@@ -37,6 +37,8 @@ export default function App() {
   const [sel, setSel] = useState<string | null>(null)
   const [showSrc, setShowSrc] = useState(false)
   const [det, setDet] = useState<string | null>(null)
+  const yb = useMemo(() => { const q = new URLSearchParams(location.search); return q.get('utm_source') === 'ynet' && q.get('yb') !== '0' }, [])
+  const nohdr = useMemo(() => { if (yb) return true; const q = new URLSearchParams(location.search), h = q.get('hdr'); return h === '0' ? true : h === '1' ? false : q.get('utm_source') === 'ynet' && q.get('utm_medium') === 'embed' }, [yb])
   const [scale, setScale] = useState(1)
   const [dscale0, setDscale] = useState(1)
   const [boost, setBoost] = useState(1)
@@ -156,24 +158,26 @@ export default function App() {
     for (const loc of locations) {
       const d = diameter(loc.count) * dscale
       const el = document.createElement('div')
-      el.className = 'mk'
+      el.className = 'mk'; if (loc.shape === 'Psyduck') el.style.zIndex = '5'
       const dot = document.createElement('div')
       dot.className = 'dot'
       dot.style.width = dot.style.height = `${d}px`
       if (loc.shape === 'Base') { dot.style.border = `${Math.max(2, 3 * dscale)}px solid #0a32d6`; dot.style.background = 'rgba(255,255,255,0.15)'; dot.style.borderRadius = '50%' }
-      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${30 * dscale + 4}px`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
+      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${Math.max(d, 26 * dscale)}px`; dot.style.boxSizing = 'border-box'; dot.style.border = `${Math.max(1.5, 2 * dscale)}px solid #d40f0f`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
       else if (loc.shape === 'Rest') { dot.style.background = 'radial-gradient(circle, #ff5a4a 0%, rgba(255,60,50,.55) 55%, rgba(255,60,50,.15) 100%)'; dot.style.borderRadius = '50%' }
       else { dot.style.background = RED; dot.style.borderRadius = '50%'; dot.style.boxShadow = '0 1px 2px rgba(0,0,0,.35)' }
       const label = document.createElement('span')
       label.className = 'lb'
       label.textContent = nm(loc.name)
       label.style.fontSize = mobile ? `calc(${Math.max(9, 11.5 * scale)}px * var(--lz, 1))` : `${Math.max(9, 11.5 * scale)}px`
-      const side = SIDE[loc.name]
+      const side = ({ 'Erez Checkpoint': 'left', 'MASA Erez': 'left', 'Zikim Firing Ranges': 'left', 'Mivtahim Junction': 'left' } as Record<string, string>)[loc.name] || SIDE[loc.name]
       if (side) el.classList.add('side-' + side)
       el.append(dot, label)
       el.title = `${label.textContent}: ${loc.count}`
       el.addEventListener('click', e => { e.stopPropagation(); track('settlement_select', { settlement: loc.name, lang: document.documentElement.lang }); setSel(loc.name) })
       el.dataset.name = loc.name
+      el.setAttribute('role', 'button')
+      el.setAttribute('aria-label', el.title)
       const anchor = side === 'left' ? 'right' : side === 'top' ? 'bottom' : side === 'bottom' ? 'top' : 'left'
       const offset: [number, number] = side === 'left' ? [d / 2, 0] : side === 'top' ? [0, d / 2] : side === 'bottom' ? [0, -d / 2] : [-d / 2, 0]
       markers.current.push(new maplibregl.Marker({ element: el, anchor, offset }).setLngLat([vx(loc.lon), vy(loc.lat)]).addTo(map))
@@ -218,8 +222,10 @@ export default function App() {
 
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
-    <div className="viewport">
-      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${det ? ' indet' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+    <div className={`viewport${yb && !mobile ? ' ybcol' : ''}`}>
+      {yb && !mobile && <div className="ybn" dir={rtl ? 'rtl' : 'ltr'}><h1>{rtl ? 'מפת טבח 7 באוקטובר' : t.title}</h1></div>}
+      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${det ? ' indet' : ''}${nohdr ? ' nohdr' : ''}${yb && mobile ? ' yb' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+        {yb && mobile && <div className="ybn" dir={rtl ? 'rtl' : 'ltr'}><h1>{rtl ? 'מפת טבח 7 באוקטובר' : t.title}</h1></div>}
         <header className="head" dir={rtl ? 'rtl' : 'ltr'}>
           <h1>{t.title}</h1>
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
@@ -234,21 +240,21 @@ export default function App() {
         {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>{t.legendBtn}</button>}
         {!(mobile && hideS) && <div className="sizeleg" dir={rtl ? 'rtl' : 'ltr'}><span>{t.sizeLeg1}<br />{t.sizeLeg2}</span>
           {(() => { const f = (n: number) => diameter(n) * dscale / 2; const R = f(200), fs = 9, gap = 10.5, ns = [200, 100, 50, 5]; const tys = ns.map(n => 2 * R + 1.5 - 2 * f(n)); const ly: number[] = []; tys.forEach((y, k) => ly.push(k ? Math.max(y, ly[k - 1] + gap) : Math.max(y, fs * 0.7))); const H = Math.max(2 * R + 3, ly[3] + 6), Wd = 2 * R + 6 + 8 + 28, bx = 2 * R + 5; return <svg width={Wd} height={H} viewBox={`0 0 ${Wd} ${H}`} style={{ width: Wd, height: H, direction: "ltr" }}>{ns.map((n, k) => { const r = f(n); const y = tys[k]; return <g key={n}><circle cx={R + 2} cy={2 * R + 1.5 - r} r={r} fill="none" stroke="#222" strokeWidth="1" /><polyline points={`${R + 2},${y} ${bx},${y} ${bx + 11},${ly[k]}`} fill="none" stroke="#222" strokeWidth=".6" /><text x={bx + 13} y={ly[k] + fs * 0.35} fontSize={fs} textAnchor="start" direction="ltr">{n}</text></g> })}</svg> })()}</div>}
-        {sel && one && (<div className="tip" dir={rtl ? 'rtl' : 'ltr'} ref={tipRef} onClick={e => e.stopPropagation()}><h4>{nm(sel)}</h4><div className="tt">{fmt(one.total)} {t.victims}:</div>
-          <div className="tr"><span>{t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
+        {sel && one && (<div className="tip" dir={rtl ? 'rtl' : 'ltr'} ref={tipRef} onClick={e => e.stopPropagation()}><h4>{nm(sel)}</h4><div className="tt">{fmt(one.total)} {rtl && one.total === 1 ? 'נפגע' : t.victims}:</div>
+          <div className="tr"><span>{rtl && one.killed === 1 ? 'נהרג' : t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
           <div className="tr"><span>{t.ttHK}</span><b className="m2">{fmt(one.hk)}</b></div>
           <div className="tr"><span>{t.ttR}</span><b className="c3">{fmt(one.ret)}</b></div>
           <button className="tgo" onClick={() => { track('settlement_open', { settlement: sel, lang }); setDet(sel) }}>{t.view}</button></div>)}
         </div>
-        <div className="hint">{t.hint}</div>
+        <div className="hint">{sel ? (rtl ? `מציג נתונים עבור ${nm(sel)}` : `Showing data for ${nm(sel)}`) : t.hint}</div>
         <section className="card c-civ"><h2>{t.cCiv}</h2>
           <div className="dn"><Donut a={s.civilians} b={s.security} /><span className="l tl">{t.sec}<br /><b>{fmt(s.security)}</b> ({pct(s.security, s.total)}%)</span><span className="l br">{t.civs}<br /><b>{fmt(s.civilians)}</b> ({pct(s.civilians, s.total)}%)</span></div></section>
         <section className="card c-gen"><h2>{t.cGen} <small>{t.incl}</small></h2>
           <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">{t.fem}<br /><b>{fmt(s.female)}</b></span><span className="l bl">{t.male}<br /><b>{fmt(s.male)}</b></span></div></section>
         <section className="card c-age"><h2>{t.cAge}</h2><small className="sub">{t.excl(s.noAge)}</small><AgeBars ages={s.ages} /></section>
-        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer" onClick={() => track('outbound_click', { target: 'oct7database', lang })}>https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => { track('sources_open', { lang }); setShowSrc(true) }}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> <a className="byl" href="https://smilganir.github.io/" target="_blank" rel="noopener noreferrer" onClick={() => track('outbound_click', { target: 'homepage', lang })}>{t.dname}</a><br />{t.based}</footer>
+        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.design}</b> <a className="byl" href="https://smilganir.github.io/" target="_blank" rel="noopener noreferrer" onClick={() => track('outbound_click', { target: 'homepage', lang })}>{t.dname}</a><br />{t.based}<span className="fgap" /><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer" onClick={() => track('outbound_click', { target: 'oct7database', lang })}>https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><span className="phl">{t.phot}</span><span className="fgap" /><a className="srcl" onClick={() => { track('sources_open', { lang }); setShowSrc(true) }}><b>{t.src}</b></a></footer>
         {showSrc && <Sources lang={lang} onClose={() => setShowSrc(false)} />}
-        {det && <Detail name={det} lang={lang} onBack={() => { track('detail_back', { settlement: det, lang }); setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
+        {det && <Detail name={det} lang={lang} onSources={() => { track('sources_open', { lang, where: 'detail' }); setShowSrc(true) }} onBack={() => { track('detail_back', { settlement: det, lang }); setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
       </div>
     </div>
   )

@@ -7,9 +7,9 @@ const T = {
     s: [
       ['Data', <>Victim details (names, ages, gender, role, status, and event location) come from the Oct 7th Database, <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a>. Numbers cover victims of events that took place between October 7 and 9, 2023, including people injured in the attacks who later died. Data is accurate to the best of our knowledge at the time of publication.</>],
       ['Locations', <>On the regional map, each dot is a location and its size reflects the number of victims. In the settlement view, each dot is one victim and is placed at approximate event coordinates, so positions are schematic.</>],
-      ['Photos', <>Photos are shown as published by the memorial sites of the National Insurance Institute (laad.btl.gov.il) and the Israel Defense Forces (idf.il), and as in the Commission&apos;s report. The images belong to their owners and are loaded from their original sources.</>],
+      ['Photos', <>Photos come from several sources, including memorial sites and other published sources. Where a memorial page exists, the record links to it from the settlement view. Rights in the photos remain with their respective owners. Some entries show a placeholder symbol instead of a photo.</>],
       ['Basemap', <>Aerial imagery: Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community. Powered by Esri. Fallback basemap, shown only if the aerial imagery is unavailable: Mapbox (© Mapbox, © OpenStreetMap) or, if that is unavailable, © OpenStreetMap contributors.</>],
-      ['Policy', <>By default the map presents aggregate figures. Names and photos appear only in the settlement view, as published in the Commission&apos;s report. A family member who wants an entry corrected or removed can contact <a href="mailto:hello@nirsmilga.com">hello@nirsmilga.com</a>, and we will act on it.</>],
+      ['Policy', <>By default the map presents aggregate figures. Names and photos appear only in the settlement view. To ask about a photo or a record, including a request for correction or removal, write to <a href="mailto:hello@nirsmilga.com">hello@nirsmilga.com</a> with the name of the person or a link to the record, the details of the request, and a way to reach you.</>],
     ] as [string, JSX.Element][],
     foot: <>Design: Nir Smilga. Based on the &quot;Return to October&quot; exhibition at the Israel Heritage &amp; Commemoration Center (IICC).</>,
   },
@@ -18,9 +18,9 @@ const T = {
     s: [
       ['נתונים', <>פרטי הנפגעים (שמות, גילאים, מגדר, תפקיד, מעמד ומקום האירוע) לקוחים ממאגר Oct 7th Database, <a href="https://oct7database.com/" target="_blank" rel="noreferrer">https://oct7database.com/</a>. המספרים מתייחסים לנפגעי אירועים שהתרחשו בין 7 ל-9 באוקטובר 2023, לרבות פצועים בהתקפות שנפטרו לאחר מכן. הנתונים מדויקים למיטב ידיעתנו במועד הפרסום.</>],
       ['מיקומים', <>במפה האזורית כל נקודה מייצגת מיקום, וגודלה משקף את מספר הנפגעים. בתצוגת היישוב כל נקודה מייצגת נפגע אחד ומוצבת בקואורדינטות אירוע משוערות, ולכן המיקומים סכמטיים.</>],
-      ['תמונות', <>התמונות מוצגות כפי שפורסמו באתרי ההנצחה של המוסד לביטוח לאומי (laad.btl.gov.il) ושל צה&quot;ל (idf.il), וכפי שפורסמו בדוח הוועדה. הזכויות בתמונות שייכות לבעליהן, והן נטענות מהמקורות המקוריים.</>],
+      ['תמונות', <>התמונות מגיעות ממקורות שונים, ובהם אתרי הנצחה ופרסומים אחרים. כאשר קיים דף הנצחה, הרשומה בתצוגת היישוב מקשרת אליו. הזכויות בתמונות שמורות לבעליהן. בחלק מהרשומות מוצג סימן ממלא מקום במקום תמונה.</>],
       ['מפת רקע', <>תצלומי אוויר: <span dir="ltr" style={{ display: 'block', textAlign: 'right' }}>Source: Esri, Vantor, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community. Powered by Esri.</span> מפת גיבוי, מוצגת רק אם תצלומי האוויר אינם זמינים: <span dir="ltr" style={{ display: 'block', textAlign: 'right' }}>© Mapbox, © OpenStreetMap contributors</span></>],
-      ['מדיניות', <>כברירת מחדל המפה מציגה נתונים מצטברים. שמות ותמונות מופיעים בתצוגת היישוב בלבד, כפי שפורסמו בדוח הוועדה. בן משפחה המבקש לתקן או להסיר רשומה מוזמן לפנות אל <a href="mailto:hello@nirsmilga.com">hello@nirsmilga.com</a>, ונטפל בפנייה.</>],
+      ['מדיניות', <>כברירת מחדל המפה מציגה נתונים מצטברים. שמות ותמונות מופיעים בתצוגת היישוב בלבד. לפנייה בנוגע לתמונה או לרשומה, לרבות בקשת תיקון או הסרה, ניתן לפנות אל <a href="mailto:hello@nirsmilga.com">hello@nirsmilga.com</a> ולציין את שם האדם או קישור לרשומה, את פרטי הבקשה ודרך ליצירת קשר.</>],
     ] as [string, JSX.Element][],
     foot: <>עיצוב: ניר סמילגה. מבוסס על התערוכה Return to October של Israel Heritage &amp; Commemoration Center (IICC).</>,
   },

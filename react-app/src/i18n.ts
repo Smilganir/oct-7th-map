@@ -1,6 +1,6 @@
 export type Lang = 'en' | 'he'
 export const HE_NAMES: Record<string, string> = {
-  'Sderot': 'שדרות', 'Netivot': 'נתיבות', 'Ofakim': 'אופקים', 'Zikim Base': 'בסיס זיקים', 'Erez Checkpoint': 'מעבר ארז',
+  'Sderot': 'שדרות', 'Netivot': 'נתיבות', 'Ofakim': 'אופקים', 'Zikim Base': 'בסיס זיקים', 'Erez Checkpoint': 'מעבר/קיבוץ ארז', 'MASA Erez': 'מוצב מש״א ארז', 'Zikim Firing Ranges': 'מטווחי זיקים / כוח הסיור', 'Mivtahim Junction': 'צומת מבטחים',
   'Nahal Oz base': 'בסיס נחל עוז', "Re'im Base": 'בסיס רעים', 'Kisufim Base': 'בסיס כיסופים', 'Urim base': 'בסיס אורים',
   'Netiv HaAsara': 'נתיב העשרה', 'Mefalsim': 'מפלסים', 'Kfar Aza': 'כפר עזה', 'Yakhini': 'יכיני', 'Kibbutz Nahal Oz': 'קיבוץ נחל עוז',
   'Alumim': 'עלומים', "Be'eri": 'בארי', 'Nova': 'נובה', "Re'im": 'רעים', 'Ein HaShlosha': 'עין השלושה', 'Nirim': 'נירים',
@@ -19,7 +19,7 @@ export const S = {
     hint: 'Click on the map locations to zoom in', scattered: 'Scattered locations', legendBtn: 'Legend', sizeLeg1: '# of victims', sizeLeg2: 'per location',
     leg: ['Military Bases', 'Civilian Locations', 'The “Nova” party', 'The “Psyduck” party', 'Border intrusion areas', 'Limits of the Hamas Massacre', 'Gaza Strip Border'],
     cCiv: 'Civilian Victims Distribution', sec: 'Security Forces on Duty', civs: 'Civilians', cGen: "Victims' Gender", incl: '(including hostages)', fem: 'Female', male: 'Male',
-    cAge: "Victims' Age Distribution", excl: (n: number) => `*excluding ${n} victims with no age data`,
+    cAge: "Victims' Age Distribution", excl: (n: number) => `*excluding ${n} victims with no age data`, phot: 'Photos as published in public sources',
     data: 'Data:', disc: 'Disclaimer:', discT: 'All data is accurate to the best of our knowledge at the time of publication', src: 'Sources & policy', design: 'Design:', dname: 'Nir Smilga', based: "Based on 'Return to October' exhibition at the Israel Heritage & Commemoration Center (IICC)",
     victims: 'Victims', ttK: 'Killed', ttHK: 'Kidnapped and killed', ttR: 'Kidnapped and returned alive', view: 'View victims ›',
     vic: 'victims', vicinity: 'Vicinity', schem: "Victims' locations are schematic and represent approximate event coordinates. Points at the same location are slightly spread for readability.", back: '◄ Back to Regional Map',
@@ -33,7 +33,7 @@ export const S = {
     hint: 'לחצו על מיקומים במפה כדי להתקרב', scattered: 'מיקומים מפוזרים', legendBtn: 'מקרא', sizeLeg1: 'מספר נפגעים', sizeLeg2: 'לכל מיקום',
     leg: ['בסיסים צבאיים', 'מיקומים אזרחיים', 'מסיבת "נובה"', 'מסיבת "פסיידאק"', 'אזורי חדירה מהגבול', 'גבולות הטבח של חמאס', 'גבול רצועת עזה'],
     cCiv: 'התפלגות נפגעים אזרחים', sec: 'כוחות ביטחון בתפקיד', civs: 'אזרחים', cGen: 'מגדר הנפגעים', incl: '(כולל חטופים)', fem: 'נשים', male: 'גברים',
-    cAge: 'התפלגות גילאי הנפגעים', excl: (n: number) => `*לא כולל ${n} נפגעים ללא נתוני גיל`,
+    cAge: 'התפלגות גילאי הנפגעים', excl: (n: number) => `*לא כולל ${n} נפגעים ללא נתוני גיל`, phot: 'התמונות כפי שפורסמו במקורות פומביים',
     data: 'נתונים:', disc: 'הבהרה:', discT: 'כל הנתונים מדויקים למיטב ידיעתנו במועד הפרסום', src: 'מקורות ומדיניות', design: 'עיצוב:', dname: 'ניר סמילגה', based: 'מבוסס על התערוכה Return to October ב-Israel Heritage & Commemoration Center (IICC)',
     victims: 'נפגעים', ttK: 'נהרגו', ttHK: 'נחטפו ונהרגו', ttR: 'נחטפו וחזרו בחיים', view: '‹ לצפייה בנפגעים',
     vic: 'נפגעים', vicinity: 'והסביבה', schem: 'מיקומי הנפגעים סכמטיים ומייצגים קואורדינטות אירוע משוערות. נקודות באותו מיקום מפוזרות מעט לשם קריאות.', back: 'חזרה למפה האזורית ►',
