@@ -42,7 +42,21 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const el = useRef<HTMLDivElement>(null)
   const [he, setHe] = useState<Record<string, [string, string]>>({})
   useEffect(() => { load().then(setD); loadHe().then(setHe) }, [])
+  const dbRef = useRef<HTMLDivElement>(null)
   const list = d?.byLoc[name] ?? []
+  useEffect(() => {
+    const cols = dbRef.current ? Array.from(dbRef.current.querySelectorAll<HTMLElement>(':scope > .col')) : []
+    if (cols.length !== 2) return
+    const [a, b] = cols
+    let lead: HTMLElement | null = null
+    const sync = (src: HTMLElement, dst: HTMLElement) => () => { if (lead !== src || getComputedStyle(src).overflowY === 'visible') return; if (Math.abs(dst.scrollTop - src.scrollTop) > 0.5) dst.scrollTop = src.scrollTop }
+    const fa = sync(a, b), fb = sync(b, a)
+    const la = () => { lead = a }, lb = () => { lead = b }
+    const evs = ['wheel', 'touchstart', 'pointerdown', 'pointerenter', 'keydown']
+    evs.forEach(e => { a.addEventListener(e, la, { passive: true }); b.addEventListener(e, lb, { passive: true }) })
+    a.addEventListener('scroll', fa, { passive: true }); b.addEventListener('scroll', fb, { passive: true })
+    return () => { evs.forEach(e => { a.removeEventListener(e, la); b.removeEventListener(e, lb) }); a.removeEventListener('scroll', fa); b.removeEventListener('scroll', fb) }
+  }, [d, name])
   useEffect(() => {
     if (!d || !el.current) return
     const pts = spreadSame(list.filter(p => p.y != null && p.x != null))
@@ -57,7 +71,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       map.addSource('p', { type: 'geojson', data: { type: 'FeatureCollection', features: pts.map(p => ({ type: 'Feature', properties: { k: p.k }, geometry: { type: 'Point', coordinates: [p.x!, p.y!] } })) } })
       map.addLayer({ id: 'p', type: 'circle', source: 'p', paint: { 'circle-radius': 5, 'circle-stroke-color': '#fff', 'circle-stroke-width': 1, 'circle-color': ['match', ['get', 'k'], 'k', COL.k, 'h', COL.h, COL.a] } })
     }
-    const mob = window.innerWidth < 760
+    const mob = window.innerWidth < 600
     const r0 = pts.length > 60 ? 2.5 : pts.length > 20 ? 3 : 4
     const scaleDots = () => {
       if (!mob || !map.getLayer('p')) return
@@ -69,7 +83,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
       if (!pts.length) return
       const b = new maplibregl.LngLatBounds()
       pts.forEach(p => b.extend([p.x!, p.y!]))
-      map.fitBounds(b, { padding: 60, maxZoom: 16.5, duration: 0 })
+      map.fitBounds(b, { padding: 28, maxZoom: 17.5, duration: 0 })
       scaleDots()
     }
     const MB = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
@@ -90,7 +104,8 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
     })
     const fell = false
     map.on('load', () => { addPts(); if (!fell) fit() })
-    return () => map.remove()
+    const host = el.current; let rt: any; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { map.resize(); if (map.getLayer('p')) fit() }, 120) }); ro.observe(host)
+    return () => { ro.disconnect(); clearTimeout(rt); map.remove() }
   }, [d, name])
   const c = { k: 0, h: 0, a: 0 }
   list.forEach(p => c[p.k]++)
@@ -99,7 +114,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
   const card = (p: P, i: number) => (
     <div className="vc" key={i}>
       {d && p.u ? <img src={local(p.u)} alt="" loading="lazy" referrerPolicy="no-referrer" onError={e => { const t = e.target as HTMLImageElement; if (t.dataset.fb) t.style.visibility = 'hidden'; else { t.dataset.fb = '1'; t.src = photo(d, p.u) } }} /> : <span className="ph" />}
-      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <><br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => { e.stopPropagation(); track('memorial_click', { settlement: name, lang }) }}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
+      <div className="cap"><span className="vn">{(rtl && hk(p)?.[0]) || p.n}{p.a != null && <>{' '}<br />({p.a})</>}</span><span className="ic"><i style={{ background: COL[p.k] }} />{hk(p)?.[1] && <a className="ml" href={hk(p)[1]} target="_blank" rel="noopener noreferrer" title={rtl ? 'אתר ההנצחה' : 'Memorial page'} aria-label="memorial page" onClick={e => { e.stopPropagation(); track('memorial_click', { settlement: name, lang }) }}><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></a>}</span></div>
     </div>
   )
   return (
@@ -111,7 +126,7 @@ export default function Detail({ name, onBack, lang }: { name: string; onBack: (
         <button onClick={onBack}>{t.back}</button>
       </div>
       <p className="subm"><i>{t.schem}</i></p>
-      <div className="db">
+      <div className="db" ref={dbRef}>
         <div className="col">{list.slice(0, half).map(card)}</div>
         <div className="dm"><div ref={el} className="dmap" />
           <div className="dl"><span><i style={{ background: COL.h }} />{t.dKK}</span><span><i style={{ background: COL.a }} />{t.dKA}</span><span><i style={{ background: COL.k }} />{t.dK}</span></div></div>

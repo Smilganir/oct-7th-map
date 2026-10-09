@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type React from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Detail from './Detail'
 import Sources from './Sources'
 import { track } from './track'
@@ -37,9 +38,15 @@ export default function App() {
   const [showSrc, setShowSrc] = useState(false)
   const [det, setDet] = useState<string | null>(null)
   const [scale, setScale] = useState(1)
+  const [dscale0, setDscale] = useState(1)
+  const [boost, setBoost] = useState(1)
+  const dscale = dscale0 * boost
   const [mobile, setMobile] = useState(false)
+  const [mid, setMid] = useState(false)
   const mobileRef = useRef(false)
   const [hideL, setHideL] = useState(false)
+  const legRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => { const d = wrap.current; const l = legRef.current; if (!d) return; if (!(mobile && l)) { d.style.removeProperty('--lh'); d.style.removeProperty('--lw'); return } const m = () => { d.style.setProperty('--lh', l.offsetHeight + 'px'); d.style.setProperty('--lw', l.offsetWidth + 'px') }; m(); const ro = new ResizeObserver(m); ro.observe(l); return () => ro.disconnect() }, [mobile, hideL, lang, scale])
   const [hideS, setHideS] = useState(false)
   const fitRef = useRef<() => void>(() => {})
   const fitting = useRef(false), baseZ = useRef<number | null>(null), lzRef = useRef<() => void>(() => {})
@@ -50,7 +57,7 @@ export default function App() {
 
   useEffect(() => {
     const el = wrap.current!
-    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 760; setMobile(w < 760); setScale(w < 760 ? w / 700 : w / DASH_W) })
+    const ro = new ResizeObserver(() => { const w = el.clientWidth; mobileRef.current = w < 1100; setMobile(w < 1100); setMid(w >= 600 && w < 1100); document.documentElement.style.setProperty('--mk', String(w < 1100 ? Math.max(1, Math.min(1.7, w / 430)) : 1)); document.documentElement.style.setProperty('--mz', String(Math.max(1, Math.min(1.5, w / 740)))); setScale(w < 1100 ? w / 700 : w / DASH_W); setDscale(w < 1100 ? Math.max((1300 / DASH_W) * Math.sqrt(w / 1300), Math.min(w / 700, 0.65)) : w / DASH_W) })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
@@ -112,30 +119,49 @@ export default function App() {
     const loc = locations.find(l => l.name === sel); if (!loc) return
     const p = map.project([vx(loc.lon), vy(loc.lat)])
     const W = host.clientWidth, H = host.clientHeight, tw = tip.offsetWidth, th = tip.offsetHeight
-    const r = (diameter(loc.count) * scale) / 2 + 4
+    const r = (diameter(loc.count) * dscale) / 2 + 4
     let x = p.x + r; if (x + tw > W - 2) x = p.x - r - tw; x = Math.max(2, Math.min(x, W - tw - 2))
     let y = p.y - th / 2; y = Math.max(2, Math.min(y, H - th - 2))
     tip.style.left = `${host.offsetLeft + x}px`; tip.style.top = `${host.offsetTop + y}px`
-  }, [sel, scale])
+  }, [sel, dscale])
   useEffect(() => {
     const map = mapRef.current; if (!map || !sel) return
     placeTip(); map.on('move', placeTip); map.on('moveend', placeTip)
     return () => { map.off('move', placeTip); map.off('moveend', placeTip) }
   }, [sel, placeTip, mobile])
 
+  useEffect(() => {
+    setBoost(1); return
+    const t = setTimeout(() => {
+      const map = mapRef.current; if (!map) return
+      const base = dscale0
+      const pts = locations.filter(l => !l.shape || l.shape === 'Circle' || l.shape === 'Rest' || (l.shape !== 'Base' && l.shape !== 'Nova' && l.shape !== 'Psyduck')).map(l => { const p = map.project([vx(l.lon), vy(l.lat)]); return { x: p.x, y: p.y, d: diameter(l.count) * base } })
+      const rs: number[] = []
+      for (let a = 0; a < pts.length; a++) { let m = Infinity; for (let b = 0; b < pts.length; b++) if (a !== b) { const dist = Math.hypot(pts[a].x - pts[b].x, pts[a].y - pts[b].y); m = Math.min(m, dist / ((pts[a].d + pts[b].d) / 2)) } rs.push(m) }
+      rs.sort((x, y) => x - y)
+      const f = rs.length ? rs[Math.floor(rs.length * 0.12)] : 1
+      const W = mapEl.current?.clientWidth ?? 600
+      const maxD = Math.max(...pts.map(p => p.d)) || 1
+      const cap = Math.max(1, (1300 / DASH_W) / base)
+      void maxD
+      setBoost(Math.max(1, Math.min(cap, f * 0.97)))
+    }, 700)
+    return () => clearTimeout(t)
+  }, [dscale0, mobile, mid, lang])
+
   const markers = useRef<maplibregl.Marker[]>([])
   useEffect(() => {
     const map = mapRef.current!
     markers.current.forEach(m => m.remove()); markers.current = []
     for (const loc of locations) {
-      const d = diameter(loc.count) * scale
+      const d = diameter(loc.count) * dscale
       const el = document.createElement('div')
       el.className = 'mk'
       const dot = document.createElement('div')
       dot.className = 'dot'
       dot.style.width = dot.style.height = `${d}px`
-      if (loc.shape === 'Base') { dot.style.border = `${Math.max(2, 3 * scale)}px solid #0a32d6`; dot.style.background = 'rgba(255,255,255,0.15)'; dot.style.borderRadius = '50%' }
-      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${30 * scale + 4}px`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
+      if (loc.shape === 'Base') { dot.style.border = `${Math.max(2, 3 * dscale)}px solid #0a32d6`; dot.style.background = 'rgba(255,255,255,0.15)'; dot.style.borderRadius = '50%' }
+      else if (loc.shape === 'Nova' || loc.shape === 'Psyduck') { dot.style.width = dot.style.height = `${30 * dscale + 4}px`; dot.style.backgroundImage = `url(${import.meta.env.BASE_URL}assets/${loc.shape.toLowerCase()}.png)`; dot.style.backgroundSize = 'cover'; dot.style.borderRadius = '50%' }
       else if (loc.shape === 'Rest') { dot.style.background = 'radial-gradient(circle, #ff5a4a 0%, rgba(255,60,50,.55) 55%, rgba(255,60,50,.15) 100%)'; dot.style.borderRadius = '50%' }
       else { dot.style.background = RED; dot.style.borderRadius = '50%'; dot.style.boxShadow = '0 1px 2px rgba(0,0,0,.35)' }
       const label = document.createElement('span')
@@ -174,7 +200,7 @@ export default function App() {
     map.on('zoom', sched); map.on('moveend', sched); map.on('resize', sched)
     sched()
     return () => { map.off('zoom', lz); map.off('zoom', sched); map.off('moveend', sched); map.off('resize', sched); cancelAnimationFrame(raf) }
-  }, [scale, mobile, lang])
+  }, [scale, dscale, mobile, lang])
 
   useEffect(() => {
     const map = mapRef.current
@@ -193,7 +219,7 @@ export default function App() {
   const pct = (n: number, t: number) => Math.round((n / (t || 1)) * 100)
   return (
     <div className="viewport">
-      <div className={`dash${mobile ? ' mobile' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
+      <div className={`dash${mobile ? ' mobile' : ''}${mid ? ' mid' : ''}${det ? ' indet' : ''}${rtl ? ' he' : ''}`} ref={wrap} style={{ ['--u' as string]: `${mobile ? scale * 0.62 : scale}px` }}>
         <header className="head" dir={rtl ? 'rtl' : 'ltr'}>
           <h1>{t.title}</h1>
           <div className="totwrap"><p className="tot"><span className="lead">{t.tot1} {fmt(all.fatalities)} {t.fat}, {t.tot1} {fmt(all.hostages)} {t.hostages}:</span> <b className="c1">{fmt(all.killed)}</b> <small className="c1">({fmt(all.killedCiv)} {t.civ})</small> {t.killed}, <b className="c2">{fmt(all.hk)}</b> <small className="c2">({fmt(all.hkCiv)} {t.civ})</small> {t.hk}<span className="mp">.</span></p>{' '}
@@ -203,11 +229,11 @@ export default function App() {
           <button className="langb" onClick={toggleLang} aria-label="Language">{t.toggle}</button>
         </header>
         <div className="mapwrap"><div className="mapzone" ref={mapEl} onClick={() => setSel(null)} />
-        {!(mobile && hideL) && (rtl ? <div className="legend hel" dir="rtl">{[<i key="a" className="ib" />, <i key="b" className="ic" />, <img key="c" src={`${import.meta.env.BASE_URL}assets/nova.png`} alt="" />, <img key="d" src={`${import.meta.env.BASE_URL}assets/psyduck.png`} alt="" />, <i key="e" className="ia">←</i>, <i key="f" className="id" />, <i key="g" className="ig" />].map((ic, k) => <div key={k} className="lr"><span className="li">{ic}</span><span>{t.leg[k]}</span></div>)}</div> : <img className="legend" src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />)}
+        {!(mobile && hideL) && (rtl ? <div className="legend hel" dir="rtl" ref={legRef}>{[<i key="a" className="ib" />, <i key="b" className="ic" />, <img key="c" src={`${import.meta.env.BASE_URL}assets/nova.png`} alt="" />, <img key="d" src={`${import.meta.env.BASE_URL}assets/psyduck.png`} alt="" />, <i key="e" className="ia">←</i>, <i key="f" className="id" />, <i key="g" className="ig" />].map((ic, k) => <div key={k} className="lr"><span className="li">{ic}</span><span>{t.leg[k]}</span></div>)}</div> : <img className="legend" ref={legRef as React.RefObject<HTMLImageElement>} src={`${import.meta.env.BASE_URL}assets/legend.png?v=3`} alt="" />)}
         {mobile && !hideL && <button className="lx lx1" aria-label={t.hideLeg} onClick={() => { setHideL(true); setHideS(true) }}><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></button>}
         {mobile && (hideL || hideS) && <button className="lx lx3" aria-label="Show legend" onClick={() => { setHideL(false); setHideS(false) }}>{t.legendBtn}</button>}
         {!(mobile && hideS) && <div className="sizeleg" dir={rtl ? 'rtl' : 'ltr'}><span>{t.sizeLeg1}<br />{t.sizeLeg2}</span>
-          <svg viewBox="0 0 60 50">{[200, 100, 50, 5].map(n => { const r = diameter(n) / 2 / 1.1833; const y = 44 - 2 * r; return <g key={n}><circle cx="22" cy={44 - r} r={r} fill="none" stroke="#222" strokeWidth=".8" /><line x1="22" y1={y} x2="44" y2={y} stroke="#222" strokeWidth=".4" /><text x="46" y={y + 1.7} fontSize="5">{n}</text></g> })}</svg></div>}
+          {(() => { const f = (n: number) => diameter(n) * dscale / 2; const R = f(200), fs = 9, gap = 10.5, ns = [200, 100, 50, 5]; const tys = ns.map(n => 2 * R + 1.5 - 2 * f(n)); const ly: number[] = []; tys.forEach((y, k) => ly.push(k ? Math.max(y, ly[k - 1] + gap) : Math.max(y, fs * 0.7))); const H = Math.max(2 * R + 3, ly[3] + 6), Wd = 2 * R + 6 + 8 + 28, bx = 2 * R + 5; return <svg width={Wd} height={H} viewBox={`0 0 ${Wd} ${H}`} style={{ width: Wd, height: H, direction: "ltr" }}>{ns.map((n, k) => { const r = f(n); const y = tys[k]; return <g key={n}><circle cx={R + 2} cy={2 * R + 1.5 - r} r={r} fill="none" stroke="#222" strokeWidth="1" /><polyline points={`${R + 2},${y} ${bx},${y} ${bx + 11},${ly[k]}`} fill="none" stroke="#222" strokeWidth=".6" /><text x={bx + 13} y={ly[k] + fs * 0.35} fontSize={fs} textAnchor="start" direction="ltr">{n}</text></g> })}</svg> })()}</div>}
         {sel && one && (<div className="tip" dir={rtl ? 'rtl' : 'ltr'} ref={tipRef} onClick={e => e.stopPropagation()}><h4>{nm(sel)}</h4><div className="tt">{fmt(one.total)} {t.victims}:</div>
           <div className="tr"><span>{t.ttK}</span><b className="c1">{fmt(one.killed)}</b></div>
           <div className="tr"><span>{t.ttHK}</span><b className="m2">{fmt(one.hk)}</b></div>
@@ -220,7 +246,7 @@ export default function App() {
         <section className="card c-gen"><h2>{t.cGen} <small>{t.incl}</small></h2>
           <div className="dn"><Donut a={s.female} b={s.male} /><span className="l tr">{t.fem}<br /><b>{fmt(s.female)}</b></span><span className="l bl">{t.male}<br /><b>{fmt(s.male)}</b></span></div></section>
         <section className="card c-age"><h2>{t.cAge}</h2><small className="sub">{t.excl(s.noAge)}</small><AgeBars ages={s.ages} /></section>
-        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer" onClick={() => track('outbound_click', { target: 'oct7database', lang })}>https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => { track('sources_open', { lang }); setShowSrc(true) }}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> {t.dname}<br />{t.based}</footer>
+        <footer className="foot" dir={rtl ? 'rtl' : 'ltr'}><b>{t.data}</b> <a href="https://oct7database.com/" target="_blank" rel="noreferrer" onClick={() => track('outbound_click', { target: 'oct7database', lang })}>https://oct7database.com/</a><br /><i><b>{t.disc}</b> {t.discT}</i><br /><a className="srcl" onClick={() => { track('sources_open', { lang }); setShowSrc(true) }}><b>{t.src}</b></a><br /><br /><b>{t.design}</b> <a className="byl" href="https://smilganir.github.io/" target="_blank" rel="noopener noreferrer" onClick={() => track('outbound_click', { target: 'homepage', lang })}>{t.dname}</a><br />{t.based}</footer>
         {showSrc && <Sources lang={lang} onClose={() => setShowSrc(false)} />}
         {det && <Detail name={det} lang={lang} onBack={() => { track('detail_back', { settlement: det, lang }); setDet(null); setSel(null); setTimeout(() => { mapRef.current?.resize(); fitRef.current() }, 60) }} />}
       </div>
